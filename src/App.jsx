@@ -1,0 +1,105 @@
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { ThemeProvider, createTheme } from '@mui/material';
+import CssBaseline from '@mui/material/CssBaseline';
+import Header from './components/layout/Header';
+import HomePage from './components/home/HomePage';
+import './App.css';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#2eca6a',
+      light: '#4dd783',
+      dark: '#21b85c',
+      contrastText: '#fff',
+    },
+    secondary: {
+      main: '#313131',
+      light: '#4a4a4a',
+      dark: '#1a1a1a',
+      contrastText: '#fff',
+    },
+    background: {
+      default: '#ffffff',
+      paper: '#f8f9fa',
+    },
+    text: {
+      primary: '#313131',
+      secondary: '#666666',
+    },
+  },
+  typography: {
+    fontFamily: "'Poppins', sans-serif",
+    h1: {
+      fontWeight: 700,
+      letterSpacing: '-0.5px',
+    },
+    h2: {
+      fontWeight: 600,
+      letterSpacing: '-0.5px',
+    },
+    h3: {
+      fontWeight: 600,
+      letterSpacing: '-0.5px',
+    },
+    h4: {
+      fontWeight: 600,
+    },
+    h5: {
+      fontWeight: 500,
+    },
+    h6: {
+      fontWeight: 500,
+    },
+    button: {
+      textTransform: 'none',
+      fontWeight: 500,
+    },
+  },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          borderRadius: '8px',
+          padding: '8px 24px',
+        },
+        contained: {
+          boxShadow: '0 4px 15px rgba(46, 202, 106, 0.2)',
+          '&:hover': {
+            boxShadow: '0 8px 25px rgba(46, 202, 106, 0.3)',
+          },
+        },
+      },
+    },
+    MuiCard: {
+      styleOverrides: {
+        root: {
+          borderRadius: '10px',
+          boxShadow: '0 4px 20px rgba(0,0,0,0.05)',
+        },
+      },
+    },
+  },
+});
+
+function App() {
+  return (
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Router>
+        <Header />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/properties" element={<div>Properties</div>} />
+          <Route path="/about" element={<div>About</div>} />
+          <Route path="/contact" element={<div>Contact</div>} />
+          <Route path="/agents" element={<div>Agents</div>} />
+          <Route path="/blog" element={<div>Blog</div>} />
+        </Routes>
+      </Router>
+    </ThemeProvider>
+  );
+}
+
+export default App;
