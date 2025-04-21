@@ -4,6 +4,10 @@ import { ThemeProvider, createTheme } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 import Header from './components/layout/Header';
 import HomePage from './components/home/HomePage';
+import ServicesPage from './components/services/ServicesPage';
+import ProcessPage from './components/process/ProcessPage';
+import ListingsPage from './components/listings/ListingsPage';
+import AboutPage from './components/about/AboutPage';
 import './App.css';
 
 const theme = createTheme({
@@ -91,8 +95,10 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/properties" element={<div>Properties</div>} />
-          <Route path="/about" element={<div>About</div>} />
+          <Route path="/services" element={<ServicesPage />} />
+          <Route path="/process" element={<ProcessPage />} />
+          <Route path="/listings" element={<ListingsPage />} />
+          <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<div>Contact</div>} />
           <Route path="/agents" element={<div>Agents</div>} />
           <Route path="/blog" element={<div>Blog</div>} />
