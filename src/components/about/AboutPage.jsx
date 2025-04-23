@@ -17,17 +17,19 @@ const BRAND = {
 };
 
 const HeroSection = styled(Box)(({ theme }) => ({
-  minHeight: '60vh',
+  minHeight: { xs: '40vh', md: '60vh' },
   backgroundColor: '#1a1a1a',
   backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1920&q=80)`,
   backgroundSize: 'cover',
   backgroundPosition: 'center',
-  backgroundAttachment: 'fixed',
+  backgroundAttachment: { xs: 'scroll', md: 'fixed' },
   display: 'flex',
   alignItems: 'center',
   position: 'relative',
   color: 'white',
   textAlign: 'center',
+  paddingTop: { xs: '120px', md: '160px' },
+  paddingBottom: { xs: '60px', md: '80px' }
 }));
 
 const ValueCard = styled(Card)(({ theme }) => ({
@@ -125,66 +127,84 @@ const AboutPage = () => {
     <Box sx={{ background: BRAND.background, minHeight: '100vh' }}>
       {/* Hero Section */}
       <HeroSection>
-        <Container maxWidth="lg">
-          <Typography
-            variant="h1"
+        <Container 
+          maxWidth="lg"
+          sx={{
+            position: 'relative',
+            zIndex: 1
+          }}
+        >
+          <Box
             sx={{
-              fontSize: { xs: '2.5rem', md: '3.5rem' },
-              fontWeight: 700,
-              mb: 3
+              position: 'relative',
+              zIndex: 2
             }}
           >
-            About Abbass Business Brokers
-          </Typography>
-          <Typography
-            variant="h5"
-            sx={{
-              maxWidth: '800px',
-              mx: 'auto',
-              opacity: 0.9
-            }}
-          >
-            Your trusted partner in business sales and acquisitions since 2005
-          </Typography>
+            <Typography
+              variant="h1"
+              sx={{
+                fontSize: { xs: '2rem', md: '3.5rem' },
+                fontWeight: 700,
+                mb: { xs: 2, md: 3 },
+                px: { xs: 2, md: 0 }
+              }}
+            >
+              About Abbass Business Brokers
+            </Typography>
+            <Typography
+              variant="h5"
+              sx={{
+                maxWidth: '800px',
+                mx: 'auto',
+                opacity: 0.9,
+                fontSize: { xs: '1.1rem', md: '1.5rem' },
+                px: { xs: 2, md: 0 }
+              }}
+            >
+              Your trusted partner in business sales and acquisitions since 2005
+            </Typography>
+          </Box>
         </Container>
       </HeroSection>
 
       {/* Our Story Section */}
-      <Container maxWidth="lg" sx={{ py: { xs: 6, md: 10 } }}>
-        <Grid container spacing={8} alignItems="center">
+      <Container maxWidth="lg" sx={{ py: { xs: 4, md: 10 } }}>
+        <Grid container spacing={{ xs: 4, md: 8 }} alignItems="center">
           <Grid item xs={12} md={6}>
-            <Typography
-              variant="h2"
-              sx={{
-                fontSize: { xs: '2rem', md: '2.5rem' },
-                fontWeight: 700,
-                color: BRAND.textDark,
-                mb: 3
-              }}
-            >
-              Our Story
-            </Typography>
-            <Typography
-              variant="body1"
-              sx={{
-                color: BRAND.textGray,
-                fontSize: '1.1rem',
-                lineHeight: 1.8,
-                mb: 3
-              }}
-            >
-              Founded in 2005, Abbass Business Brokers has established itself as a leading force in the business brokerage industry. Our journey began with a simple mission: to provide exceptional service in business sales and acquisitions while maintaining the highest standards of professionalism and integrity.
-            </Typography>
-            <Typography
-              variant="body1"
-              sx={{
-                color: BRAND.textGray,
-                fontSize: '1.1rem',
-                lineHeight: 1.8
-              }}
-            >
-              Over the years, we've successfully facilitated hundreds of business transactions across various industries, building a reputation for excellence and reliability. Our team of experienced professionals brings together extensive knowledge of the market, ensuring the best possible outcomes for our clients.
-            </Typography>
+            <Box sx={{ px: { xs: 2, md: 0 } }}>
+              <Typography
+                variant="h2"
+                sx={{
+                  fontSize: { xs: '1.75rem', md: '2.5rem' },
+                  fontWeight: 700,
+                  color: BRAND.textDark,
+                  mb: { xs: 2, md: 3 }
+                }}
+              >
+                Our Story
+              </Typography>
+              <Typography
+                variant="body1"
+                sx={{
+                  color: BRAND.textGray,
+                  fontSize: { xs: '1rem', md: '1.1rem' },
+                  lineHeight: 1.8,
+                  mb: 3
+                }}
+              >
+                Founded in 2005, Abbass Business Brokers has established itself as a leading force in the business brokerage industry. Our journey began with a simple mission: to provide exceptional service in business sales and acquisitions while maintaining the highest standards of professionalism and integrity.
+              </Typography>
+              <Typography
+                variant="body1"
+                sx={{
+                  color: BRAND.textGray,
+                  fontSize: { xs: '1rem', md: '1.1rem' },
+                  lineHeight: 1.8
+                }}
+              >
+                Over the years, we've successfully facilitated hundreds of business transactions across various industries, building a reputation for excellence and reliability. Our team of experienced professionals brings together extensive knowledge of the market, ensuring the best possible outcomes for our clients.
+              </Typography>
+            </Box>
           </Grid>
           <Grid item xs={12} md={6}>
             <Box
@@ -193,7 +213,9 @@ const AboutPage = () => {
               sx={{
                 width: '100%',
                 borderRadius: '16px',
-                boxShadow: '0 20px 40px rgba(0,0,0,0.1)'
+                boxShadow: '0 20px 40px rgba(0,0,0,0.1)',
+                display: 'block',
+                mx: 'auto'
               }}
               alt="Our office"
             />
@@ -202,25 +224,26 @@ const AboutPage = () => {
       </Container>
 
       {/* Our Values Section */}
-      <Box sx={{ background: BRAND.lightBlue, py: { xs: 6, md: 10 } }}>
+      <Box sx={{ background: BRAND.lightBlue, py: { xs: 4, md: 10 } }}>
         <Container maxWidth="lg">
           <Typography
             variant="h2"
             align="center"
             sx={{
-              fontSize: { xs: '2rem', md: '2.5rem' },
+              fontSize: { xs: '1.75rem', md: '2.5rem' },
               fontWeight: 700,
               color: BRAND.textDark,
-              mb: 6
+              mb: { xs: 4, md: 6 },
+              px: { xs: 2, md: 0 }
             }}
           >
             Our Values
           </Typography>
-          <Grid container spacing={4}>
+          <Grid container spacing={{ xs: 2, md: 4 }}>
             {values.map((value, index) => (
               <Grid item xs={12} sm={6} md={3} key={index}>
                 <ValueCard component={motion.div} whileHover={{ y: -5 }}>
-                  <CardContent sx={{ textAlign: 'center', p: 4 }}>
+                  <CardContent sx={{ textAlign: 'center', p: { xs: 3, md: 4 } }}>
                     <Box sx={{ mb: 2 }}>
                       {value.icon}
                     </Box>
@@ -229,7 +252,8 @@ const AboutPage = () => {
                       sx={{
                         fontWeight: 600,
                         color: BRAND.textDark,
-                        mb: 2
+                        mb: 2,
+                        fontSize: { xs: '1.1rem', md: '1.25rem' }
                       }}
                     >
                       {value.title}
@@ -237,7 +261,8 @@ const AboutPage = () => {
                     <Typography
                       variant="body1"
                       sx={{
-                        color: BRAND.textGray
+                        color: BRAND.textGray,
+                        fontSize: { xs: '0.9rem', md: '1rem' }
                       }}
                     >
                       {value.description}
@@ -251,34 +276,41 @@ const AboutPage = () => {
       </Box>
 
       {/* Our Team Section */}
-      <Container maxWidth="lg" sx={{ py: { xs: 6, md: 10 } }}>
+      <Container maxWidth="lg" sx={{ py: { xs: 4, md: 10 } }}>
         <Typography
           variant="h2"
           align="center"
           sx={{
-            fontSize: { xs: '2rem', md: '2.5rem' },
+            fontSize: { xs: '1.75rem', md: '2.5rem' },
             fontWeight: 700,
             color: BRAND.textDark,
-            mb: 6
+            mb: { xs: 4, md: 6 },
+            px: { xs: 2, md: 0 }
           }}
         >
           Meet Our Team
         </Typography>
-        <Grid container spacing={4}>
+        <Grid container spacing={{ xs: 2, md: 4 }}>
           {teamMembers.map((member, index) => (
             <Grid item xs={12} sm={6} md={3} key={index}>
               <TeamMemberCard component={motion.div} whileHover={{ y: -5 }}>
                 <TeamMemberImage
                   src={member.image}
                   alt={member.name}
+                  sx={{
+                    width: { xs: '120px', md: '150px' },
+                    height: { xs: '120px', md: '150px' },
+                    margin: { xs: '15px auto', md: '20px auto' }
+                  }}
                 />
-                <CardContent>
+                <CardContent sx={{ p: { xs: 2, md: 3 } }}>
                   <Typography
                     variant="h6"
                     sx={{
                       fontWeight: 600,
                       color: BRAND.textDark,
-                      mb: 1
+                      mb: 1,
+                      fontSize: { xs: '1.1rem', md: '1.25rem' }
                     }}
                   >
                     {member.name}
@@ -288,7 +320,8 @@ const AboutPage = () => {
                     sx={{
                       color: BRAND.blue,
                       fontWeight: 500,
-                      mb: 2
+                      mb: 2,
+                      fontSize: { xs: '0.9rem', md: '1rem' }
                     }}
                   >
                     {member.position}
@@ -296,7 +329,8 @@ const AboutPage = () => {
                   <Typography
                     variant="body2"
                     sx={{
-                      color: BRAND.textGray
+                      color: BRAND.textGray,
+                      fontSize: { xs: '0.85rem', md: '0.9rem' }
                     }}
                   >
                     {member.description}
