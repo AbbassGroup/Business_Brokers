@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { AppBar, Container, Button, Box, styled } from '@mui/material';
+import { AppBar, Container, Button, Box, IconButton, Drawer, List, ListItem, ListItemText, useTheme, useMediaQuery, styled } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
+import CloseIcon from '@mui/icons-material/Close';
 
 const BRAND = {
   blue: '#56C1BC'
@@ -39,8 +41,46 @@ const NavButton = styled(Button)({
   }
 });
 
+const MobileDrawer = styled(Drawer)(({ theme }) => ({
+  '& .MuiDrawer-paper': {
+    width: '100%',
+    maxWidth: '300px',
+    background: 'rgba(28, 36, 52, 0.98)',
+    backdropFilter: 'blur(10px)',
+    padding: theme.spacing(2),
+  },
+}));
+
+const DrawerNavItem = styled(ListItem)({
+  padding: '15px 20px',
+  '& .MuiListItemText-primary': {
+    color: 'white',
+    fontSize: '18px',
+    fontWeight: 500,
+  },
+  '&:hover': {
+    backgroundColor: 'rgba(86, 193, 188, 0.1)',
+    '& .MuiListItemText-primary': {
+      color: BRAND.blue,
+    },
+  },
+});
+
 const Header = () => {
   const [scrolled, setScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
+  const navigationItems = [
+    { text: 'Home', path: '/' },
+    { text: 'Services', path: '/services' },
+    { text: 'Process', path: '/process' },
+    { text: 'Listings', path: '/listings' },
+    { text: 'About', path: '/about' },
+    { text: 'Agents', path: '/agents' },
+    { text: 'Contact', path: '/contact' },
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -53,6 +93,10 @@ const Header = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, [scrolled]);
+
+  const handleDrawerToggle = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
 
   return (
     <AppBar 
@@ -86,29 +130,66 @@ const Header = () => {
               }}
             />
           </Link>
-          <NavigationSection>
-            <NavButton component={Link} to="/">
-              Home
-            </NavButton>
-            <NavButton component={Link} to="/services">
-              Services
-            </NavButton>
-            <NavButton component={Link} to="/process">
-              Process
-            </NavButton>
-            <NavButton component={Link} to="/listings">
-              Listings
-            </NavButton>
-            <NavButton component={Link} to="/about">
-              About
-            </NavButton>
-            <NavButton component={Link} to="/agents">
-              Agents
-            </NavButton>
-            <NavButton component={Link} to="/contact">
-              Contact
-            </NavButton>
-          </NavigationSection>
+
+          {isMobile ? (
+            <>
+              <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                edge="start"
+                onClick={handleDrawerToggle}
+                sx={{ ml: 2 }}
+              >
+                <MenuIcon sx={{ fontSize: 28 }} />
+              </IconButton>
+              <MobileDrawer
+                anchor="right"
+                open={mobileMenuOpen}
+                onClose={handleDrawerToggle}
+                ModalProps={{
+                  keepMounted: true, // Better open performance on mobile.
+                }}
+              >
+                <Box sx={{ 
+                  display: 'flex', 
+                  justifyContent: 'flex-end', 
+                  p: 1 
+                }}>
+                  <IconButton 
+                    onClick={handleDrawerToggle}
+                    sx={{ color: 'white' }}
+                  >
+                    <CloseIcon />
+                  </IconButton>
+                </Box>
+                <List>
+                  {navigationItems.map((item) => (
+                    <DrawerNavItem
+                      button
+                      key={item.text}
+                      component={Link}
+                      to={item.path}
+                      onClick={handleDrawerToggle}
+                    >
+                      <ListItemText primary={item.text} />
+                    </DrawerNavItem>
+                  ))}
+                </List>
+              </MobileDrawer>
+            </>
+          ) : (
+            <NavigationSection>
+              {navigationItems.map((item) => (
+                <NavButton
+                  key={item.text}
+                  component={Link}
+                  to={item.path}
+                >
+                  {item.text}
+                </NavButton>
+              ))}
+            </NavigationSection>
+          )}
         </Box>
       </Container>
     </AppBar>

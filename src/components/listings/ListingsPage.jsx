@@ -69,7 +69,6 @@ const ListingsPage = () => {
   const [selectedLocation, setSelectedLocation] = useState('all');
 
   const categories = [
-    { id: 'all', name: 'All Categories' },
     { id: 'accommodation', name: 'Accommodation/Tourism' },
     { id: 'automotive', name: 'Automotive' },
     { id: 'beauty', name: 'Beauty/Health' },
@@ -84,7 +83,6 @@ const ListingsPage = () => {
   ];
 
   const locations = [
-    { id: 'all', name: 'All Locations' },
     { id: 'melbourne', name: 'Melbourne' },
     { id: 'geelong', name: 'Geelong' },
     { id: 'ballarat', name: 'Ballarat' },
@@ -112,7 +110,7 @@ const ListingsPage = () => {
     <Box sx={{ 
       background: BRAND.background,
       minHeight: '100vh',
-      pt: { xs: 12, md: 14 },
+      pt: { xs: 8, md: 14 },
       pb: { xs: 8, md: 12 }
     }}>
       <Container maxWidth="xl">
@@ -122,7 +120,8 @@ const ListingsPage = () => {
             fontSize: { xs: '2rem', md: '2.75rem' },
             fontWeight: 700,
             color: BRAND.textDark,
-            mb: 4,
+            mb: { xs: 3, md: 4 },
+            pl: { xs: 2, md: 0 }
           }}
         >
           Business Listings
@@ -130,19 +129,30 @@ const ListingsPage = () => {
 
         <Grid container spacing={4}>
           {/* Filters Sidebar */}
-          <Grid item xs={12} md={3}>
-            <FilterSection>
+          <Grid 
+            item 
+            xs={12} 
+            md={3}
+            sx={{
+              order: { xs: 2, md: 1 },
+              position: { md: 'sticky' },
+              top: { md: 100 },
+              height: { md: 'fit-content' }
+            }}
+          >
+            <FilterSection sx={{ mb: { xs: 2, md: 4 } }}>
               <Typography
                 variant="h6"
                 sx={{
                   fontWeight: 600,
                   color: BRAND.textDark,
                   mb: 2,
+                  fontSize: { xs: '1.1rem', md: '1.25rem' }
                 }}
               >
                 Listing categories
               </Typography>
-              <FormControl component="fieldset">
+              <FormControl component="fieldset" sx={{ width: '100%' }}>
                 <RadioGroup
                   value={selectedCategory}
                   onChange={(e) => setSelectedCategory(e.target.value)}
@@ -171,11 +181,12 @@ const ListingsPage = () => {
                   fontWeight: 600,
                   color: BRAND.textDark,
                   mb: 2,
+                  fontSize: { xs: '1.1rem', md: '1.25rem' }
                 }}
               >
                 Location
               </Typography>
-              <FormControl component="fieldset">
+              <FormControl component="fieldset" sx={{ width: '100%' }}>
                 <RadioGroup
                   value={selectedLocation}
                   onChange={(e) => setSelectedLocation(e.target.value)}
@@ -199,7 +210,14 @@ const ListingsPage = () => {
           </Grid>
 
           {/* Listings Grid */}
-          <Grid item xs={12} md={9}>
+          <Grid 
+            item 
+            xs={12} 
+            md={9}
+            sx={{
+              order: { xs: 1, md: 2 }
+            }}
+          >
             <Grid container spacing={3}>
               {listings.map((listing) => (
                 <Grid item xs={12} sm={6} lg={4} key={listing.id}>
@@ -215,7 +233,8 @@ const ListingsPage = () => {
                         <Typography 
                           variant="h6" 
                           sx={{ 
-                            height: '56px',
+                            fontSize: { xs: '1.1rem', md: '1.25rem' },
+                            height: { xs: 'auto', md: '56px' },
                             display: '-webkit-box',
                             WebkitLineClamp: 2,
                             WebkitBoxOrient: 'vertical',
@@ -229,12 +248,13 @@ const ListingsPage = () => {
                           variant="body1" 
                           sx={{ 
                             color: BRAND.textGray,
-                            height: '72px',
+                            height: { xs: 'auto', md: '72px' },
                             display: '-webkit-box',
-                            WebkitLineClamp: 3,
+                            WebkitLineClamp: { xs: 2, md: 3 },
                             WebkitBoxOrient: 'vertical',
                             overflow: 'hidden',
-                            mb: 2
+                            mb: 2,
+                            fontSize: { xs: '0.9rem', md: '1rem' }
                           }}
                         >
                           {listing.description}
@@ -251,7 +271,8 @@ const ListingsPage = () => {
                           variant="h5" 
                           sx={{ 
                             color: BRAND.blue,
-                            fontWeight: 700 
+                            fontWeight: 700,
+                            fontSize: { xs: '1.5rem', md: '1.75rem' }
                           }}
                         >
                           {listing.price}
@@ -266,7 +287,8 @@ const ListingsPage = () => {
                             },
                             borderRadius: '8px',
                             textTransform: 'none',
-                            py: 1
+                            py: { xs: 1.5, md: 1 },
+                            fontSize: { xs: '1rem', md: '0.9rem' }
                           }}
                         >
                           View Details
