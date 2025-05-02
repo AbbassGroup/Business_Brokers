@@ -10,6 +10,11 @@ import SupportAgentIcon from '@mui/icons-material/SupportAgent';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import TimelineIcon from '@mui/icons-material/Timeline';
 import FormatQuoteIcon from '@mui/icons-material/FormatQuote';
+import Footer from '../common/Footer';
+import HeroSection from '../common/HeroSection';
+
+// Replace the image import with a constant
+const servicesHeroImage = "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2000&q=80";
 
 // Brand Colors
 const BRAND = {
@@ -187,55 +192,12 @@ const ServicesPage = () => {
   ];
 
   return (
-    <Box>
-      {/* Hero Section */}
-      <Box
-        sx={{
-          pt: { xs: 15, md: 20 },
-          pb: { xs: 8, md: 12 },
-          background: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1920&q=80)`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          color: 'white',
-        }}
-      >
-        <Container maxWidth="lg">
-          <Box sx={{ textAlign: 'center', maxWidth: '800px', mx: 'auto' }}>
-            <Typography
-              variant="h1"
-              sx={{
-                fontSize: { xs: '2.5rem', md: '3.5rem' },
-                fontWeight: 700,
-                mb: 3,
-                position: 'relative',
-                '&::after': {
-                  content: '""',
-                  position: 'absolute',
-                  bottom: '-16px',
-                  left: '50%',
-                  transform: 'translateX(-50%)',
-                  width: '80px',
-                  height: '4px',
-                  backgroundColor: BRAND.blue,
-                  borderRadius: '2px',
-                },
-              }}
-            >
-              Our Services
-            </Typography>
-            <Typography
-              variant="h5"
-              sx={{
-                mt: 4,
-                fontWeight: 400,
-                opacity: 0.9,
-              }}
-            >
-              Comprehensive business brokerage services to help you buy, sell, or value your business
-            </Typography>
-          </Box>
-        </Container>
-      </Box>
+    <Box sx={{ background: BRAND.background, minHeight: '100vh' }}>
+      <HeroSection
+        title="Our Services & Process"
+        subtitle="Discover our comprehensive business brokerage services and our proven step-by-step process to help you succeed."
+        backgroundImage={servicesHeroImage}
+      />
 
       {/* Services Section */}
       <Box sx={{ py: { xs: 8, md: 12 }, bgcolor: '#f8f9fa' }}>
@@ -377,34 +339,7 @@ const ServicesPage = () => {
       </Box>
 
       {/* CTA Section */}
-      <Box sx={{ py: { xs: 8, md: 12 }, bgcolor: BRAND.blue }}>
-        <Container maxWidth="lg">
-          <Box sx={{ textAlign: 'center', color: 'white' }}>
-            <Typography variant="h3" sx={{ fontWeight: 700, mb: 3 }}>
-              Ready to Take the Next Step?
-            </Typography>
-            <Typography variant="h6" sx={{ mb: 4, opacity: 0.9, maxWidth: '700px', mx: 'auto' }}>
-              Contact us today for a confidential consultation about your business needs.
-            </Typography>
-            <Button
-              variant="contained"
-              size="large"
-              sx={{
-                bgcolor: 'white',
-                color: BRAND.blue,
-                px: 4,
-                py: 1.5,
-                fontSize: '1.1rem',
-                '&:hover': {
-                  bgcolor: 'rgba(255, 255, 255, 0.9)',
-                },
-              }}
-            >
-              Schedule a Consultation
-            </Button>
-          </Box>
-        </Container>
-      </Box>
+      <Footer />
 
       {/* Service Details Modal */}
       <Dialog

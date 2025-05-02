@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Box, Typography, Button, Grid, TextField, MenuItem, Card, CardContent, CardMedia, IconButton, styled } from '@mui/material';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import SearchIcon from '@mui/icons-material/Search';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import BusinessIcon from '@mui/icons-material/Business';
@@ -12,6 +12,8 @@ import RestaurantIcon from '@mui/icons-material/Restaurant';
 import ApartmentIcon from '@mui/icons-material/Apartment';
 import BuildIcon from '@mui/icons-material/Build';
 import FormatQuoteIcon from '@mui/icons-material/FormatQuote';
+import Footer from '../common/Footer';
+import { useEffect, useRef, useState } from 'react';
 
 // Brand Colors
 const BRAND = {
@@ -42,14 +44,20 @@ const IMAGES = {
     client4: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=150&q=80"
   },
   companies: {
-    logo1: "https://via.placeholder.com/120x60?text=Company+1",
-    logo2: "https://via.placeholder.com/120x60?text=Company+2",
-    logo3: "https://via.placeholder.com/120x60?text=Company+3",
-    logo4: "https://via.placeholder.com/120x60?text=Company+4",
-    logo5: "https://via.placeholder.com/120x60?text=Company+5",
-    logo6: "https://via.placeholder.com/120x60?text=Company+6"
+    logo1: "/Cheesecake-shop-logo-2024.png", // Cheesecake Shop
+    logo2: "/WSQ-NewWeb-Gami-Logo1.jpg", // Gami Chicken
+    logo3: "/We-love-ndis-logo_1x.webp", // NDIS
+    logo4: "/Degani cafe.jpg" // Degani Cafe
   }
 };
+
+// Add company URLs for linking
+const COMPANY_LINKS = [
+  "https://www.cheesecake.com.au/", // Cheesecake Shop
+  "https://www.gamichicken.com.au/", // Gami Chicken
+  "https://www.ndis.gov.au/", // NDIS
+  "https://degani.com.au/" // Degani Cafe
+];
 
 const SearchBar = styled(Box)(({ theme }) => ({
   backgroundColor: 'white',
@@ -289,16 +297,75 @@ const CategoryCard = styled(Box)(({ theme }) => ({
 
 const CompanyLogo = styled('img')({
   height: '40px',
+  width: '100%',
   objectFit: 'contain',
+  background: '#fff',
   opacity: 0.7,
   filter: 'grayscale(100%)',
   transition: 'all 0.3s ease',
   cursor: 'pointer',
+  margin: '0 auto',
+  display: 'block',
+  marginBottom: '24px',
   '&:hover': {
     opacity: 1,
     filter: 'grayscale(0%)',
   }
 });
+
+const CountUp = ({ end, duration = 2 }) => {
+  const [count, setCount] = useState(0);
+  const countRef = useRef(count);
+  const [isInView, setIsInView] = useState(false);
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true);
+        }
+      },
+      { threshold: 0.5 }
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => {
+      if (ref.current) {
+        observer.unobserve(ref.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!isInView) return;
+
+    let startTimestamp;
+    const step = (timestamp) => {
+      if (!startTimestamp) startTimestamp = timestamp;
+      const progress = Math.min((timestamp - startTimestamp) / (duration * 1000), 1);
+      
+      const currentCount = Math.floor(progress * end);
+      if (currentCount !== countRef.current) {
+        setCount(currentCount);
+        countRef.current = currentCount;
+      }
+
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      } else {
+        setCount(end);
+      }
+    };
+
+    requestAnimationFrame(step);
+  }, [end, duration, isInView]);
+
+  return <span ref={ref}>{count.toLocaleString()}</span>;
+};
 
 const HomePage = () => {
   return (
@@ -309,6 +376,10 @@ const HomePage = () => {
     }}>
       {/* Hero Section */}
       <Box
+        component={motion.div}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1 }}
         sx={{
           minHeight: '100vh',
           backgroundColor: '#1a1a1a',
@@ -329,10 +400,16 @@ const HomePage = () => {
             minHeight: '100vh',
             pt: { xs: 8, md: 0 }
           }}>
-            <Box sx={{ 
-              maxWidth: '600px',
-              pr: 4
-            }}>
+            <Box 
+              component={motion.div}
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.5 }}
+              sx={{ 
+                maxWidth: '600px',
+                pr: 4
+              }}
+            >
               <Typography
                 variant="h1"
                 color="white"
@@ -343,86 +420,113 @@ const HomePage = () => {
                   lineHeight: 1.2
                 }}
               >
-                <Box component="span" display="block" sx={{ mb: 1 }}>
-                  Selling your business
-                </Box>
-                <Box component="span" display="block">
-                  is our business
-                </Box>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.8 }}
+                >
+                  <Box component="span" display="block" sx={{ mb: 1 }}>
+                    Selling your business
+                  </Box>
+                </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 1.1 }}
+                >
+                  <Box component="span" display="block">
+                    is our business
+                  </Box>
+                </motion.div>
               </Typography>
-              <Button
-                variant="contained"
-                sx={{
-                  backgroundColor: BRAND.blue,
-                  color: 'white',
-                  padding: '12px 24px',
-                  fontSize: '16px',
-                  mt: 4,
-                  '&:hover': {
-                    backgroundColor: '#45a19d',
-                  }
-                }}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 1.4 }}
               >
-                Contact Us →
-              </Button>
+                <Button
+                  variant="contained"
+                  component={motion.button}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  sx={{
+                    backgroundColor: BRAND.blue,
+                    color: 'white',
+                    padding: '12px 24px',
+                    fontSize: '16px',
+                    mt: 4,
+                    '&:hover': {
+                      backgroundColor: '#45a19d',
+                    }
+                  }}
+                >
+                  Contact Us →
+                </Button>
+              </motion.div>
             </Box>
 
-            <ContactForm>
-              <FormTitle>What's my business worth?</FormTitle>
-              <Grid container spacing={2}>
-                <Grid item xs={12} container spacing={2}>
-                  <Grid item xs={6}>
-                    <FormLabel>First Name</FormLabel>
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.5 }}
+            >
+              <ContactForm>
+                <FormTitle>What's my business worth?</FormTitle>
+                <Grid container spacing={2}>
+                  <Grid item xs={12} container spacing={2}>
+                    <Grid item xs={6}>
+                      <FormLabel>First Name</FormLabel>
+                      <FormInput
+                        fullWidth
+                        variant="outlined"
+                        size="small"
+                      />
+                    </Grid>
+                    <Grid item xs={6}>
+                      <FormLabel>Last Name</FormLabel>
+                      <FormInput
+                        fullWidth
+                        variant="outlined"
+                        size="small"
+                      />
+                    </Grid>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <FormLabel>Phone Number</FormLabel>
                     <FormInput
                       fullWidth
                       variant="outlined"
                       size="small"
                     />
                   </Grid>
-                  <Grid item xs={6}>
-                    <FormLabel>Last Name</FormLabel>
+                  <Grid item xs={12}>
+                    <FormLabel>Your Email</FormLabel>
                     <FormInput
                       fullWidth
                       variant="outlined"
                       size="small"
+                      type="email"
                     />
                   </Grid>
+                  <Grid item xs={12}>
+                    <Button
+                      fullWidth
+                      variant="contained"
+                      sx={{
+                        height: '45px',
+                        backgroundColor: BRAND.blue,
+                        fontSize: '16px',
+                        '&:hover': {
+                          backgroundColor: '#45a19d',
+                        }
+                      }}
+                    >
+                      Send
+                    </Button>
+                  </Grid>
                 </Grid>
-                <Grid item xs={12}>
-                  <FormLabel>Phone Number</FormLabel>
-                  <FormInput
-                    fullWidth
-                    variant="outlined"
-                    size="small"
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <FormLabel>Your Email</FormLabel>
-                  <FormInput
-                    fullWidth
-                    variant="outlined"
-                    size="small"
-                    type="email"
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <Button
-                    fullWidth
-                    variant="contained"
-                    sx={{
-                      height: '45px',
-                      backgroundColor: BRAND.blue,
-                      fontSize: '16px',
-                      '&:hover': {
-                        backgroundColor: '#45a19d',
-                      }
-                    }}
-                  >
-                    Send
-                  </Button>
-                </Grid>
-              </Grid>
-            </ContactForm>
+              </ContactForm>
+            </motion.div>
           </Box>
         </Container>
       </Box>
@@ -430,45 +534,52 @@ const HomePage = () => {
       {/* Featured Businesses Section */}
       <SectionWrapper sx={{ py: { xs: 6, md: 10 } }}>
         <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
-          <Box sx={{ 
-            textAlign: 'center', 
-            mb: 8,
-            position: 'relative',
-            '&::after': {
-              content: '""',
-              position: 'absolute',
-              bottom: '-20px',
-              left: '50%',
-              transform: 'translateX(-50%)',
-              width: '100px',
-              height: '4px',
-              background: `linear-gradient(to right, ${BRAND.blue}, ${BRAND.darkBlue})`,
-              borderRadius: '2px',
-            }
-          }}>
-            <Typography
-              variant="h2"
-              sx={{
-                fontSize: { xs: '2rem', md: '2.75rem' },
-                fontWeight: 700,
-                color: BRAND.textDark,
-                mb: 2,
-              }}
-            >
-              Featured Business Opportunities
-            </Typography>
-            <Typography 
-              variant="h6" 
-              sx={{ 
-                mt: 3, 
-                maxWidth: '600px', 
-                mx: 'auto',
-                color: BRAND.textGray
-              }}
-            >
-              Discover our handpicked selection of premium businesses for sale
-            </Typography>
-          </Box>
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <Box sx={{ 
+              textAlign: 'center', 
+              mb: 8,
+              position: 'relative',
+              '&::after': {
+                content: '""',
+                position: 'absolute',
+                bottom: '-20px',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                width: '100px',
+                height: '4px',
+                background: `linear-gradient(to right, ${BRAND.blue}, ${BRAND.darkBlue})`,
+                borderRadius: '2px',
+              }
+            }}>
+              <Typography
+                variant="h2"
+                sx={{
+                  fontSize: { xs: '2rem', md: '2.75rem' },
+                  fontWeight: 700,
+                  color: BRAND.textDark,
+                  mb: 2,
+                }}
+              >
+                Featured Business Opportunities
+              </Typography>
+              <Typography 
+                variant="h6" 
+                sx={{ 
+                  mt: 3, 
+                  maxWidth: '600px', 
+                  mx: 'auto',
+                  color: BRAND.textGray
+                }}
+              >
+                Discover our handpicked selection of premium businesses for sale
+              </Typography>
+            </Box>
+          </motion.div>
 
           <Grid container spacing={4}>
             {[
@@ -502,79 +613,86 @@ const HomePage = () => {
               }
             ].map((business, index) => (
               <Grid item xs={12} sm={6} md={3} key={index}>
-                <PropertyCard component={motion.div} whileHover={{ y: -10 }}>
-                  <CardMedia
-                    component="img"
-                    height="200"
-                    image={business.image}
-                    alt={business.title}
-                  />
-                  <CardContent>
-                    <Box sx={{ flex: 1 }}>
-                      <Typography 
-                        variant="h6" 
-                        sx={{ 
-                          height: '56px',
-                          display: '-webkit-box',
-                          WebkitLineClamp: 2,
-                          WebkitBoxOrient: 'vertical',
-                          overflow: 'hidden',
-                          mb: 1
-                        }}
-                      >
-                        {business.title}
-                      </Typography>
-                      <Typography 
-                        variant="body1" 
-                        sx={{ 
-                          color: BRAND.textGray,
-                          height: '72px',
-                          display: '-webkit-box',
-                          WebkitLineClamp: 3,
-                          WebkitBoxOrient: 'vertical',
-                          overflow: 'hidden',
-                          mb: 2
-                        }}
-                      >
-                        {business.description}
-                      </Typography>
-                    </Box>
-                    <Box sx={{ 
-                      display: 'flex', 
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                      gap: 2,
-                      mt: 'auto'
-                    }}>
-                      <Typography 
-                        variant="h5" 
-                        sx={{ 
-                          color: BRAND.blue,
-                          fontWeight: 700 
-                        }}
-                      >
-                        {business.price}
-                      </Typography>
-                      <Button 
-                        component={Link}
-                        to={`/listings/${business.id}`}
-                        variant="contained" 
-                        fullWidth
-                        sx={{
-                          bgcolor: BRAND.blue,
-                          '&:hover': {
-                            bgcolor: BRAND.darkBlue,
-                          },
-                          borderRadius: '8px',
-                          textTransform: 'none',
-                          py: 1
-                        }}
-                      >
-                        View Details
-                      </Button>
-                    </Box>
-                  </CardContent>
-                </PropertyCard>
+                <motion.div
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                >
+                  <PropertyCard>
+                    <CardMedia
+                      component="img"
+                      height="200"
+                      image={business.image}
+                      alt={business.title}
+                    />
+                    <CardContent>
+                      <Box sx={{ flex: 1 }}>
+                        <Typography 
+                          variant="h6" 
+                          sx={{ 
+                            height: '56px',
+                            display: '-webkit-box',
+                            WebkitLineClamp: 2,
+                            WebkitBoxOrient: 'vertical',
+                            overflow: 'hidden',
+                            mb: 1
+                          }}
+                        >
+                          {business.title}
+                        </Typography>
+                        <Typography 
+                          variant="body1" 
+                          sx={{ 
+                            color: BRAND.textGray,
+                            height: '72px',
+                            display: '-webkit-box',
+                            WebkitLineClamp: 3,
+                            WebkitBoxOrient: 'vertical',
+                            overflow: 'hidden',
+                            mb: 2
+                          }}
+                        >
+                          {business.description}
+                        </Typography>
+                      </Box>
+                      <Box sx={{ 
+                        display: 'flex', 
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        gap: 2,
+                        mt: 'auto'
+                      }}>
+                        <Typography 
+                          variant="h5" 
+                          sx={{ 
+                            color: BRAND.blue,
+                            fontWeight: 700 
+                          }}
+                        >
+                          {business.price}
+                        </Typography>
+                        <Button 
+                          component={Link}
+                          to={`/listings/${business.id}`}
+                          variant="contained" 
+                          fullWidth
+                          sx={{
+                            bgcolor: BRAND.blue,
+                            '&:hover': {
+                              bgcolor: BRAND.darkBlue,
+                            },
+                            borderRadius: '8px',
+                            textTransform: 'none',
+                            py: 1
+                          }}
+                        >
+                          View Details
+                        </Button>
+                      </Box>
+                    </CardContent>
+                  </PropertyCard>
+                </motion.div>
               </Grid>
             ))}
           </Grid>
@@ -633,6 +751,11 @@ const HomePage = () => {
 
       {/* Statistics Section */}
       <Box 
+        component={motion.div}
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1 }}
         sx={{ 
           py: { xs: 6, md: 10 }, 
           position: 'relative',
@@ -651,21 +774,53 @@ const HomePage = () => {
         <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
           <Grid container spacing={4}>
             {[
-              { number: '967', title: 'Businesses For Sale', icon: <MonetizationOnIcon className="icon" /> },
-              { number: '1,276', title: 'Successful Sales', icon: <BusinessIcon className="icon" /> },
-              { number: '396', title: 'Expert Agents', icon: <LocationOnIcon className="icon" /> },
-              { number: '177', title: 'Happy Clients', icon: <PeopleIcon className="icon" /> },
+              { number: 967, title: 'Businesses For Sale', icon: <MonetizationOnIcon className="icon" /> },
+              { number: 1276, title: 'Successful Sales', icon: <BusinessIcon className="icon" /> },
+              { number: 396, title: 'Expert Agents', icon: <LocationOnIcon className="icon" /> },
+              { number: 177, title: 'Happy Clients', icon: <PeopleIcon className="icon" /> },
             ].map((stat, index) => (
               <Grid item xs={12} sm={6} md={3} key={index}>
-                <StatsBox>
-                  {stat.icon}
-                  <Typography variant="h3" sx={{ fontWeight: 700, mb: 1, fontSize: '3.5rem' }}>
-                    {stat.number}
-                  </Typography>
-                  <Typography variant="h6" sx={{ fontSize: '1.25rem' }}>
-                    {stat.title}
-                  </Typography>
-                </StatsBox>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                >
+                  <StatsBox>
+                    <motion.div
+                      initial={{ scale: 0 }}
+                      whileInView={{ scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ 
+                        type: "spring",
+                        stiffness: 260,
+                        damping: 20,
+                        delay: index * 0.1 + 0.3
+                      }}
+                    >
+                      {stat.icon}
+                    </motion.div>
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      whileInView={{ opacity: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.5, delay: index * 0.1 + 0.5 }}
+                    >
+                      <Typography variant="h3" sx={{ 
+                        fontWeight: 700, 
+                        mb: 1, 
+                        fontSize: '3.5rem',
+                        fontFamily: "'Roboto Mono', monospace",
+                        letterSpacing: '0.05em'
+                      }}>
+                        <CountUp end={stat.number} duration={2.5} />
+                      </Typography>
+                      <Typography variant="h6" sx={{ fontSize: '1.25rem' }}>
+                        {stat.title}
+                      </Typography>
+                    </motion.div>
+                  </StatsBox>
+                </motion.div>
               </Grid>
             ))}
           </Grid>
@@ -712,58 +867,36 @@ const HomePage = () => {
             </Typography>
           </Box>
 
-          <Grid container spacing={4}>
+          <Grid container spacing={4} justifyContent="center">
             {[
               {
-                quote: "Working with Abbass Business Brokers was the best decision for selling my business. Their professionalism and expertise made the process smooth and successful.",
-                author: "John Smith",
-                position: "Former Owner",
-                company: "Melbourne Cafe Group",
-                image: IMAGES.testimonials.client1
+                video: "/Testimonial - Adisha .MP4",
+                author: "Adisha",
+                position: "Business Owner",
+                company: "Successful Business Sale"
               },
               {
-                quote: "The team's knowledge of the market and attention to detail helped us acquire the perfect business. Their guidance throughout the process was invaluable.",
-                author: "Sarah Johnson",
-                position: "CEO",
-                company: "Retail Solutions Inc",
-                image: IMAGES.testimonials.client2
-              },
-              {
-                quote: "Their valuation services provided crucial insights that helped us make informed decisions. The team's expertise in the industry is unmatched.",
-                author: "Michael Brown",
-                position: "Director",
-                company: "Tech Innovations",
-                image: IMAGES.testimonials.client3
-              },
-              {
-                quote: "From start to finish, the level of service and professionalism was exceptional. They truly understand the complexities of business sales.",
-                author: "Emily Chen",
-                position: "Founder",
-                company: "Wellness Enterprises",
-                image: IMAGES.testimonials.client4
+                video: "/Jordan - Testimonial copy.MP4",
+                author: "Jordan",
+                position: "Business Owner",
+                company: "Successful Business Sale"
               }
             ].map((testimonial, index) => (
               <Grid item xs={12} md={6} key={index}>
                 <TestimonialCard>
-                  <Box sx={{ textAlign: 'center', mb: 3 }}>
-                    <FormatQuoteIcon className="quote-icon" />
-                    <img 
-                      src={testimonial.image} 
-                      alt={testimonial.author}
-                      className="client-image"
-                    />
+                  <Box sx={{ width: '100%', mb: 3 }}>
+                    <video
+                      controls
+                      width="100%"
+                      style={{ 
+                        borderRadius: '10px',
+                        boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
+                      }}
+                    >
+                      <source src={testimonial.video} type="video/mp4" />
+                      Your browser does not support the video tag.
+                    </video>
                   </Box>
-                  <Typography 
-                    variant="body1" 
-                    sx={{ 
-                      mb: 3,
-                      fontSize: '1.1rem',
-                      fontStyle: 'italic',
-                      lineHeight: 1.6
-                    }}
-                  >
-                    "{testimonial.quote}"
-                  </Typography>
                   <Box sx={{ mt: 'auto' }}>
                     <Typography variant="h6" sx={{ fontWeight: 600, mb: 0.5 }}>
                       {testimonial.author}
@@ -782,19 +915,26 @@ const HomePage = () => {
 
           {/* Trusted By Companies Section */}
           <Box sx={{ mt: 10, textAlign: 'center' }}>
-            <Typography
-              variant="h5"
-              sx={{
-                fontWeight: 600,
-                color: BRAND.textGray,
-                mb: 4
-              }}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
             >
-              Trusted By Leading Companies
-            </Typography>
+              <Typography
+                variant="h5"
+                sx={{
+                  fontWeight: 600,
+                  color: BRAND.textGray,
+                  mb: 4
+                }}
+              >
+                Trusted By Leading Companies
+              </Typography>
+            </motion.div>
             <Grid 
               container 
-              spacing={4} 
+              spacing={6} 
               alignItems="center" 
               justifyContent="center"
               sx={{
@@ -807,51 +947,34 @@ const HomePage = () => {
             >
               {Object.values(IMAGES.companies).map((logo, index) => (
                 <Grid item xs={6} sm={4} md={2} key={index}>
-                  <CompanyLogo
-                    src={logo}
-                    alt={`Company ${index + 1}`}
-                  />
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                  >
+                    <a href={COMPANY_LINKS[index]} target="_blank" rel="noopener noreferrer">
+                      <CompanyLogo
+                        src={logo}
+                        alt={`Company ${index + 1}`}
+                        component={motion.img}
+                        whileHover={{ 
+                          scale: 1.05,
+                          filter: 'grayscale(0%)',
+                          opacity: 1
+                        }}
+                      />
+                    </a>
+                  </motion.div>
                 </Grid>
               ))}
             </Grid>
           </Box>
 
           {/* Call to Action */}
-          <Box 
-            sx={{ 
-              mt: 10,
-              textAlign: 'center',
-              p: 4,
-              borderRadius: '16px',
-              background: `linear-gradient(135deg, ${BRAND.blue} 0%, rgba(86,193,188,0.9) 100%)`,
-              color: 'white'
-            }}
-          >
-            <Typography variant="h4" sx={{ fontWeight: 600, mb: 2 }}>
-              Ready to Start Your Journey?
-            </Typography>
-            <Typography variant="h6" sx={{ mb: 4, opacity: 0.9 }}>
-              Let us help you buy or sell your business with confidence
-            </Typography>
-            <Button
-              variant="contained"
-              size="large"
-              sx={{
-                bgcolor: 'white',
-                color: BRAND.blue,
-                px: 4,
-                py: 1.5,
-                fontSize: '1.1rem',
-                '&:hover': {
-                  bgcolor: 'rgba(255, 255, 255, 0.9)',
-                },
-              }}
-            >
-              Schedule a Consultation
-            </Button>
-          </Box>
         </Container>
       </SectionWrapper>
+      <Footer />
     </Box>
   );
 };

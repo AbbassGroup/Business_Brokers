@@ -1,10 +1,20 @@
 import React from 'react';
-import { Container, Box, Typography, Grid, Card, CardContent, styled } from '@mui/material';
-import { motion } from 'framer-motion';
+import { Container, Box, Typography, Grid, Card, CardContent, styled, Button } from '@mui/material';
+import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import BusinessIcon from '@mui/icons-material/Business';
 import GroupsIcon from '@mui/icons-material/Groups';
 import HandshakeIcon from '@mui/icons-material/Handshake';
 import StarIcon from '@mui/icons-material/Star';
+import FormatQuoteIcon from '@mui/icons-material/FormatQuote';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import EmailIcon from '@mui/icons-material/Email';
+import PhoneIcon from '@mui/icons-material/Phone';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import SecurityIcon from '@mui/icons-material/Security';
+import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
+import Footer from '../common/Footer';
 
 const BRAND = {
   blue: '#56C1BC',
@@ -17,33 +27,42 @@ const BRAND = {
 };
 
 const HeroSection = styled(Box)(({ theme }) => ({
-  minHeight: { xs: '40vh', md: '60vh' },
+  position: 'relative',
+  minHeight: '75vh',
   backgroundColor: '#1a1a1a',
-  backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1920&q=80)`,
+  backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)), url(https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1920&q=80)`,
   backgroundSize: 'cover',
   backgroundPosition: 'center',
-  backgroundAttachment: { xs: 'scroll', md: 'fixed' },
+  backgroundAttachment: 'fixed',
   display: 'flex',
   alignItems: 'center',
-  position: 'relative',
+  justifyContent: 'center',
   color: 'white',
   textAlign: 'center',
-  paddingTop: { xs: '120px', md: '160px' },
-  paddingBottom: { xs: '60px', md: '80px' }
+  marginTop: '0',
+  paddingTop: '120px', // Account for header height
+  '&::before': {
+    content: '""',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    background: 'linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.6) 100%)',
+    zIndex: 1
+  }
 }));
 
 const ValueCard = styled(Card)(({ theme }) => ({
   height: '100%',
-  background: BRAND.cardBg,
-  borderRadius: '16px',
+  background: 'white',
+  borderRadius: '20px',
   overflow: 'hidden',
-  boxShadow: '0 8px 24px rgba(0,0,0,0.08)',
+  boxShadow: '0 4px 20px rgba(0,0,0,0.05)',
   transition: 'all 0.3s ease-in-out',
-  border: '1px solid rgba(255, 255, 255, 0.7)',
   '&:hover': {
     transform: 'translateY(-5px)',
-    boxShadow: '0 12px 30px rgba(86, 193, 188, 0.2)',
-    border: '1px solid rgba(86, 193, 188, 0.3)',
+    boxShadow: '0 8px 30px rgba(86, 193, 188, 0.15)',
   },
 }));
 
@@ -72,27 +91,170 @@ const TeamMemberImage = styled('img')({
   padding: '5px',
 });
 
+const TestimonialCard = styled(Card)(({ theme }) => ({
+  height: '100%',
+  background: BRAND.cardBg,
+  borderRadius: '16px',
+  overflow: 'hidden',
+  boxShadow: '0 8px 24px rgba(0,0,0,0.08)',
+  transition: 'all 0.3s ease-in-out',
+  border: '1px solid rgba(255, 255, 255, 0.7)',
+  position: 'relative',
+  '&:hover': {
+    transform: 'translateY(-5px)',
+    boxShadow: '0 12px 30px rgba(86, 193, 188, 0.2)',
+    border: '1px solid rgba(86, 193, 188, 0.3)',
+  },
+}));
+
+const SocialButton = styled(Button)(({ theme }) => ({
+  minWidth: 'auto',
+  padding: '8px',
+  marginRight: '8px',
+  color: BRAND.blue,
+  '&:hover': {
+    backgroundColor: BRAND.lightBlue,
+  },
+}));
+
+const FadeInWhenVisible = ({ children, delay = 0 }) => {
+  const ref = React.useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 50 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+      transition={{ duration: 0.8, delay }}
+    >
+      {children}
+    </motion.div>
+  );
+};
+
+const StaggerChildren = ({ children }) => {
+  const ref = React.useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  
+  return (
+    <motion.div
+      ref={ref}
+      initial="hidden"
+      animate={isInView ? "visible" : "hidden"}
+      variants={{
+        hidden: { opacity: 0 },
+        visible: {
+          opacity: 1,
+          transition: {
+            staggerChildren: 0.2
+          }
+        }
+      }}
+    >
+      {children}
+    </motion.div>
+  );
+};
+
+const DirectorSection = styled(Box)(({ theme }) => ({
+  position: 'relative',
+  background: '#fff',
+  padding: '80px 0',
+  '&::before': {
+    content: '""',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    height: '100%',
+    background: `linear-gradient(135deg, ${BRAND.lightBlue} 0%, rgba(255,255,255,0) 50%)`,
+    zIndex: 0
+  }
+}));
+
+const DirectorImageWrapper = styled(Box)({
+  position: 'relative',
+  '&::before': {
+    content: '""',
+    position: 'absolute',
+    top: '20px',
+    left: '20px',
+    width: '100%',
+    height: '100%',
+    background: `linear-gradient(135deg, ${BRAND.blue} 0%, ${BRAND.darkBlue} 100%)`,
+    borderRadius: '20px',
+    zIndex: 0,
+    opacity: 0.1,
+    transition: 'all 0.5s ease-in-out'
+  },
+  '&::after': {
+    content: '""',
+    position: 'absolute',
+    top: '-15px',
+    right: '-15px',
+    width: '140px',
+    height: '140px',
+    background: `linear-gradient(45deg, ${BRAND.lightBlue} 0%, rgba(86, 193, 188, 0.2) 100%)`,
+    borderRadius: '50%',
+    zIndex: 0,
+    opacity: 0.6
+  },
+  '&:hover::before': {
+    top: '25px',
+    left: '25px',
+    opacity: 0.15
+  }
+});
+
+const DirectorImage = styled('img')({
+  width: '100%',
+  maxWidth: '400px',
+  borderRadius: '20px',
+  boxShadow: '0 20px 40px rgba(0,0,0,0.1)',
+  transition: 'all 0.5s ease-in-out',
+  position: 'relative',
+  zIndex: 1,
+  background: 'white'
+});
+
+const ScrollProgressBar = styled(motion.div)({
+  position: 'fixed',
+  top: 0,
+  left: 0,
+  right: 0,
+  height: '3px',
+  background: BRAND.blue,
+  transformOrigin: '0%',
+  zIndex: 1000
+});
+
 const AboutPage = () => {
   const values = [
     {
-      icon: <BusinessIcon sx={{ fontSize: 40, color: BRAND.blue }} />,
-      title: 'Professional Excellence',
-      description: 'We maintain the highest standards of professionalism in every business transaction.'
+      icon: <SecurityIcon sx={{ fontSize: 40, color: BRAND.blue }} />,
+      title: 'Trust',
+      description: 'Building lasting relationships through transparency and reliability'
+    },
+    {
+      icon: <EmojiEventsIcon sx={{ fontSize: 40, color: BRAND.blue }} />,
+      title: 'Excellence',
+      description: 'Delivering exceptional service and results in everything we do'
     },
     {
       icon: <HandshakeIcon sx={{ fontSize: 40, color: BRAND.blue }} />,
-      title: 'Trust & Integrity',
-      description: 'Building lasting relationships through honest and transparent dealings.'
+      title: 'Commitment',
+      description: 'Dedicated to achieving the best outcomes for our clients'
     },
     {
-      icon: <StarIcon sx={{ fontSize: 40, color: BRAND.blue }} />,
-      title: 'Industry Expertise',
-      description: 'Deep understanding of the business brokerage market and industry trends.'
+      icon: <AccessTimeIcon sx={{ fontSize: 40, color: BRAND.blue }} />,
+      title: 'Convenience',
+      description: 'Making real estate simple and accessible for everyone'
     },
     {
-      icon: <GroupsIcon sx={{ fontSize: 40, color: BRAND.blue }} />,
-      title: 'Client-Focused',
-      description: 'Dedicated to achieving the best outcomes for our clients through personalized service.'
+      icon: <WorkspacePremiumIcon sx={{ fontSize: 40, color: BRAND.blue }} />,
+      title: 'Expertise',
+      description: 'Bringing years of experience and market knowledge'
     }
   ];
 
@@ -123,33 +285,84 @@ const AboutPage = () => {
     }
   ];
 
+  const whyChooseUs = [
+    {
+      title: 'Proven Track Record',
+      description: 'Successfully facilitated over 500+ business transactions across various industries.'
+    },
+    {
+      title: 'Comprehensive Network',
+      description: 'Access to a vast network of qualified buyers and industry connections.'
+    },
+    {
+      title: 'Confidential Process',
+      description: 'Strict confidentiality measures to protect your business interests.'
+    },
+    {
+      title: 'Market Knowledge',
+      description: 'Deep understanding of local and national market trends and valuations.'
+    }
+  ];
+
+  const testimonials = [
+    {
+      quote: "Working with Abbass Business Brokers was a game-changer for our business sale. Their professionalism and expertise made the entire process smooth and successful.",
+      author: "David Williams",
+      position: "Former Business Owner",
+      company: "Melbourne Cafe Group"
+    },
+    {
+      quote: "The team's attention to detail and market knowledge helped us secure the perfect buyer for our manufacturing business. Highly recommended!",
+      author: "Sarah Chen",
+      position: "CEO",
+      company: "Industrial Solutions Ltd"
+    },
+    {
+      quote: "Their valuation expertise and negotiation skills were instrumental in achieving our desired outcome. A truly professional team.",
+      author: "Michael Thompson",
+      position: "Managing Director",
+      company: "Retail Solutions Australia"
+    }
+  ];
+
+  const { scrollYProgress } = useScroll();
+  const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
+  const scaleX = useTransform(scrollYProgress, [0, 1], [0, 1]);
+
   return (
     <Box sx={{ background: BRAND.background, minHeight: '100vh' }}>
+      <ScrollProgressBar style={{ scaleX }} />
+
       {/* Hero Section */}
       <HeroSection>
         <Container 
           maxWidth="lg"
           sx={{
             position: 'relative',
-            zIndex: 1
+            zIndex: 2,
+            py: { xs: 8, md: 12 },
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center'
           }}
         >
-          <Box
-            sx={{
-              position: 'relative',
-              zIndex: 2
-            }}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
           >
             <Typography
               variant="h1"
               sx={{
-                fontSize: { xs: '2rem', md: '3.5rem' },
+                fontSize: { xs: '2.5rem', sm: '3rem', md: '4rem' },
                 fontWeight: 700,
-                mb: { xs: 2, md: 3 },
-                px: { xs: 2, md: 0 }
+                mb: { xs: 3, md: 4 },
+                textShadow: '2px 2px 4px rgba(0,0,0,0.3)',
+                letterSpacing: '-0.02em'
               }}
             >
-              About Abbass Business Brokers
+              About <Box component="span" sx={{ color: BRAND.blue }}>ABBASS</Box> Business Brokers
             </Typography>
             <Typography
               variant="h5"
@@ -157,13 +370,40 @@ const AboutPage = () => {
                 maxWidth: '800px',
                 mx: 'auto',
                 opacity: 0.9,
-                fontSize: { xs: '1.1rem', md: '1.5rem' },
-                px: { xs: 2, md: 0 }
+                fontSize: { xs: '1.2rem', sm: '1.4rem', md: '1.6rem' },
+                fontWeight: 400,
+                lineHeight: 1.5,
+                textShadow: '1px 1px 2px rgba(0,0,0,0.3)',
+                mb: { xs: 4, md: 6 }
               }}
             >
-              Your trusted partner in business sales and acquisitions since 2005
+              A boutique firm delivering tailored, high-impact outcomes for business owners
             </Typography>
-          </Box>
+            <Box sx={{ mt: 2 }}>
+              <Button
+                variant="contained"
+                size="large"
+                sx={{
+                  backgroundColor: BRAND.blue,
+                  color: 'white',
+                  px: 4,
+                  py: 2,
+                  fontSize: { xs: '1rem', md: '1.1rem' },
+                  fontWeight: 600,
+                  borderRadius: '30px',
+                  textTransform: 'none',
+                  boxShadow: '0 4px 14px rgba(86, 193, 188, 0.4)',
+                  '&:hover': {
+                    backgroundColor: BRAND.darkBlue,
+                    transform: 'translateY(-2px)',
+                    boxShadow: '0 6px 20px rgba(86, 193, 188, 0.6)'
+                  }
+                }}
+              >
+                Learn More About Us
+              </Button>
+            </Box>
+          </motion.div>
         </Container>
       </HeroSection>
 
@@ -171,61 +411,355 @@ const AboutPage = () => {
       <Container maxWidth="lg" sx={{ py: { xs: 4, md: 10 } }}>
         <Grid container spacing={{ xs: 4, md: 8 }} alignItems="center">
           <Grid item xs={12} md={6}>
-            <Box sx={{ px: { xs: 2, md: 0 } }}>
-              <Typography
-                variant="h2"
-                sx={{
-                  fontSize: { xs: '1.75rem', md: '2.5rem' },
-                  fontWeight: 700,
-                  color: BRAND.textDark,
-                  mb: { xs: 2, md: 3 }
-                }}
-              >
-                Our Story
-              </Typography>
-              <Typography
-                variant="body1"
-                sx={{
-                  color: BRAND.textGray,
-                  fontSize: { xs: '1rem', md: '1.1rem' },
-                  lineHeight: 1.8,
-                  mb: 3
-                }}
-              >
-                Founded in 2005, Abbass Business Brokers has established itself as a leading force in the business brokerage industry. Our journey began with a simple mission: to provide exceptional service in business sales and acquisitions while maintaining the highest standards of professionalism and integrity.
-              </Typography>
-              <Typography
-                variant="body1"
-                sx={{
-                  color: BRAND.textGray,
-                  fontSize: { xs: '1rem', md: '1.1rem' },
-                  lineHeight: 1.8
-                }}
-              >
-                Over the years, we've successfully facilitated hundreds of business transactions across various industries, building a reputation for excellence and reliability. Our team of experienced professionals brings together extensive knowledge of the market, ensuring the best possible outcomes for our clients.
-              </Typography>
-            </Box>
+            <FadeInWhenVisible>
+              <Box sx={{ px: { xs: 2, md: 0 } }}>
+                <Typography
+                  variant="h2"
+                  sx={{
+                    fontSize: { xs: '1.75rem', md: '2.5rem' },
+                    fontWeight: 700,
+                    color: BRAND.textDark,
+                    mb: { xs: 2, md: 3 },
+                    position: 'relative',
+                    '&::after': {
+                      content: '""',
+                      position: 'absolute',
+                      bottom: '-10px',
+                      left: 0,
+                      width: '80px',
+                      height: '4px',
+                      background: BRAND.blue,
+                      borderRadius: '2px'
+                    }
+                  }}
+                >
+                  Our Story
+                </Typography>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    color: BRAND.textGray,
+                    fontSize: { xs: '1rem', md: '1.1rem' },
+                    lineHeight: 1.8,
+                    mb: 3,
+                    textAlign: 'justify'
+                  }}
+                >
+                  ABBASS Business Brokers was founded to raise the standard in an industry where too many brokers focus on volume over value, listing dozens of businesses with little intention or ability to sell them. We do things differently. We're a boutique firm that works with a select number of clients at a time, ensuring every business we represent receives the attention, care, and strategic focus it deserves. Our approach is grounded in five core values: trust, earned through transparency; expertise, developed through real market experience; excellence, delivered in every detail; commitment, to seeing each deal through with dedication; and convenience, by making the process as smooth and stress free as possible. At ABBASS, we don't just facilitate sales, we guide business owners through one of the most important transactions of their lives with clarity, respect, and results.
+                </Typography>
+              </Box>
+            </FadeInWhenVisible>
           </Grid>
           <Grid item xs={12} md={6}>
-            <Box
-              component="img"
-              src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=800&q=80"
-              sx={{
-                width: '100%',
-                borderRadius: '16px',
-                boxShadow: '0 20px 40px rgba(0,0,0,0.1)',
-                display: 'block',
-                mx: 'auto'
-              }}
-              alt="Our office"
-            />
+            <FadeInWhenVisible delay={0.2}>
+              <Box
+                component="img"
+                src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=800&q=80"
+                sx={{
+                  width: '100%',
+                  borderRadius: '16px',
+                  boxShadow: '0 20px 40px rgba(0,0,0,0.1)',
+                  display: 'block',
+                  mx: 'auto',
+                  transform: 'perspective(1000px) rotateY(-5deg)',
+                  transition: 'transform 0.5s ease',
+                  '&:hover': {
+                    transform: 'perspective(1000px) rotateY(0deg)'
+                  }
+                }}
+                alt="Our office"
+              />
+            </FadeInWhenVisible>
           </Grid>
         </Grid>
       </Container>
 
-      {/* Our Values Section */}
-      <Box sx={{ background: BRAND.lightBlue, py: { xs: 4, md: 10 } }}>
+      {/* Managing Director Section */}
+      <DirectorSection>
         <Container maxWidth="lg">
+          <Grid container spacing={6} alignItems="center">
+            <Grid item xs={12} md={5}>
+              <FadeInWhenVisible>
+                <motion.div
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  <DirectorImageWrapper>
+                    <DirectorImage
+                      src="/IMG_3392.JPG"
+                      alt="Sadeq Abbass - Managing Director"
+                      sx={{
+                        filter: 'brightness(1.02) contrast(1.02)',
+                        '&:hover': {
+                          boxShadow: `0 25px 50px rgba(86, 193, 188, 0.2)`,
+                          transform: 'translateY(-5px)'
+                        }
+                      }}
+                    />
+                    <Box
+                      sx={{
+                        position: 'absolute',
+                        bottom: '-20px',
+                        right: '-20px',
+                        width: '200px',
+                        height: '200px',
+                        background: `radial-gradient(circle, ${BRAND.lightBlue} 0%, rgba(255,255,255,0) 70%)`,
+                        opacity: 0.4,
+                        zIndex: 0,
+                        borderRadius: '50%'
+                      }}
+                    />
+                    <Box
+                      sx={{
+                        position: 'absolute',
+                        top: '-30px',
+                        left: '-30px',
+                        width: '150px',
+                        height: '150px',
+                        background: `radial-gradient(circle, ${BRAND.lightBlue} 0%, rgba(255,255,255,0) 70%)`,
+                        opacity: 0.3,
+                        zIndex: 0,
+                        borderRadius: '50%'
+                      }}
+                    />
+                  </DirectorImageWrapper>
+                </motion.div>
+              </FadeInWhenVisible>
+            </Grid>
+            <Grid item xs={12} md={7}>
+              <Box sx={{ position: 'relative', zIndex: 1 }}>
+                <FadeInWhenVisible delay={0.2}>
+                  <Typography
+                    component={motion.h2}
+                    variant="h2"
+                    whileInView={{ 
+                      opacity: [0, 1],
+                      x: [-50, 0] 
+                    }}
+                    transition={{ duration: 0.8 }}
+                    sx={{
+                      fontSize: { xs: '2rem', md: '2.5rem' },
+                      fontWeight: 700,
+                      color: BRAND.textDark,
+                      mb: 3,
+                      position: 'relative',
+                      '&::after': {
+                        content: '""',
+                        position: 'absolute',
+                        bottom: '-10px',
+                        left: 0,
+                        width: '80px',
+                        height: '4px',
+                        background: BRAND.blue,
+                        borderRadius: '2px'
+                      }
+                    }}
+                  >
+                    Meet Our Managing Director
+                  </Typography>
+                </FadeInWhenVisible>
+
+                <FadeInWhenVisible delay={0.3}>
+                  <Typography
+                    variant="h4"
+                    sx={{
+                      color: BRAND.blue,
+                      fontSize: { xs: '1.5rem', md: '1.75rem' },
+                      fontWeight: 600,
+                      mb: 3
+                    }}
+                  >
+                    Sadeq Abbass
+                  </Typography>
+                </FadeInWhenVisible>
+
+                <StaggerChildren>
+                  {[
+                    "Sadeq Abbass is a licensed business broker, finance broker, and real estate agent with a rare mix of frontline experience and strategic thinking. As a strategic deal maker and business and wealth builder, Sadeq has bought and sold businesses of his own, giving him a firsthand understanding of what's at stake when entrepreneurs decide to exit. Those experiences also exposed him to a disappointing reality: too many business brokers lack the drive, depth, and accountability required to truly represent their clients' interests.",
+                    "That frustration became fuel. Determined to raise the bar, Sadeq founded ABBASS Business Brokers. A boutique firm designed to do what traditional agencies can't or won't. Rather than chasing listings, he focuses on results, working with a select group of clients to deliver tailored, high-impact outcomes. His approach is personal, professional, and rooted in strategy, offering business owners not just a sale, but a smart next chapter"
+                  ].map((paragraph, index) => (
+                    <motion.div
+                      key={index}
+                      variants={{
+                        hidden: { opacity: 0, y: 20 },
+                        visible: { opacity: 1, y: 0 }
+                      }}
+                    >
+                      <Typography
+                        variant="body1"
+                        sx={{
+                          color: BRAND.textGray,
+                          fontSize: { xs: '1rem', md: '1.1rem' },
+                          lineHeight: 1.8,
+                          mb: 3,
+                          textAlign: 'justify'
+                        }}
+                      >
+                        {paragraph}
+                      </Typography>
+                    </motion.div>
+                  ))}
+                </StaggerChildren>
+
+                <FadeInWhenVisible delay={0.5}>
+                  <Box sx={{ mt: 4, display: 'flex', gap: 2 }}>
+                    {[
+                      { icon: <LinkedInIcon />, label: 'LinkedIn' },
+                      { icon: <EmailIcon />, label: 'Email' },
+                      { icon: <PhoneIcon />, label: 'Contact' }
+                    ].map((item, index) => (
+                      <motion.div
+                        key={index}
+                        whileHover={{ scale: 1.1, y: -5 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <Button
+                          variant="contained"
+                          startIcon={item.icon}
+                          sx={{
+                            backgroundColor: BRAND.blue,
+                            color: 'white',
+                            px: 3,
+                            py: 1.5,
+                            borderRadius: '10px',
+                            '&:hover': {
+                              backgroundColor: BRAND.darkBlue
+                            }
+                          }}
+                        >
+                          {item.label}
+                        </Button>
+                      </motion.div>
+                    ))}
+                  </Box>
+                </FadeInWhenVisible>
+              </Box>
+            </Grid>
+          </Grid>
+        </Container>
+      </DirectorSection>
+
+      {/* Our Values Section */}
+      <Box sx={{ 
+        background: '#f8fdfd',
+        py: { xs: 8, md: 12 }
+      }}>
+        <Container maxWidth="lg">
+          <FadeInWhenVisible>
+            <Typography
+              variant="h2"
+              align="center"
+              sx={{
+                fontSize: { xs: '2rem', md: '2.5rem' },
+                fontWeight: 700,
+                color: '#2c3e50',
+                mb: 2,
+                position: 'relative',
+                '&::after': {
+                  content: '""',
+                  position: 'absolute',
+                  bottom: '-10px',
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  width: '80px',
+                  height: '4px',
+                  background: BRAND.blue,
+                  borderRadius: '2px'
+                }
+              }}
+            >
+              Our Values
+            </Typography>
+            <Typography
+              variant="h6"
+              align="center"
+              sx={{
+                color: '#64748b',
+                mb: { xs: 6, md: 8 },
+                maxWidth: '800px',
+                mx: 'auto',
+                fontSize: '1.25rem'
+              }}
+            >
+              The principles that guide us in delivering exceptional real estate services
+            </Typography>
+          </FadeInWhenVisible>
+
+          <Box sx={{ maxWidth: '1400px', mx: 'auto' }}>
+            <Grid container spacing={3} alignItems="stretch">
+              {values.map((value, index) => (
+                <Grid item xs={12} sm={6} md={2.4} key={index}>
+                  <motion.div
+                    variants={{
+                      hidden: { opacity: 0, y: 20 },
+                      visible: { opacity: 1, y: 0 }
+                    }}
+                    style={{ height: '100%' }}
+                  >
+                    <ValueCard sx={{ 
+                      width: '100%',
+                      height: '100%',
+                      minHeight: '260px',
+                      display: 'flex',
+                      flexDirection: 'column'
+                    }}>
+                      <CardContent sx={{ 
+                        p: 4,
+                        flex: 1,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'flex-start',
+                        gap: 2
+                      }}>
+                        <Box sx={{ 
+                          width: '80px',
+                          height: '80px',
+                          borderRadius: '50%',
+                          backgroundColor: 'rgba(86, 193, 188, 0.1)',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          mb: 2
+                        }}>
+                          {value.icon}
+                        </Box>
+                        <Typography
+                          variant="h6"
+                          sx={{
+                            fontWeight: 600,
+                            color: '#2c3e50',
+                            fontSize: '1.25rem',
+                            mb: 1
+                          }}
+                        >
+                          {value.title}
+                        </Typography>
+                        <Typography
+                          variant="body1"
+                          sx={{
+                            color: '#64748b',
+                            fontSize: '1rem',
+                            lineHeight: 1.6,
+                            textAlign: 'center',
+                            maxWidth: '200px'
+                          }}
+                        >
+                          {value.description}
+                        </Typography>
+                      </CardContent>
+                    </ValueCard>
+                  </motion.div>
+                </Grid>
+              ))}
+            </Grid>
+          </Box>
+        </Container>
+      </Box>
+
+      {/* Why Choose Us Section */}
+      <Container maxWidth="lg" sx={{ py: { xs: 4, md: 10 } }}>
+        <FadeInWhenVisible>
           <Typography
             variant="h2"
             align="center"
@@ -234,113 +768,184 @@ const AboutPage = () => {
               fontWeight: 700,
               color: BRAND.textDark,
               mb: { xs: 4, md: 6 },
-              px: { xs: 2, md: 0 }
+              position: 'relative',
+              '&::after': {
+                content: '""',
+                position: 'absolute',
+                bottom: '-10px',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                width: '80px',
+                height: '4px',
+                background: BRAND.blue,
+                borderRadius: '2px'
+              }
             }}
           >
-            Our Values
+            Why Choose Us
           </Typography>
-          <Grid container spacing={{ xs: 2, md: 4 }}>
-            {values.map((value, index) => (
-              <Grid item xs={12} sm={6} md={3} key={index}>
-                <ValueCard component={motion.div} whileHover={{ y: -5 }}>
-                  <CardContent sx={{ textAlign: 'center', p: { xs: 3, md: 4 } }}>
-                    <Box sx={{ mb: 2 }}>
-                      {value.icon}
+        </FadeInWhenVisible>
+        <StaggerChildren>
+          <Grid container spacing={4}>
+            {whyChooseUs.map((item, index) => (
+              <Grid item xs={12} sm={6} key={index}>
+                <motion.div
+                  variants={{
+                    hidden: { opacity: 0, x: -20 },
+                    visible: { opacity: 1, x: 0 }
+                  }}
+                >
+                  <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 2 }}>
+                    <motion.div
+                      whileHover={{ scale: 1.2, rotate: 360 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <CheckCircleIcon sx={{ color: BRAND.blue, mt: 0.5 }} />
+                    </motion.div>
+                    <Box>
+                      <Typography variant="h6" sx={{ color: BRAND.textDark, mb: 1 }}>
+                        {item.title}
+                      </Typography>
+                      <Typography variant="body1" sx={{ color: BRAND.textGray }}>
+                        {item.description}
+                      </Typography>
                     </Box>
-                    <Typography
-                      variant="h6"
-                      sx={{
-                        fontWeight: 600,
-                        color: BRAND.textDark,
-                        mb: 2,
-                        fontSize: { xs: '1.1rem', md: '1.25rem' }
-                      }}
-                    >
-                      {value.title}
-                    </Typography>
-                    <Typography
-                      variant="body1"
-                      sx={{
-                        color: BRAND.textGray,
-                        fontSize: { xs: '0.9rem', md: '1rem' }
-                      }}
-                    >
-                      {value.description}
-                    </Typography>
-                  </CardContent>
-                </ValueCard>
+                  </Box>
+                </motion.div>
               </Grid>
             ))}
           </Grid>
+        </StaggerChildren>
+      </Container>
+
+      {/* Testimonials Section */}
+      <Container maxWidth="lg" sx={{ py: { xs: 4, md: 10 } }}>
+        <FadeInWhenVisible>
+          <Typography
+            variant="h2"
+            align="center"
+            sx={{
+              fontSize: { xs: '1.75rem', md: '2.5rem' },
+              fontWeight: 700,
+              color: BRAND.textDark,
+              mb: { xs: 4, md: 6 },
+              position: 'relative',
+              '&::after': {
+                content: '""',
+                position: 'absolute',
+                bottom: '-10px',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                width: '80px',
+                height: '4px',
+                background: BRAND.blue,
+                borderRadius: '2px'
+              }
+            }}
+          >
+            What Our Clients Say
+          </Typography>
+        </FadeInWhenVisible>
+        <StaggerChildren>
+          <Grid container spacing={4}>
+            {testimonials.map((testimonial, index) => (
+              <Grid item xs={12} md={4} key={index}>
+                <motion.div
+                  variants={{
+                    hidden: { opacity: 0, y: 20 },
+                    visible: { opacity: 1, y: 0 }
+                  }}
+                >
+                  <TestimonialCard>
+                    <CardContent sx={{ p: 4 }}>
+                      <motion.div
+                        initial={{ opacity: 0.3 }}
+                        whileHover={{ opacity: 1, scale: 1.1 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <FormatQuoteIcon sx={{ fontSize: 40, color: BRAND.blue, mb: 2 }} />
+                      </motion.div>
+                      <Typography variant="body1" sx={{ color: BRAND.textGray, mb: 3, minHeight: '120px' }}>
+                        "{testimonial.quote}"
+                      </Typography>
+                      <Typography variant="h6" sx={{ color: BRAND.textDark }}>
+                        {testimonial.author}
+                      </Typography>
+                      <Typography variant="subtitle2" sx={{ color: BRAND.blue }}>
+                        {testimonial.position}
+                      </Typography>
+                      <Typography variant="body2" sx={{ color: BRAND.textGray }}>
+                        {testimonial.company}
+                      </Typography>
+                    </CardContent>
+                  </TestimonialCard>
+                </motion.div>
+              </Grid>
+            ))}
+          </Grid>
+        </StaggerChildren>
+      </Container>
+
+      {/* Contact CTA Section */}
+      <Box 
+        component={motion.div}
+        initial={{ backgroundColor: BRAND.blue }}
+        whileHover={{ backgroundColor: BRAND.darkBlue }}
+        transition={{ duration: 0.3 }}
+        sx={{ 
+          py: { xs: 6, md: 10 },
+          color: 'white',
+          textAlign: 'center'
+        }}
+      >
+        <Container maxWidth="md">
+          <FadeInWhenVisible>
+            <Typography
+              variant="h3"
+              sx={{
+                fontSize: { xs: '1.75rem', md: '2.5rem' },
+                fontWeight: 700,
+                mb: 3
+              }}
+            >
+              Ready to Start Your Journey?
+            </Typography>
+            <Typography
+              variant="h6"
+              sx={{
+                fontSize: { xs: '1rem', md: '1.25rem' },
+                mb: 4,
+                opacity: 0.9
+              }}
+            >
+              Let's discuss how we can help you achieve your business goals
+            </Typography>
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Button
+                variant="contained"
+                size="large"
+                sx={{
+                  backgroundColor: 'white',
+                  color: BRAND.blue,
+                  px: 4,
+                  py: 1.5,
+                  fontSize: '1.1rem',
+                  '&:hover': {
+                    backgroundColor: 'rgba(255,255,255,0.9)',
+                  }
+                }}
+              >
+                Contact Us Today
+              </Button>
+            </motion.div>
+          </FadeInWhenVisible>
         </Container>
       </Box>
 
-      {/* Our Team Section */}
-      <Container maxWidth="lg" sx={{ py: { xs: 4, md: 10 } }}>
-        <Typography
-          variant="h2"
-          align="center"
-          sx={{
-            fontSize: { xs: '1.75rem', md: '2.5rem' },
-            fontWeight: 700,
-            color: BRAND.textDark,
-            mb: { xs: 4, md: 6 },
-            px: { xs: 2, md: 0 }
-          }}
-        >
-          Meet Our Team
-        </Typography>
-        <Grid container spacing={{ xs: 2, md: 4 }}>
-          {teamMembers.map((member, index) => (
-            <Grid item xs={12} sm={6} md={3} key={index}>
-              <TeamMemberCard component={motion.div} whileHover={{ y: -5 }}>
-                <TeamMemberImage
-                  src={member.image}
-                  alt={member.name}
-                  sx={{
-                    width: { xs: '120px', md: '150px' },
-                    height: { xs: '120px', md: '150px' },
-                    margin: { xs: '15px auto', md: '20px auto' }
-                  }}
-                />
-                <CardContent sx={{ p: { xs: 2, md: 3 } }}>
-                  <Typography
-                    variant="h6"
-                    sx={{
-                      fontWeight: 600,
-                      color: BRAND.textDark,
-                      mb: 1,
-                      fontSize: { xs: '1.1rem', md: '1.25rem' }
-                    }}
-                  >
-                    {member.name}
-                  </Typography>
-                  <Typography
-                    variant="subtitle1"
-                    sx={{
-                      color: BRAND.blue,
-                      fontWeight: 500,
-                      mb: 2,
-                      fontSize: { xs: '0.9rem', md: '1rem' }
-                    }}
-                  >
-                    {member.position}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    sx={{
-                      color: BRAND.textGray,
-                      fontSize: { xs: '0.85rem', md: '0.9rem' }
-                    }}
-                  >
-                    {member.description}
-                  </Typography>
-                </CardContent>
-              </TeamMemberCard>
-            </Grid>
-          ))}
-        </Grid>
-      </Container>
+      <Footer />
     </Box>
   );
 };
