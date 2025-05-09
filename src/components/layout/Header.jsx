@@ -74,11 +74,11 @@ const Header = () => {
 
   const navigationItems = [
     { text: 'Home', path: '/' },
-    { text: 'Services', path: '/services' },
-    { text: 'Process', path: '/process' },
+    { text: 'Services', path: '/services-process' },
     { text: 'Listings', path: '/listings' },
     { text: 'About', path: '/about' },
     { text: 'Agents', path: '/agents' },
+    { text: 'Careers', path: '/careers' },
     { text: 'Contact', path: '/contact' },
   ];
 
