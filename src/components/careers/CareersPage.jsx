@@ -5,6 +5,7 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import WorkIcon from '@mui/icons-material/Work';
 import GroupIcon from '@mui/icons-material/Group';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
+import Footer from '../common/Footer';
 import HeroSection from '../common/HeroSection';
 
 const BRAND = {
@@ -297,6 +298,8 @@ const CareersPage = () => {
           </Card>
         </Container>
       </Box>
+
+      <Footer />
     </Box>
   );
 };

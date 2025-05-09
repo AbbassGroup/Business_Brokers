@@ -12,6 +12,7 @@ import RestaurantIcon from '@mui/icons-material/Restaurant';
 import ApartmentIcon from '@mui/icons-material/Apartment';
 import BuildIcon from '@mui/icons-material/Build';
 import FormatQuoteIcon from '@mui/icons-material/FormatQuote';
+import Footer from '../common/Footer';
 import { useEffect, useRef, useState } from 'react';
 
 // Brand Colors
@@ -148,7 +149,7 @@ const StatsBox = styled(Box)(({ theme }) => ({
 
 const TestimonialCard = styled(Card)(({ theme }) => ({
   height: '100%',
-  padding: theme.spacing(2),
+  padding: theme.spacing(4),
   backgroundColor: BRAND.cardBg,
   backdropFilter: 'blur(10px)',
   borderRadius: '15px',
@@ -883,25 +884,20 @@ const HomePage = () => {
             ].map((testimonial, index) => (
               <Grid item xs={12} md={6} key={index}>
                 <TestimonialCard>
-                  <Box sx={{ width: '100%', mb: 2 }}>
+                  <Box sx={{ width: '100%', mb: 3 }}>
                     <video
                       controls
                       width="100%"
-                      height="280"
                       style={{ 
                         borderRadius: '10px',
-                        boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
-                        objectFit: 'cover',
-                        height: '280px',
-                        maxHeight: '280px',
-                        background: '#000'
+                        boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
                       }}
                     >
                       <source src={testimonial.video} type="video/mp4" />
                       Your browser does not support the video tag.
                     </video>
                   </Box>
-                  <Box sx={{ mt: 'auto', mb: 1 }}>
+                  <Box sx={{ mt: 'auto' }}>
                     <Typography variant="h6" sx={{ fontWeight: 600, mb: 0.5 }}>
                       {testimonial.author}
                     </Typography>
@@ -978,6 +974,7 @@ const HomePage = () => {
           {/* Call to Action */}
         </Container>
       </SectionWrapper>
+      <Footer />
     </Box>
   );
 };

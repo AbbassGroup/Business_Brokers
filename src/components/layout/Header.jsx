@@ -74,7 +74,7 @@ const Header = () => {
 
   const navigationItems = [
     { text: 'Home', path: '/' },
-    { text: 'Services', path: '/services-process' },
+    { text: 'Services', path: '/services' },
     { text: 'Listings', path: '/listings' },
     { text: 'About', path: '/about' },
     { text: 'Agents', path: '/agents' },

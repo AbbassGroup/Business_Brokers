@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Container, Box, Typography, Grid, Card, CardContent, CardMedia, Button, FormControl, RadioGroup, FormControlLabel, Radio, styled } from '@mui/material';
 import { motion } from 'framer-motion';
+import Footer from '../common/Footer';
 import HeroSection from '../common/HeroSection';
 
 // Replace the image import with a constant
@@ -327,6 +328,8 @@ const ListingsPage = () => {
             </Grid>
           </Grid>
         </Container>
+
+        <Footer />
       </Box>
     </>
   );

@@ -11,6 +11,7 @@ import AboutPage from './components/about/AboutPage';
 import AgentsPage from './components/agents/AgentsPage';
 import ContactPage from './components/contact/ContactPage';
 import CareersPage from './components/careers/CareersPage';
+import JoinTeamButton from './components/common/JoinTeamButton';
 import './App.css';
 
 const theme = createTheme({
@@ -98,7 +99,7 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/services-process" element={<ServicesProcessPage />} />
+          <Route path="/services" element={<ServicesProcessPage />} />
           <Route path="/listings" element={<ListingsPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/agents" element={<AgentsPage />} />
@@ -107,6 +108,7 @@ function App() {
           <Route path="/blog" element={<div>Blog</div>} />
         </Routes>
         <Footer />
+        <JoinTeamButton />
       </Router>
     </ThemeProvider>
   );

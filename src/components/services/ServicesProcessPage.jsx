@@ -10,6 +10,7 @@ import SupportAgentIcon from '@mui/icons-material/SupportAgent';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import TimelineIcon from '@mui/icons-material/Timeline';
 import FormatQuoteIcon from '@mui/icons-material/FormatQuote';
+import Footer from '../common/Footer';
 
 const BRAND = { blue: '#56C1BC' };
 
@@ -276,11 +277,27 @@ const ServicesProcessPage = () => {
           ) to get started with an initial consultation.
         </Typography>
       )
+    },
+    {
+      question: "How long does it typically take to sell a business?",
+      answer: "The timeline varies depending on factors such as business size, industry, and market conditions. On average, it takes 6-9 months to complete a business sale."
+    },
+    {
+      question: "How do you determine the value of my business?",
+      answer: "We use multiple valuation methods including asset-based valuation, market comparison, and earnings multipliers. We also consider industry-specific factors and market conditions."
+    },
+    {
+      question: "What makes your business brokerage service different?",
+      answer: "We offer a comprehensive approach combining market expertise, confidential marketing, and personalized service. Our team has extensive experience across various industries."
+    },
+    {
+      question: "How do you maintain confidentiality during the sale process?",
+      answer: "We implement strict confidentiality protocols, including NDAs for potential buyers, anonymous listings, and controlled information disclosure."
     }
   ];
 
   return (
-    <Box>
+    <Box sx={{ background: '#f8f9fa', minHeight: '100vh' }}>
       {/* Hero Section */}
       <Box
         sx={{
@@ -606,17 +623,17 @@ const ServicesProcessPage = () => {
                   </Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                  {faq.answerWithLinks || (
-                    <Typography color="text.secondary">
-                      {faq.answer}
-                    </Typography>
-                  )}
+                  <Typography color="text.secondary">
+                    {faq.answer}
+                  </Typography>
                 </AccordionDetails>
               </Accordion>
             ))}
           </Box>
         </Container>
       </Box>
+
+      <Footer />
     </Box>
   );
 };

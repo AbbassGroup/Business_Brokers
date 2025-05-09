@@ -19,6 +19,7 @@ import MilitaryTechIcon from '@mui/icons-material/MilitaryTech';
 import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
 import DirectionsRunIcon from '@mui/icons-material/DirectionsRun';
 import SchoolIcon from '@mui/icons-material/School';
+import Footer from '../common/Footer';
 
 const BRAND = {
   blue: '#56C1BC',
@@ -236,27 +237,27 @@ const ScrollProgressBar = styled(motion.div)({
 const AboutPage = () => {
   const values = [
     {
-      image: 'https://img.icons8.com/3d-fluency/94/shield.png',
+      icon: <SecurityIcon sx={{ fontSize: 40, color: BRAND.blue }} />,
       title: 'Trust',
       description: 'Building lasting relationships through transparency and reliability'
     },
     {
-      image: 'https://img.icons8.com/3d-fluency/94/trophy.png',
+      icon: <EmojiEventsIcon sx={{ fontSize: 40, color: BRAND.blue }} />,
       title: 'Excellence',
       description: 'Delivering exceptional service and results in everything we do'
     },
     {
-      image: 'https://img.icons8.com/3d-fluency/94/handshake.png',
+      icon: <HandshakeIcon sx={{ fontSize: 40, color: BRAND.blue }} />,
       title: 'Commitment',
       description: 'Dedicated to achieving the best outcomes for our clients'
     },
     {
-      image: 'https://img.icons8.com/3d-fluency/94/clock.png',
+      icon: <AccessTimeIcon sx={{ fontSize: 40, color: BRAND.blue }} />,
       title: 'Convenience',
       description: 'Making real estate simple and accessible for everyone'
     },
     {
-      image: 'https://img.icons8.com/3d-fluency/94/graduation-cap.png',
+      icon: <WorkspacePremiumIcon sx={{ fontSize: 40, color: BRAND.blue }} />,
       title: 'Expertise',
       description: 'Bringing years of experience and market knowledge'
     }
@@ -727,16 +728,7 @@ const AboutPage = () => {
                           mb: 2,
                           overflow: 'hidden'
                         }}>
-                          <img
-                            src={value.image}
-                            alt={value.title}
-                            style={{
-                              width: '70%',
-                              height: '70%',
-                              objectFit: 'contain',
-                              borderRadius: '50%'
-                            }}
-                          />
+                          {value.icon}
                         </Box>
                         <Typography
                           variant="h6"
@@ -958,6 +950,8 @@ const AboutPage = () => {
           </FadeInWhenVisible>
         </Container>
       </Box>
+
+      <Footer />
     </Box>
   );
 };

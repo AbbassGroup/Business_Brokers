@@ -7,6 +7,7 @@ import PhoneIcon from '@mui/icons-material/Phone';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import BusinessIcon from '@mui/icons-material/Business';
 import StarIcon from '@mui/icons-material/Star';
+import Footer from '../common/Footer';
 import HeroSection from '../common/HeroSection';
 
 // Replace the image import with a constant
@@ -212,6 +213,8 @@ const AgentsPage = () => {
           ))}
         </Grid>
       </Container>
+
+      <Footer />
     </Box>
   );
 };
