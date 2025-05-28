@@ -21,7 +21,7 @@ const BRAND = {
 };
 
 // Contact page hero image
-const contactHeroImage = "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1920&q=80";
+const contactHeroImage = "https://images.unsplash.com/photo-1521737852567-6949f3f9f2b5?auto=format&fit=crop&w=1920&q=80";
 
 const ContactCard = styled(Card)({
   height: '100%',
@@ -228,23 +228,33 @@ const ContactPage = () => {
                     />
                   </Grid>
                   <Grid item xs={12}>
-                    <Button
-                      variant="contained"
-                      size="large"
-                      type="submit"
-                      sx={{
-                        backgroundColor: BRAND.blue,
-                        color: 'white',
-                        px: 4,
-                        py: 1.5,
-                        fontSize: '1.1rem',
-                        '&:hover': {
-                          backgroundColor: BRAND.darkBlue,
-                        }
-                      }}
-                    >
-                      Send Message
-                    </Button>
+                    <Box sx={{
+                      display: 'flex',
+                      flexDirection: { xs: 'column', sm: 'row' },
+                      alignItems: { xs: 'stretch', sm: 'center' },
+                      justifyContent: { xs: 'center', sm: 'flex-start' },
+                      gap: 2,
+                      mt: 2
+                    }}>
+                      <Button
+                        variant="contained"
+                        size="large"
+                        type="submit"
+                        sx={{
+                          backgroundColor: BRAND.blue,
+                          color: 'white',
+                          px: 4,
+                          py: 1.5,
+                          fontSize: '1.1rem',
+                          '&:hover': {
+                            backgroundColor: BRAND.darkBlue,
+                          },
+                          width: { xs: '100%', sm: 'auto' }
+                        }}
+                      >
+                        Send Message
+                      </Button>
+                    </Box>
                   </Grid>
                 </Grid>
               </form>
@@ -294,42 +304,91 @@ const ContactPage = () => {
                   color: BRAND.textGray, 
                   lineHeight: 1.8,
                   fontSize: '1.1rem',
-                  textAlign: 'justify'
+                  textAlign: 'justify',
+                  mb: 4
                 }}>
                   Visit our office in South Melbourne for a face-to-face discussion, or connect with us through your preferred channel. We're here to help you achieve your business goals.
                 </Typography>
-              </Box>
-              <Box sx={{ mt: 'auto', pt: 2 }}>
-                <Typography variant="h6" sx={{ 
-                  mb: 2, 
-                  color: BRAND.textDark,
-                  fontWeight: 600,
-                  fontSize: '1.2rem'
-                }}>
-                  Follow Us
-                </Typography>
-                <Box sx={{ display: 'flex', gap: 2 }}>
-                  <SocialButton 
-                    component="a" 
-                    href="https://www.linkedin.com/company/abbassbusinessbrokers"
-                    target="_blank"
+                {/* Follow Us section below the paragraphs, left-aligned with icons, with extra margin below */}
+                <Box sx={{ mt: 10, mb: 6 }}>
+                  <Typography 
+                    variant="h5" 
+                    sx={{ 
+                      fontWeight: 800, 
+                      color: BRAND.textDark, 
+                      mb: 2, 
+                      fontSize: { xs: '1.3rem', md: '1.5rem' },
+                      letterSpacing: '0.03em',
+                      textAlign: 'left'
+                    }}
                   >
-                    <LinkedInIcon />
-                  </SocialButton>
-                  <SocialButton 
-                    component="a" 
-                    href="https://www.facebook.com/abbassbusinessbrokers"
-                    target="_blank"
-                  >
-                    <FacebookIcon />
-                  </SocialButton>
-                  <SocialButton 
-                    component="a" 
-                    href="https://www.instagram.com/abbassbusinessbrokers"
-                    target="_blank"
-                  >
-                    <InstagramIcon />
-                  </SocialButton>
+                    Follow Us
+                  </Typography>
+                  <Box sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', gap: 4 }}>
+                    <IconButton 
+                      component="a" 
+                      href="https://www.linkedin.com/company/abbassbusinessbrokers"
+                      target="_blank"
+                      aria-label="LinkedIn"
+                      sx={{
+                        background: 'rgba(86, 193, 188, 0.18)',
+                        color: BRAND.blue,
+                        width: 60,
+                        height: 60,
+                        boxShadow: '0 2px 8px rgba(86,193,188,0.10)',
+                        transition: 'all 0.2s',
+                        '&:hover': {
+                          background: BRAND.blue,
+                          color: 'white',
+                          boxShadow: '0 4px 16px rgba(86,193,188,0.18)',
+                        }
+                      }}
+                    >
+                      <LinkedInIcon sx={{ fontSize: 32 }} />
+                    </IconButton>
+                    <IconButton 
+                      component="a" 
+                      href="https://www.facebook.com/abbassbusinessbrokers"
+                      target="_blank"
+                      aria-label="Facebook"
+                      sx={{
+                        background: 'rgba(86, 193, 188, 0.18)',
+                        color: BRAND.blue,
+                        width: 60,
+                        height: 60,
+                        boxShadow: '0 2px 8px rgba(86,193,188,0.10)',
+                        transition: 'all 0.2s',
+                        '&:hover': {
+                          background: BRAND.blue,
+                          color: 'white',
+                          boxShadow: '0 4px 16px rgba(86,193,188,0.18)',
+                        }
+                      }}
+                    >
+                      <FacebookIcon sx={{ fontSize: 32 }} />
+                    </IconButton>
+                    <IconButton 
+                      component="a" 
+                      href="https://www.instagram.com/abbassbusinessbrokers"
+                      target="_blank"
+                      aria-label="Instagram"
+                      sx={{
+                        background: 'rgba(86, 193, 188, 0.18)',
+                        color: BRAND.blue,
+                        width: 60,
+                        height: 60,
+                        boxShadow: '0 2px 8px rgba(86,193,188,0.10)',
+                        transition: 'all 0.2s',
+                        '&:hover': {
+                          background: BRAND.blue,
+                          color: 'white',
+                          boxShadow: '0 4px 16px rgba(86,193,188,0.18)',
+                        }
+                      }}
+                    >
+                      <InstagramIcon sx={{ fontSize: 32 }} />
+                    </IconButton>
+                  </Box>
                 </Box>
               </Box>
             </motion.div>

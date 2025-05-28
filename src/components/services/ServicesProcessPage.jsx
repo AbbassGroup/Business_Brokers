@@ -25,7 +25,7 @@ const ServiceCard = styled(Card)(({ theme }) => ({
   cursor: 'pointer',
   '&:hover': {
     transform: 'translateY(-10px)',
-    boxShadow: '0 12px 30px rgba(0,0,0,0.16)',
+    boxShadow: `0 0 0 8px rgba(86,193,188,0.10), 0 0 32px 8px ${BRAND.blue}33, 0 12px 30px rgba(0,0,0,0.16)`
   },
 }));
 
@@ -42,32 +42,44 @@ const ServiceIcon = styled(Box)(({ theme }) => ({
   '& svg': { fontSize: '40px' },
 }));
 
-const ProcessStep = styled(Box)(({ theme }) => ({
-  textAlign: 'center',
-  position: 'relative',
-  padding: theme.spacing(3),
-  background: 'white',
+const ProcessStep = styled(Card)(({ theme }) => ({
+  height: '100%',
+  display: 'flex',
+  flexDirection: 'column',
   borderRadius: '16px',
-  boxShadow: '0 4px 16px rgba(86,193,188,0.07)',
-  marginBottom: theme.spacing(4),
-  zIndex: 1,
+  overflow: 'hidden',
+  boxShadow: '0 8px 24px rgba(0,0,0,0.12)',
+  transition: 'all 0.3s ease-in-out',
+  cursor: 'pointer',
+  '&:hover': {
+    transform: 'translateY(-10px)',
+    boxShadow: `0 0 0 8px rgba(86,193,188,0.10), 0 0 32px 8px ${BRAND.blue}33, 0 12px 30px rgba(0,0,0,0.16)`
+  },
 }));
 
 const ProcessIcon = styled(Box)(({ theme }) => ({
   width: '80px',
   height: '80px',
+  minWidth: '80px',
+  minHeight: '80px',
+  maxWidth: '80px',
+  maxHeight: '80px',
+  aspectRatio: '1 / 1',
   borderRadius: '50%',
-  backgroundColor: BRAND.blue,
+  backgroundColor: 'rgba(86, 193, 188, 0.1)',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
   margin: '0 auto 20px',
-  boxShadow: '0 4px 20px rgba(86, 193, 188, 0.15)',
-  border: `3px solid #fff`,
+  boxShadow: '0 2px 8px rgba(86, 193, 188, 0.10)',
+  transition: 'box-shadow 0.3s, transform 0.3s',
   '& svg': {
     fontSize: '40px',
-    color: 'white',
+    color: BRAND.blue,
   },
+  '.MuiPaper-root:hover &, .MuiBox-root:hover &': {
+    boxShadow: `0 0 0 8px rgba(86,193,188,0.10), 0 0 32px 8px ${BRAND.blue}33, 0 12px 30px rgba(0,0,0,0.16)`
+  }
 }));
 
 const ProcessTitle = styled(Typography)(({ theme }) => ({
@@ -103,7 +115,7 @@ const ServicesProcessPage = () => {
     {
       title: 'Business Valuation',
       description: 'Get an accurate assessment of your business worth with our comprehensive valuation services. We use industry-standard methods to determine the true market value.',
-      icon: 'https://img.icons8.com/3d-fluency/94/bar-chart.png',
+      icon: <AssessmentIcon />,
       image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80',
       details: [
         'Financial Analysis & Reporting',
@@ -116,7 +128,7 @@ const ServicesProcessPage = () => {
     {
       title: 'Business Sales',
       description: 'We handle the entire process of selling your business, from marketing to negotiations and closing. Our expertise ensures you get the best possible price.',
-      icon: 'https://img.icons8.com/3d-fluency/94/handshake.png',
+      icon: <HandshakeIcon />,
       image: 'https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=800&q=80',
       details: [
         'Confidential Marketing',
@@ -129,7 +141,7 @@ const ServicesProcessPage = () => {
     {
       title: 'Business Acquisitions',
       description: 'Looking to buy a business? We help you find the perfect opportunity that matches your criteria and guide you through the acquisition process.',
-      icon: 'https://img.icons8.com/3d-fluency/94/search.png',
+      icon: <SearchIcon />,
       image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=800&q=80',
       details: [
         'Business Search & Matching',
@@ -142,7 +154,7 @@ const ServicesProcessPage = () => {
     {
       title: 'Financial Advisory',
       description: 'Our financial experts provide guidance on business structure, tax planning, and financial strategies to maximize your business value.',
-      icon: 'https://img.icons8.com/3d-fluency/94/calculator.png',
+      icon: <MonetizationOnIcon />,
       image: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=800&q=80',
       details: [
         'Tax Planning',
@@ -155,7 +167,7 @@ const ServicesProcessPage = () => {
     {
       title: 'Business Brokerage',
       description: 'We act as intermediaries between buyers and sellers, ensuring a smooth transaction process with confidentiality and professionalism.',
-      icon: 'https://img.icons8.com/3d-fluency/94/city-buildings.png',
+      icon: <BusinessIcon />,
       image: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=800&q=80',
       details: [
         'Confidential Representation',
@@ -168,7 +180,7 @@ const ServicesProcessPage = () => {
     {
       title: 'Consulting Services',
       description: 'Get expert advice on business operations, growth strategies, and market positioning to enhance your business value before sale.',
-      icon: 'https://img.icons8.com/3d-fluency/94/headset.png',
+      icon: <SupportAgentIcon />,
       image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=800&q=80',
       details: [
         'Operational Assessment',
@@ -185,37 +197,37 @@ const ServicesProcessPage = () => {
       number: '1',
       title: 'Consultation',
       description: 'Initial Consultation and a deep dive into your business operations to better advise you',
-      icon: 'https://img.icons8.com/3d-fluency/94/handshake.png'
+      icon: <HandshakeIcon />
     },
     {
       number: '2',
       title: 'Appraisal',
       description: 'Based on an Initial Consultation and finance assessment, we provide you with an appraisal for your business',
-      icon: 'https://img.icons8.com/3d-fluency/94/bar-chart.png'
+      icon: <AssessmentIcon />
     },
     {
       number: '3',
       title: 'Strategy Development',
       description: 'We develop a strategy around the potential sale of your business',
-      icon: 'https://img.icons8.com/3d-fluency/94/goal.png'
+      icon: <TimelineIcon />
     },
     {
       number: '4',
       title: 'Strategic Marketing Plan',
       description: 'Strategic marketing on your business to best position it for sale to the right buyer',
-      icon: 'https://img.icons8.com/3d-fluency/94/megaphone.png'
+      icon: <BusinessIcon />
     },
     {
       number: '5',
       title: 'Offer Reviews',
       description: 'We receive, vet and negotiate the best outcome for you',
-      icon: 'https://img.icons8.com/3d-fluency/94/agreement.png'
+      icon: <MonetizationOnIcon />
     },
     {
       number: '6',
       title: 'Post Sale',
       description: 'We help you with the sale and transition of business ownership',
-      icon: 'https://img.icons8.com/3d-fluency/94/headset.png'
+      icon: <SupportAgentIcon />
     }
   ];
 
@@ -384,16 +396,7 @@ const ServicesProcessPage = () => {
                   />
                   <CardContent sx={{ p: 4, flexGrow: 1 }}>
                     <ServiceIcon>
-                      <motion.img
-                        src={service.icon}
-                        alt={service.title + ' icon'}
-                        style={{ width: 48, height: 48, objectFit: 'contain' }}
-                        whileHover={{
-                          scale: 1.12,
-                          boxShadow: '0 0 24px #56C1BC, 0 0 40px #56C1BC44'
-                        }}
-                        transition={{ duration: 0.3 }}
-                      />
+                      {service.icon}
                     </ServiceIcon>
                     <Typography variant="h5" gutterBottom sx={{ fontWeight: 600, textAlign: 'center' }}>
                       {service.title}
@@ -484,16 +487,9 @@ const ServicesProcessPage = () => {
                       justifyContent: 'center',
                       mb: 3
                     }}>
-                      <motion.img
-                        src={step.icon}
-                        alt={step.title + ' icon'}
-                        style={{ width: 48, height: 48, objectFit: 'contain' }}
-                        whileHover={{
-                          scale: 1.12,
-                          boxShadow: '0 0 24px #56C1BC, 0 0 40px #56C1BC44'
-                        }}
-                        transition={{ duration: 0.3 }}
-                      />
+                      <ProcessIcon>
+                        {step.icon}
+                      </ProcessIcon>
                     </Box>
                     <Typography sx={{
                       color: BRAND.blue,

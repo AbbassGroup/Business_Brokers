@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Box, Typography, Grid, Card, CardContent, CardMedia, Button, FormControl, RadioGroup, FormControlLabel, Radio, styled } from '@mui/material';
 import { motion } from 'framer-motion';
 import Footer from '../common/Footer';
 import HeroSection from '../common/HeroSection';
+import { Link } from 'react-router-dom';
+import RoomIcon from '@mui/icons-material/Room';
+import LabelIcon from '@mui/icons-material/Label';
 
 // Replace the image import with a constant
 const listingsHeroImage = "https://images.unsplash.com/photo-1582407947304-fd86f028f716?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2000&q=80";
@@ -72,6 +75,13 @@ const FilterLabel = styled(FormControlLabel)(({ theme }) => ({
 const ListingsPage = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedLocation, setSelectedLocation] = useState('all');
+  const [listings, setListings] = useState([]);
+
+  useEffect(() => {
+    fetch('http://localhost:5005/api/listings')
+      .then(res => res.json())
+      .then(data => setListings(data));
+  }, []);
 
   const categories = [
     { id: 'accommodation', name: 'Accommodation/Tourism' },
@@ -95,29 +105,6 @@ const ListingsPage = () => {
     { id: 'brisbane', name: 'Brisbane' },
     { id: 'hobart', name: 'Hobart' },
     { id: 'sydney', name: 'Sydney' }
-  ];
-
-  // Sample listings data - you would typically fetch this from an API
-  const listings = [
-    {
-      id: 1,
-      title: "Modern Cafe in CBD",
-      category: "cafes",
-      location: "melbourne",
-      description: "Well-established cafe with prime location and loyal customer base",
-      price: "$450,000",
-      image: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=800&q=80"
-    },
-    {
-      id: 2,
-      title: "Retail Store Franchise",
-      price: "$850,000",
-      location: "South Melbourne",
-      type: "Retail",
-      image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=800&q=80",
-      description: "Profitable retail business with established brand presence"
-    },
-    // Add more listings here
   ];
 
   return (
@@ -246,80 +233,107 @@ const ListingsPage = () => {
             >
               <Grid container spacing={3}>
                 {listings.map((listing) => (
-                  <Grid item xs={12} sm={12} md={6} lg={6} key={listing.id}>
-                    <ListingCard component={motion.div} whileHover={{ y: -5 }} sx={{ minHeight: 620 }}>
+                  <Grid item xs={12} sm={12} md={6} lg={6} key={listing._id}>
+                    <ListingCard
+                      component={motion.div}
+                      whileHover={{ y: -8, boxShadow: '0 12px 32px rgba(86,193,188,0.18)' }}
+                      sx={{
+                        minHeight: 420,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'space-between',
+                        boxShadow: '0 4px 20px rgba(86,193,188,0.08)',
+                        border: '1.5px solid #e0f7fa',
+                        transition: 'box-shadow 0.3s, transform 0.3s',
+                        p: 0
+                      }}
+                    >
                       <CardMedia
                         component="img"
-                        height="540"
-                        image={listing.image}
+                        height="200"
+                        image={listing.image || 'https://via.placeholder.com/400x200?text=No+Image'}
                         alt={listing.title}
+                        sx={{ objectFit: 'cover', borderTopLeftRadius: '16px', borderTopRightRadius: '16px' }}
                       />
-                      <CardContent>
-                        <Box sx={{ flex: 1 }}>
-                          <Typography 
-                            variant="h6" 
-                            sx={{ 
-                              fontSize: { xs: '1.3rem', md: '1.5rem' },
-                              height: { xs: 'auto', md: '56px' },
-                              display: '-webkit-box',
-                              WebkitLineClamp: 2,
-                              WebkitBoxOrient: 'vertical',
-                              overflow: 'hidden',
-                              mb: 1
-                            }}
-                          >
-                            {listing.title}
-                          </Typography>
-                          <Typography 
-                            variant="body1" 
-                            sx={{ 
-                              color: BRAND.textGray,
-                              height: { xs: 'auto', md: '72px' },
-                              display: '-webkit-box',
-                              WebkitLineClamp: { xs: 2, md: 3 },
-                              WebkitBoxOrient: 'vertical',
-                              overflow: 'hidden',
-                              mb: 2,
-                              fontSize: { xs: '1rem', md: '1.1rem' }
-                            }}
-                          >
-                            {listing.description}
-                          </Typography>
+                      <CardContent sx={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', p: 3 }}>
+                        {/* Badges Row */}
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
+                          {listing.location && (
+                            <Box sx={{ display: 'flex', alignItems: 'center', bgcolor: '#e0f7fa', color: BRAND.blue, px: 1.2, py: 0.3, borderRadius: 2, fontSize: 13, fontWeight: 500 }}>
+                              <RoomIcon sx={{ fontSize: 16, mr: 0.5 }} />
+                              {listing.location}
+                            </Box>
+                          )}
+                          {listing.category && (
+                            <Box sx={{ display: 'flex', alignItems: 'center', bgcolor: '#f3e5f5', color: '#7b1fa2', px: 1.2, py: 0.3, borderRadius: 2, fontSize: 13, fontWeight: 500 }}>
+                              <LabelIcon sx={{ fontSize: 15, mr: 0.5 }} />
+                              {listing.category}
+                            </Box>
+                          )}
                         </Box>
-                        <Box sx={{ 
-                          display: 'flex', 
-                          flexDirection: 'column',
-                          alignItems: 'center',
-                          gap: 2,
-                          mt: 'auto'
-                        }}>
-                          <Typography 
-                            variant="h5" 
-                            sx={{ 
-                              color: BRAND.blue,
-                              fontWeight: 700,
-                              fontSize: { xs: '2rem', md: '2.2rem' }
-                            }}
-                          >
-                            {listing.price}
-                          </Typography>
-                          <Button 
-                            variant="contained" 
-                            fullWidth
-                            sx={{
-                              bgcolor: BRAND.blue,
-                              '&:hover': {
-                                bgcolor: BRAND.darkBlue,
-                              },
-                              borderRadius: '8px',
-                              textTransform: 'none',
-                              py: { xs: 1.5, md: 1.5 },
-                              fontSize: { xs: '1.1rem', md: '1.1rem' }
-                            }}
-                          >
-                            View Details
-                          </Button>
+                        {/* Title */}
+                        <Typography
+                          variant="h6"
+                          sx={{
+                            fontSize: { xs: '1.2rem', md: '1.3rem' },
+                            fontWeight: 700,
+                            display: '-webkit-box',
+                            WebkitLineClamp: 1,
+                            WebkitBoxOrient: 'vertical',
+                            overflow: 'hidden',
+                            mb: 1
+                          }}
+                        >
+                          {listing.title}
+                        </Typography>
+                        {/* Description */}
+                        <Typography
+                          variant="body2"
+                          sx={{
+                            color: BRAND.textGray,
+                            display: '-webkit-box',
+                            WebkitLineClamp: 2,
+                            WebkitBoxOrient: 'vertical',
+                            overflow: 'hidden',
+                            mb: 2
+                          }}
+                        >
+                          {listing.summary || listing.description || 'No description available.'}
+                        </Typography>
+                        {/* Price */}
+                        <Typography
+                          variant="h5"
+                          sx={{
+                            color: BRAND.blue,
+                            fontWeight: 700,
+                            fontSize: { xs: '2rem', md: '2.2rem' },
+                            mb: 2
+                          }}
+                        >
+                          {listing.price && !listing.price.startsWith('$') ? `$${listing.price}` : listing.price}
+                        </Typography>
+                        <Box sx={{ width: '100%', mb: 2 }}>
+                          <hr style={{ border: 'none', borderTop: '1.5px solid #e0f7fa', margin: 0 }} />
                         </Box>
+                        <Button
+                          component={Link}
+                          to={`/listings/${listing._id}`}
+                          variant="contained"
+                          fullWidth
+                          sx={{
+                            bgcolor: BRAND.blue,
+                            '&:hover': {
+                              bgcolor: BRAND.darkBlue,
+                            },
+                            borderRadius: '8px',
+                            textTransform: 'none',
+                            py: { xs: 1.5, md: 1.5 },
+                            fontSize: { xs: '1.1rem', md: '1.1rem' },
+                            mt: 1
+                          }}
+                        >
+                          View Details
+                        </Button>
                       </CardContent>
                     </ListingCard>
                   </Grid>

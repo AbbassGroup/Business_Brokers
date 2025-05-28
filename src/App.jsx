@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 import Header from './components/layout/Header';
-import Footer from './components/Footer';
 import HomePage from './components/home/HomePage';
 import ServicesProcessPage from './components/services/ServicesProcessPage';
 import ListingsPage from './components/listings/ListingsPage';
@@ -11,7 +10,8 @@ import AboutPage from './components/about/AboutPage';
 import AgentsPage from './components/agents/AgentsPage';
 import ContactPage from './components/contact/ContactPage';
 import CareersPage from './components/careers/CareersPage';
-import JoinTeamButton from './components/common/JoinTeamButton';
+import ListingDetailsPage from './components/listings/ListingDetailsPage';
+import AdminDashboard from './components/admin/AdminDashboard';
 import './App.css';
 
 const theme = createTheme({
@@ -101,14 +101,14 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/services" element={<ServicesProcessPage />} />
           <Route path="/listings" element={<ListingsPage />} />
+          <Route path="/listings/:id" element={<ListingDetailsPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/agents" element={<AgentsPage />} />
           <Route path="/careers" element={<CareersPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/blog" element={<div>Blog</div>} />
+          <Route path="/admin" element={<AdminDashboard />} />
         </Routes>
-        <Footer />
-        <JoinTeamButton />
       </Router>
     </ThemeProvider>
   );

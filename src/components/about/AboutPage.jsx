@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container, Box, Typography, Grid, Card, CardContent, styled, Button } from '@mui/material';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import BusinessIcon from '@mui/icons-material/Business';
 import GroupsIcon from '@mui/icons-material/Groups';
 import HandshakeIcon from '@mui/icons-material/Handshake';
@@ -66,8 +67,8 @@ const ValueCard = styled(Card)(({ theme }) => ({
   boxShadow: '0 4px 20px rgba(0,0,0,0.05)',
   transition: 'all 0.3s ease-in-out',
   '&:hover': {
-    transform: 'translateY(-5px)',
-    boxShadow: '0 8px 30px rgba(86, 193, 188, 0.15)',
+    transform: 'translateY(-10px)',
+    boxShadow: `0 0 0 8px rgba(86,193,188,0.10), 0 0 32px 8px ${BRAND.blue}33, 0 12px 30px rgba(0,0,0,0.16)`
   },
 }));
 
@@ -333,6 +334,7 @@ const AboutPage = () => {
   const { scrollYProgress } = useScroll();
   const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
   const scaleX = useTransform(scrollYProgress, [0, 1], [0, 1]);
+  const navigate = useNavigate();
 
   return (
     <Box sx={{ background: BRAND.background, minHeight: '100vh' }}>
@@ -933,6 +935,7 @@ const AboutPage = () => {
               <Button
                 variant="contained"
                 size="large"
+                onClick={() => navigate('/contact')}
                 sx={{
                   backgroundColor: 'white',
                   color: BRAND.blue,

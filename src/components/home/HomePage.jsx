@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Box, Typography, Button, Grid, TextField, MenuItem, Card, CardContent, CardMedia, IconButton, styled } from '@mui/material';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
@@ -13,7 +13,8 @@ import ApartmentIcon from '@mui/icons-material/Apartment';
 import BuildIcon from '@mui/icons-material/Build';
 import FormatQuoteIcon from '@mui/icons-material/FormatQuote';
 import Footer from '../common/Footer';
-import { useEffect, useRef, useState } from 'react';
+import Marquee from 'react-fast-marquee';
+import { styled as muiStyled } from '@mui/material/styles';
 
 // Brand Colors
 const BRAND = {
@@ -47,7 +48,12 @@ const IMAGES = {
     logo1: "/Cheesecake-shop-logo-2024.png", // Cheesecake Shop
     logo2: "/WSQ-NewWeb-Gami-Logo1.jpg", // Gami Chicken
     logo3: "/We-love-ndis-logo_1x.webp", // NDIS
-    logo4: "/Degani cafe.jpg" // Degani Cafe
+    logo4: "/Degani cafe.jpg", // Degani Cafe
+    burgertory: "https://upload.wikimedia.org/wikipedia/commons/2/2e/Burgertory_logo.png", // Placeholder, replace with local PNG if available
+    jamaicaBlue: "https://upload.wikimedia.org/wikipedia/commons/2/2a/Jamaica_Blue_logo.png", // Placeholder
+    rolld: "https://upload.wikimedia.org/wikipedia/commons/2/2a/Rolld_logo.png", // Placeholder
+    bigals: "https://upload.wikimedia.org/wikipedia/commons/2/2a/Big_Als_Pizza_logo.png", // Placeholder
+    sumosalad: "https://www.cleanpng.com/png-logo-brand-line-point-font-he-man-orko-5501056/preview.html" // Placeholder
   }
 };
 
@@ -56,7 +62,12 @@ const COMPANY_LINKS = [
   "https://www.cheesecake.com.au/", // Cheesecake Shop
   "https://www.gamichicken.com.au/", // Gami Chicken
   "https://www.ndis.gov.au/", // NDIS
-  "https://degani.com.au/" // Degani Cafe
+  "https://degani.com.au/", // Degani Cafe
+  "https://www.burgertory.com.au/", // Burgertory
+  "https://jamaicablue.com.au/", // Jamaica Blue
+  "https://rolld.com.au/", // Roll'd Vietnamese
+  "https://www.bigalpizza.com.au/", // Big Al's Pizza
+  "https://sumosalad.com/" // Sumo Salad
 ];
 
 const SearchBar = styled(Box)(({ theme }) => ({
@@ -248,7 +259,9 @@ const FormInput = styled(TextField)(({ theme }) => ({
   },
 }));
 
-const SectionWrapper = styled(Box)(({ theme, isDark }) => ({
+const SectionWrapper = muiStyled(Box, {
+  shouldForwardProp: (prop) => prop !== '$isDark'
+})(({ theme, $isDark }) => ({
   position: 'relative',
   '&::before': {
     content: '""',
@@ -257,7 +270,7 @@ const SectionWrapper = styled(Box)(({ theme, isDark }) => ({
     left: 0,
     right: 0,
     bottom: 0,
-    background: isDark 
+    background: $isDark 
       ? `linear-gradient(180deg, ${BRAND.background} 0%, ${BRAND.darkGray} 100%)`
       : `linear-gradient(180deg, ${BRAND.softDark} 0%, ${BRAND.background} 100%)`,
     opacity: 0.97,
@@ -367,7 +380,30 @@ const CountUp = ({ end, duration = 2 }) => {
   return <span ref={ref}>{count.toLocaleString()}</span>;
 };
 
+// Add a styled component for the logo card
+const LogoCard = styled(Box)(({ theme }) => ({
+  background: '#fff',
+  borderRadius: '16px',
+  boxShadow: '0 4px 16px rgba(44,62,80,0.07)',
+  padding: theme.spacing(3),
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  transition: 'box-shadow 0.3s, transform 0.3s',
+  height: '120px',
+  minWidth: '120px',
+  maxWidth: '180px',
+  margin: '0 auto',
+  '&:hover': {
+    boxShadow: '0 8px 32px rgba(86,193,188,0.15)',
+    transform: 'translateY(-4px) scale(1.04)'
+  }
+}));
+
 const HomePage = () => {
+  const [count, setCount] = useState(0);
+  const [isInView, setIsInView] = useState(false);
+  
   return (
     <Box sx={{ 
       background: BRAND.background,
@@ -532,7 +568,7 @@ const HomePage = () => {
       </Box>
 
       {/* Featured Businesses Section */}
-      <SectionWrapper sx={{ py: { xs: 6, md: 10 } }}>
+      <SectionWrapper $isDark sx={{ py: { xs: 6, md: 10 } }}>
         <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
           <motion.div
             initial={{ opacity: 0, y: 50 }}
@@ -700,7 +736,7 @@ const HomePage = () => {
       </SectionWrapper>
 
       {/* Business Categories Section */}
-      <SectionWrapper isDark sx={{ py: { xs: 6, md: 10 } }}>
+      <SectionWrapper $isDark sx={{ py: { xs: 6, md: 10 } }}>
         <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
           <Box sx={{ textAlign: 'center', mb: 6 }}>
             <Typography
@@ -774,53 +810,32 @@ const HomePage = () => {
         <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
           <Grid container spacing={4}>
             {[
-              { number: 967, title: 'Businesses For Sale', icon: <MonetizationOnIcon className="icon" /> },
-              { number: 1276, title: 'Successful Sales', icon: <BusinessIcon className="icon" /> },
-              { number: 396, title: 'Expert Agents', icon: <LocationOnIcon className="icon" /> },
-              { number: 177, title: 'Happy Clients', icon: <PeopleIcon className="icon" /> },
+              { number: 40, suffix: '+', label: 'Years of combined industry experience' },
+              { number: 1200, suffix: '+', label: 'Qualified buyers in our database' },
+              { number: 20000, suffix: '+', label: 'Monthly marketing reach', sublabel: 'Active buyers per month' },
+              { number: 10, suffix: '+', label: 'Industry sectors served' },
             ].map((stat, index) => (
               <Grid item xs={12} sm={6} md={3} key={index}>
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                >
-                  <StatsBox>
-                    <motion.div
-                      initial={{ scale: 0 }}
-                      whileInView={{ scale: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ 
-                        type: "spring",
-                        stiffness: 260,
-                        damping: 20,
-                        delay: index * 0.1 + 0.3
-                      }}
-                    >
-                      {stat.icon}
-                    </motion.div>
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      whileInView={{ opacity: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.5, delay: index * 0.1 + 0.5 }}
-                    >
-                      <Typography variant="h3" sx={{ 
-                        fontWeight: 700, 
-                        mb: 1, 
-                        fontSize: '3.5rem',
-                        fontFamily: "'Roboto Mono', monospace",
-                        letterSpacing: '0.05em'
-                      }}>
-                        <CountUp end={stat.number} duration={2.5} />
-                      </Typography>
-                      <Typography variant="h6" sx={{ fontSize: '1.25rem' }}>
-                        {stat.title}
-                      </Typography>
-                    </motion.div>
-                  </StatsBox>
-                </motion.div>
+                <StatsBox>
+                  <Typography variant="h3" sx={{ 
+                    fontWeight: 700, 
+                    mb: 1, 
+                    fontSize: '3.5rem',
+                    fontFamily: "'Roboto Mono', monospace",
+                    letterSpacing: '0.05em',
+                    color: 'white'
+                  }}>
+                    <CountUp end={stat.number} duration={2.5} />{stat.suffix}
+                  </Typography>
+                  <Typography variant="h6" sx={{ fontSize: '1.15rem', color: 'white', fontWeight: 500 }}>
+                    {stat.label}
+                  </Typography>
+                  {stat.sublabel && (
+                    <Typography variant="body2" sx={{ color: 'white', opacity: 0.85 }}>
+                      {stat.sublabel}
+                    </Typography>
+                  )}
+                </StatsBox>
               </Grid>
             ))}
           </Grid>
@@ -828,7 +843,7 @@ const HomePage = () => {
       </Box>
 
       {/* Testimonials Section */}
-      <SectionWrapper sx={{ py: { xs: 6, md: 10 } }}>
+      <SectionWrapper $isDark sx={{ py: { xs: 6, md: 10 } }}>
         <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
           <Box sx={{ textAlign: 'center', mb: 8 }}>
             <Typography
@@ -889,6 +904,8 @@ const HomePage = () => {
                       controls
                       width="100%"
                       style={{ 
+                        maxHeight: '320px', 
+                        objectFit: 'cover', 
                         borderRadius: '10px',
                         boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
                       }}
@@ -932,43 +949,23 @@ const HomePage = () => {
                 Trusted By Leading Companies
               </Typography>
             </motion.div>
-            <Grid 
-              container 
-              spacing={6} 
-              alignItems="center" 
-              justifyContent="center"
-              sx={{
-                px: { md: 8 },
-                '& img': {
-                  maxWidth: '100%',
-                  height: 'auto'
-                }
-              }}
-            >
-              {Object.values(IMAGES.companies).map((logo, index) => (
-                <Grid item xs={6} sm={4} md={2} key={index}>
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                  >
-                    <a href={COMPANY_LINKS[index]} target="_blank" rel="noopener noreferrer">
-                      <CompanyLogo
-                        src={logo}
-                        alt={`Company ${index + 1}`}
-                        component={motion.img}
-                        whileHover={{ 
-                          scale: 1.05,
-                          filter: 'grayscale(0%)',
-                          opacity: 1
-                        }}
-                      />
+            <Box sx={{ maxWidth: 1200, mx: 'auto', position: 'relative' }}>
+              <Marquee gradient={false} speed={40} pauseOnHover={true} style={{ minHeight: 160 }}>
+                {COMPANY_LINKS.map((link, index) => (
+                  <Box key={index} sx={{ mx: 2, display: 'inline-block' }}>
+                    <a href={link} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
+                      <LogoCard>
+                        <CompanyLogo
+                          src={Object.values(IMAGES.companies)[index]}
+                          alt={`Company ${index + 1}`}
+                          style={{ maxHeight: '60px', maxWidth: '120px', width: 'auto', height: 'auto' }}
+                        />
+                      </LogoCard>
                     </a>
-                  </motion.div>
-                </Grid>
-              ))}
-            </Grid>
+                  </Box>
+                ))}
+              </Marquee>
+            </Box>
           </Box>
 
           {/* Call to Action */}
