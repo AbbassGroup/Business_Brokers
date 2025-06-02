@@ -49,11 +49,11 @@ const IMAGES = {
     logo2: "/WSQ-NewWeb-Gami-Logo1.jpg", // Gami Chicken
     logo3: "/We-love-ndis-logo_1x.webp", // NDIS
     logo4: "/Degani cafe.jpg", // Degani Cafe
-    burgertory: "https://upload.wikimedia.org/wikipedia/commons/2/2e/Burgertory_logo.png", // Placeholder, replace with local PNG if available
-    jamaicaBlue: "https://upload.wikimedia.org/wikipedia/commons/2/2a/Jamaica_Blue_logo.png", // Placeholder
-    rolld: "https://upload.wikimedia.org/wikipedia/commons/2/2a/Rolld_logo.png", // Placeholder
-    bigals: "https://upload.wikimedia.org/wikipedia/commons/2/2a/Big_Als_Pizza_logo.png", // Placeholder
-    sumosalad: "https://www.cleanpng.com/png-logo-brand-line-point-font-he-man-orko-5501056/preview.html" // Placeholder
+    burgertory: "/burgertory.png", // Burgertory PNG
+    jamaicaBlue: "/jamaocablue.png", // Jamaica Blue PNG
+    rolld: "/rolld.jpg", // Roll'd (JPG in public)
+    bigals: "/bigals.png", // Big Al's PNG
+    sumosalad: "/sumosalad.png" // Sumo Salad PNG
   }
 };
 
@@ -148,18 +148,19 @@ const CategoryBox = styled(Box)(({ theme }) => ({
   },
 }));
 
+const GOLD = '#bfa46f';
+
 const StatsBox = styled(Box)(({ theme }) => ({
-  padding: theme.spacing(3),
+  padding: theme.spacing(2, 0),
   textAlign: 'center',
-  color: 'white',
-  '& .icon': {
-    fontSize: '4rem',
-    marginBottom: theme.spacing(2),
-  },
+  color: 'inherit',
+  background: 'none',
+  boxShadow: 'none',
 }));
 
 const TestimonialCard = styled(Card)(({ theme }) => ({
   height: '100%',
+  minHeight: '520px',
   padding: theme.spacing(4),
   backgroundColor: BRAND.cardBg,
   backdropFilter: 'blur(10px)',
@@ -401,9 +402,70 @@ const LogoCard = styled(Box)(({ theme }) => ({
 }));
 
 const HomePage = () => {
-  const [count, setCount] = useState(0);
-  const [isInView, setIsInView] = useState(false);
-  
+  const [featuredListings, setFeaturedListings] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // State for valuation form
+  const [valuationForm, setValuationForm] = useState({
+    firstName: '',
+    lastName: '',
+    phone: '',
+    email: '',
+  });
+  const [valuationStatus, setValuationStatus] = useState(''); // success or error message
+  const [valuationLoading, setValuationLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchFeaturedListings = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch('http://localhost:5005/api/listings');
+        if (!response.ok) {
+          throw new Error('Failed to fetch listings');
+        }
+        const data = await response.json();
+        // Filter featured listings and ensure we have valid data
+        const featured = Array.isArray(data) 
+          ? data.filter(listing => listing && listing.featured === true).slice(0, 4)
+          : [];
+        console.log('Featured listings:', featured); // Debug log
+        setFeaturedListings(featured);
+      } catch (err) {
+        console.error('Error fetching featured listings:', err);
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchFeaturedListings();
+  }, []);
+
+  // Handle valuation form submit
+  const handleValuationSubmit = async (e) => {
+    e.preventDefault();
+    setValuationStatus('');
+    setValuationLoading(true);
+    try {
+      const res = await fetch('http://localhost:5005/api/valuations', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(valuationForm),
+      });
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error || 'Submission failed');
+      }
+      setValuationStatus('success');
+      setValuationForm({ firstName: '', lastName: '', phone: '', email: '' });
+    } catch (err) {
+      setValuationStatus(err.message || 'Submission failed');
+    } finally {
+      setValuationLoading(false);
+    }
+  };
+
   return (
     <Box sx={{ 
       background: BRAND.background,
@@ -482,7 +544,8 @@ const HomePage = () => {
               >
                 <Button
                   variant="contained"
-                  component={motion.button}
+                  component={Link}
+                  to="/contact"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   sx={{
@@ -506,7 +569,7 @@ const HomePage = () => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.5 }}
             >
-              <ContactForm>
+              <ContactForm component="form" onSubmit={handleValuationSubmit}>
                 <FormTitle>What's my business worth?</FormTitle>
                 <Grid container spacing={2}>
                   <Grid item xs={12} container spacing={2}>
@@ -516,6 +579,9 @@ const HomePage = () => {
                         fullWidth
                         variant="outlined"
                         size="small"
+                        value={valuationForm.firstName}
+                        onChange={e => setValuationForm(f => ({ ...f, firstName: e.target.value }))}
+                        required
                       />
                     </Grid>
                     <Grid item xs={6}>
@@ -524,6 +590,9 @@ const HomePage = () => {
                         fullWidth
                         variant="outlined"
                         size="small"
+                        value={valuationForm.lastName}
+                        onChange={e => setValuationForm(f => ({ ...f, lastName: e.target.value }))}
+                        required
                       />
                     </Grid>
                   </Grid>
@@ -533,6 +602,9 @@ const HomePage = () => {
                       fullWidth
                       variant="outlined"
                       size="small"
+                      value={valuationForm.phone}
+                      onChange={e => setValuationForm(f => ({ ...f, phone: e.target.value }))}
+                      required
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -542,6 +614,9 @@ const HomePage = () => {
                       variant="outlined"
                       size="small"
                       type="email"
+                      value={valuationForm.email}
+                      onChange={e => setValuationForm(f => ({ ...f, email: e.target.value }))}
+                      required
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -556,10 +631,19 @@ const HomePage = () => {
                           backgroundColor: '#45a19d',
                         }
                       }}
+                      type="submit"
+                      disabled={valuationLoading}
                     >
-                      Send
+                      {valuationLoading ? 'Sending...' : 'Send'}
                     </Button>
                   </Grid>
+                  {valuationStatus && (
+                    <Grid item xs={12}>
+                      <Typography color={valuationStatus === 'success' ? 'success.main' : 'error.main'}>
+                        {valuationStatus === 'success' ? 'Thank you! We have received your request.' : valuationStatus}
+                      </Typography>
+                    </Grid>
+                  )}
                 </Grid>
               </ContactForm>
             </motion.div>
@@ -617,121 +701,106 @@ const HomePage = () => {
             </Box>
           </motion.div>
 
-          <Grid container spacing={4}>
-            {[
-              {
-                id: 1,
-                image: IMAGES.featured.cafe,
-                title: "Modern Cafe in CBD",
-                description: "Well-established cafe with prime location and loyal customer base",
-                price: "$450,000"
-              },
-              {
-                id: 2,
-                image: IMAGES.featured.retail,
-                title: "Retail Store Franchise",
-                description: "Profitable retail business with established brand presence",
-                price: "$850,000"
-              },
-              {
-                id: 3,
-                image: IMAGES.featured.restaurant,
-                title: "Fine Dining Restaurant",
-                description: "Award-winning restaurant with excellent reputation",
-                price: "$1,200,000"
-              },
-              {
-                id: 4,
-                image: IMAGES.featured.gym,
-                title: "Premium Fitness Center",
-                description: "Modern gym facility with state-of-the-art equipment",
-                price: "$750,000"
-              }
-            ].map((business, index) => (
-              <Grid item xs={12} sm={6} md={3} key={index}>
-                <motion.div
-                  initial={{ opacity: 0, y: 50 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                >
-                  <PropertyCard>
-                    <CardMedia
-                      component="img"
-                      height="200"
-                      image={business.image}
-                      alt={business.title}
-                    />
-                    <CardContent>
-                      <Box sx={{ flex: 1 }}>
-                        <Typography 
-                          variant="h6" 
-                          sx={{ 
-                            height: '56px',
-                            display: '-webkit-box',
-                            WebkitLineClamp: 2,
-                            WebkitBoxOrient: 'vertical',
-                            overflow: 'hidden',
-                            mb: 1
-                          }}
-                        >
-                          {business.title}
-                        </Typography>
-                        <Typography 
-                          variant="body1" 
-                          sx={{ 
-                            color: BRAND.textGray,
-                            height: '72px',
-                            display: '-webkit-box',
-                            WebkitLineClamp: 3,
-                            WebkitBoxOrient: 'vertical',
-                            overflow: 'hidden',
-                            mb: 2
-                          }}
-                        >
-                          {business.description}
-                        </Typography>
-                      </Box>
-                      <Box sx={{ 
-                        display: 'flex', 
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        gap: 2,
-                        mt: 'auto'
-                      }}>
-                        <Typography 
-                          variant="h5" 
-                          sx={{ 
-                            color: BRAND.blue,
-                            fontWeight: 700 
-                          }}
-                        >
-                          {business.price}
-                        </Typography>
-                        <Button 
-                          component={Link}
-                          to={`/listings/${business.id}`}
-                          variant="contained" 
-                          fullWidth
-                          sx={{
-                            bgcolor: BRAND.blue,
-                            '&:hover': {
-                              bgcolor: BRAND.darkBlue,
-                            },
-                            borderRadius: '8px',
-                            textTransform: 'none',
-                            py: 1
-                          }}
-                        >
-                          View Details
-                        </Button>
-                      </Box>
-                    </CardContent>
-                  </PropertyCard>
-                </motion.div>
-              </Grid>
-            ))}
-          </Grid>
+          {loading ? (
+            <Box sx={{ textAlign: 'center', py: 4 }}>
+              <Typography>Loading featured listings...</Typography>
+            </Box>
+          ) : error ? (
+            <Box sx={{ textAlign: 'center', py: 4 }}>
+              <Typography color="error">{error}</Typography>
+            </Box>
+          ) : featuredListings.length === 0 ? (
+            <Box sx={{ textAlign: 'center', py: 4 }}>
+              <Typography>No featured listings available at the moment.</Typography>
+            </Box>
+          ) : (
+            <Grid container spacing={4}>
+              {featuredListings.map((listing, index) => (
+                <Grid item xs={12} sm={6} md={3} key={listing._id}>
+                  <motion.div
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                  >
+                    <PropertyCard>
+                      <CardMedia
+                        component="img"
+                        height="200"
+                        image={listing.image || 'https://via.placeholder.com/400x200?text=No+Image'}
+                        alt={listing.title}
+                      />
+                      <CardContent>
+                        <Box sx={{ flex: 1 }}>
+                          <Typography
+                            variant="h6"
+                            sx={{
+                              height: '56px',
+                              display: '-webkit-box',
+                              WebkitLineClamp: 2,
+                              WebkitBoxOrient: 'vertical',
+                              overflow: 'hidden',
+                              mb: 1
+                            }}
+                          >
+                            {listing.title}
+                          </Typography>
+                          <Typography
+                            variant="body1"
+                            sx={{
+                              color: BRAND.textGray,
+                              height: '72px',
+                              display: '-webkit-box',
+                              WebkitLineClamp: 3,
+                              WebkitBoxOrient: 'vertical',
+                              overflow: 'hidden',
+                              mb: 2
+                            }}
+                          >
+                            {listing.about?.replace(/<[^>]+>/g, '').slice(0, 120) || 'No description available.'}
+                          </Typography>
+                        </Box>
+                        <Box sx={{
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'center',
+                          gap: 2,
+                          mt: 'auto'
+                        }}>
+                          <Typography
+                            variant="h5"
+                            sx={{
+                              color: BRAND.blue,
+                              fontWeight: 700
+                            }}
+                          >
+                            {listing.price && !listing.price.startsWith('$') ? `$${listing.price}` : listing.price}
+                          </Typography>
+                          <Button
+                            component={Link}
+                            to={`/listings/${listing._id}`}
+                            variant="contained"
+                            fullWidth
+                            sx={{
+                              bgcolor: BRAND.blue,
+                              '&:hover': {
+                                bgcolor: BRAND.darkBlue,
+                              },
+                              borderRadius: '8px',
+                              textTransform: 'none',
+                              py: 1
+                            }}
+                          >
+                            View Details
+                          </Button>
+                        </Box>
+                      </CardContent>
+                    </PropertyCard>
+                  </motion.div>
+                </Grid>
+              ))}
+            </Grid>
+          )}
         </Container>
       </SectionWrapper>
 
@@ -786,15 +855,16 @@ const HomePage = () => {
       </SectionWrapper>
 
       {/* Statistics Section */}
-      <Box 
+      <Box
         component={motion.div}
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 1 }}
-        sx={{ 
-          py: { xs: 6, md: 10 }, 
+        sx={{
+          py: { xs: 6, md: 10 },
           position: 'relative',
+          background: `linear-gradient(135deg, #6ee7e7 0%, #b2f1ec 100%)`,
           '&::before': {
             content: '""',
             position: 'absolute',
@@ -802,9 +872,10 @@ const HomePage = () => {
             left: 0,
             right: 0,
             bottom: 0,
-            background: `linear-gradient(135deg, ${BRAND.blue} 0%, rgba(86,193,188,0.9) 100%)`,
-            opacity: 0.97,
-          }
+            background: `linear-gradient(135deg, #6ee7e7 0%, #b2f1ec 100%)`,
+            opacity: 1,
+            zIndex: 0,
+          },
         }}
       >
         <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
@@ -817,21 +888,31 @@ const HomePage = () => {
             ].map((stat, index) => (
               <Grid item xs={12} sm={6} md={3} key={index}>
                 <StatsBox>
-                  <Typography variant="h3" sx={{ 
-                    fontWeight: 700, 
-                    mb: 1, 
-                    fontSize: '3.5rem',
-                    fontFamily: "'Roboto Mono', monospace",
-                    letterSpacing: '0.05em',
-                    color: 'white'
-                  }}>
+                  <Typography
+                    sx={{
+                      fontWeight: 700,
+                      mb: 1,
+                      fontSize: { xs: '2.5rem', md: '3.2rem' },
+                      color: BRAND.blue,
+                      fontFamily: 'inherit',
+                      letterSpacing: '0.02em',
+                      lineHeight: 1.1,
+                    }}
+                  >
                     <CountUp end={stat.number} duration={2.5} />{stat.suffix}
                   </Typography>
-                  <Typography variant="h6" sx={{ fontSize: '1.15rem', color: 'white', fontWeight: 500 }}>
+                  <Typography
+                    sx={{
+                      fontSize: { xs: '1.1rem', md: '1.25rem' },
+                      color: '#232323',
+                      fontWeight: 600,
+                      mt: 0.5,
+                    }}
+                  >
                     {stat.label}
                   </Typography>
                   {stat.sublabel && (
-                    <Typography variant="body2" sx={{ color: 'white', opacity: 0.85 }}>
+                    <Typography sx={{ color: '#232323', opacity: 0.7, fontSize: '1rem', mt: 0.5 }}>
                       {stat.sublabel}
                     </Typography>
                   )}
@@ -904,8 +985,8 @@ const HomePage = () => {
                       controls
                       width="100%"
                       style={{ 
-                        maxHeight: '320px', 
-                        objectFit: 'cover', 
+                        maxHeight: '480px', 
+                        objectFit: 'contain', 
                         borderRadius: '10px',
                         boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
                       }}

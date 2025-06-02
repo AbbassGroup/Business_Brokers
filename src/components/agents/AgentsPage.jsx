@@ -24,6 +24,8 @@ const BRAND = {
 };
 
 const AgentCard = styled(Card)(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
   height: '100%',
   background: 'white',
   borderRadius: '16px',
@@ -80,7 +82,10 @@ const AgentsPage = () => {
         'Licenced business broker',
         'Strong domestic & international network',
         'SME business sale expert'
-      ]
+      ],
+      email: 'asif.ahammed@abbass.group',
+      phone: '0451 918 152',
+      linkedin: ''
     },
     {
       name: 'Freddie Wong',
@@ -93,12 +98,15 @@ const AgentsPage = () => {
         'Licenced business broker',
         'Strong financial analysis & valuations',
         'SME business sale expert'
-      ]
+      ],
+      email: 'freddie.wong@abbass.group',
+      phone: '0452 655 608',
+      linkedin: 'https://www.linkedin.com/in/freddie-wong-3926b388/'
     },
     {
       name: 'Hicham Nahas',
       title: 'Business Broker',
-      image: '/hicham.png',
+      image: '/IMG_3531.png',
       location: 'Melbourne',
       specialization: 'SME Businesses',
       bio: `I'm a business broker who has had a successful track record of selling businesses in the SME space. I have a strong financial and valuation background and focus on providing exceptional customer service.`,
@@ -106,7 +114,10 @@ const AgentsPage = () => {
         'Licenced business broker',
         'Strong financial analysis',
         'SME business sale expert'
-      ]
+      ],
+      email: 'hicham.nahas@abbass.group',
+      phone: '0423 241 225',
+      linkedin: 'https://www.linkedin.com/in/hicham-nahas-9a1bb5202/'
     }
   ];
 
@@ -124,7 +135,7 @@ const AgentsPage = () => {
       <Container maxWidth="lg" sx={{ py: { xs: 8, md: 12 } }}>
         <Grid container spacing={4}>
           {agents.map((agent, index) => (
-            <Grid item xs={12} md={6} key={index}>
+            <Grid item xs={12} md={4} key={index} style={{ height: '100%' }}>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -132,79 +143,102 @@ const AgentsPage = () => {
               >
                 <AgentCard>
                   <AgentImage src={agent.image} alt={agent.name} />
-                  <CardContent sx={{ p: 4 }}>
-                    <Typography variant="h4" sx={{ fontWeight: 600, mb: 1, color: BRAND.textDark }}>
-                      {agent.name}
-                    </Typography>
-                    <Typography variant="h6" sx={{ color: BRAND.blue, mb: 2 }}>
-                      {agent.title}
-                    </Typography>
-                    
-                    <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
-                      <LocationOnIcon sx={{ color: BRAND.blue, mr: 1 }} />
-                      <Typography variant="body1" sx={{ color: BRAND.textGray }}>
-                        {agent.location}
+                  <CardContent sx={{ p: 4, display: 'flex', flexDirection: 'column', height: '100%' }}>
+                    <Box sx={{ flexGrow: 1 }}>
+                      <Typography variant="h4" sx={{ fontWeight: 600, mb: 1, color: BRAND.textDark }}>
+                        {agent.name}
                       </Typography>
-                    </Box>
-                    
-                    <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
-                      <BusinessIcon sx={{ color: BRAND.blue, mr: 1 }} />
-                      <Typography variant="body1" sx={{ color: BRAND.textGray }}>
-                        {agent.specialization}
+                      <Typography variant="h6" sx={{ color: BRAND.blue, mb: 2 }}>
+                        {agent.title}
                       </Typography>
-                    </Box>
-
-                    <Typography variant="body1" sx={{ color: BRAND.textGray, my: 2 }}>
-                      {agent.bio}
-                    </Typography>
-
-                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 3 }}>
-                      {agent.tags.map((tag, idx) => (
-                        <Box
-                          key={idx}
-                          sx={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            bgcolor: BRAND.lightBlue,
-                            px: 2,
-                            py: 0.5,
-                            borderRadius: '15px',
-                            fontSize: '0.95rem',
-                            color: BRAND.blue,
-                            fontWeight: 500
-                          }}
-                        >
-                          <StarIcon sx={{ color: BRAND.blue, fontSize: '0.9rem', mr: 0.5 }} />
-                          {tag}
-                        </Box>
-                      ))}
-                    </Box>
-
-                    <Box sx={{ display: 'flex', gap: 1 }}>
-                      {[
-                        { icon: <LinkedInIcon />, label: 'LinkedIn' },
-                        { icon: <EmailIcon />, label: 'Email' },
-                        { icon: <PhoneIcon />, label: 'Call' }
-                      ].map((action, idx) => (
-                        <motion.div
-                          key={idx}
-                          whileHover={{ scale: 1.1 }}
-                          whileTap={{ scale: 0.95 }}
-                        >
-                          <IconButton
+                      <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+                        <LocationOnIcon sx={{ color: BRAND.blue, mr: 1 }} />
+                        <Typography variant="body1" sx={{ color: BRAND.textGray }}>
+                          {agent.location}
+                        </Typography>
+                      </Box>
+                      <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+                        <BusinessIcon sx={{ color: BRAND.blue, mr: 1 }} />
+                        <Typography variant="body1" sx={{ color: BRAND.textGray }}>
+                          {agent.specialization}
+                        </Typography>
+                      </Box>
+                      <Typography variant="body1" sx={{ color: BRAND.textGray, my: 2 }}>
+                        {agent.bio}
+                      </Typography>
+                      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 3 }}>
+                        {agent.tags.map((tag, idx) => (
+                          <Box
+                            key={idx}
                             sx={{
+                              display: 'flex',
+                              alignItems: 'center',
                               bgcolor: BRAND.lightBlue,
+                              px: 2,
+                              py: 0.5,
+                              borderRadius: '15px',
+                              fontSize: '0.95rem',
                               color: BRAND.blue,
-                              '&:hover': {
-                                bgcolor: BRAND.blue,
-                                color: 'white'
-                              }
+                              fontWeight: 500
                             }}
                           >
-                            {action.icon}
-                          </IconButton>
-                        </motion.div>
-                      ))}
+                            <StarIcon sx={{ color: BRAND.blue, fontSize: '0.9rem', mr: 0.5 }} />
+                            {tag}
+                          </Box>
+                        ))}
+                      </Box>
+                    </Box>
+                    <Box sx={{ display: 'flex', gap: 1, mt: 'auto' }}>
+                      <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
+                        <IconButton
+                          component="a"
+                          href={agent.linkedin}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          sx={{
+                            bgcolor: BRAND.lightBlue,
+                            color: BRAND.blue,
+                            '&:hover': {
+                              bgcolor: BRAND.blue,
+                              color: 'white'
+                            }
+                          }}
+                        >
+                          <LinkedInIcon />
+                        </IconButton>
+                      </motion.div>
+                      <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
+                        <IconButton
+                          component="a"
+                          href={`mailto:${agent.email}`}
+                          sx={{
+                            bgcolor: BRAND.lightBlue,
+                            color: BRAND.blue,
+                            '&:hover': {
+                              bgcolor: BRAND.blue,
+                              color: 'white'
+                            }
+                          }}
+                        >
+                          <EmailIcon />
+                        </IconButton>
+                      </motion.div>
+                      <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
+                        <IconButton
+                          component="a"
+                          href={`tel:${agent.phone.replace(/\s/g, '')}`}
+                          sx={{
+                            bgcolor: BRAND.lightBlue,
+                            color: BRAND.blue,
+                            '&:hover': {
+                              bgcolor: BRAND.blue,
+                              color: 'white'
+                            }
+                          }}
+                        >
+                          <PhoneIcon />
+                        </IconButton>
+                      </motion.div>
                     </Box>
                   </CardContent>
                 </AgentCard>

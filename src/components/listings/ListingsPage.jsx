@@ -80,7 +80,14 @@ const ListingsPage = () => {
   useEffect(() => {
     fetch('http://localhost:5005/api/listings')
       .then(res => res.json())
-      .then(data => setListings(data));
+      .then(data => {
+        if (Array.isArray(data)) {
+          setListings(data);
+        } else {
+          setListings([]);
+        }
+      })
+      .catch(() => setListings([]));
   }, []);
 
   const categories = [
@@ -88,7 +95,7 @@ const ListingsPage = () => {
     { id: 'automotive', name: 'Automotive' },
     { id: 'beauty', name: 'Beauty/Health' },
     { id: 'education', name: 'Education/Training' },
-    { id: 'cafes', name: 'Cafe\'s, Restaurants & Takeaway' },
+    { id: 'cafes', name: "Cafe's, Restaurants & Takeaway" },
     { id: 'transport', name: 'Transport & Logistics' },
     { id: 'trade', name: 'Trade' },
     { id: 'catering', name: 'Catering & Events' },
@@ -106,6 +113,23 @@ const ListingsPage = () => {
     { id: 'hobart', name: 'Hobart' },
     { id: 'sydney', name: 'Sydney' }
   ];
+
+  // Filter listings by selected category and location
+  const filteredListings = listings.filter(listing => {
+    // Category filter
+    let categoryMatch = true;
+    if (selectedCategory !== 'all') {
+      const selectedCategoryObj = categories.find(cat => cat.id === selectedCategory);
+      categoryMatch = selectedCategoryObj ? listing.category === selectedCategoryObj.name : true;
+    }
+    // Location filter
+    let locationMatch = true;
+    if (selectedLocation !== 'all') {
+      const selectedLocationObj = locations.find(loc => loc.id === selectedLocation);
+      locationMatch = selectedLocationObj ? (listing.location && listing.location.toLowerCase().includes(selectedLocationObj.name.toLowerCase())) : true;
+    }
+    return categoryMatch && locationMatch;
+  });
 
   return (
     <>
@@ -232,7 +256,7 @@ const ListingsPage = () => {
               }}
             >
               <Grid container spacing={3}>
-                {listings.map((listing) => (
+                {Array.isArray(filteredListings) && filteredListings.map((listing) => (
                   <Grid item xs={12} sm={12} md={6} lg={6} key={listing._id}>
                     <ListingCard
                       component={motion.div}

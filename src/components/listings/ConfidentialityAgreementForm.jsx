@@ -68,15 +68,44 @@ const countries = [
 const ConfidentialityAgreementForm = ({ open, onClose, listingTitle }) => {
   const [form, setForm] = useState({ ...initialForm, business: listingTitle || '' });
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
-    // Here you would send the form data to your backend
+    setError('');
+    setLoading(true);
+    try {
+      const res = await fetch('http://localhost:5005/api/confidentiality', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          firstName: form.firstName,
+          lastName: form.lastName,
+          email: form.email,
+          phone: form.mobile,
+          country: form.country,
+          address: form.address,
+          suburb: form.suburb,
+          state: form.state,
+          postalCode: form.postalCode,
+          businessTitle: form.business,
+        }),
+      });
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error || 'Submission failed');
+      }
+      setSubmitted(true);
+    } catch (err) {
+      setError(err.message || 'Submission failed');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -250,9 +279,14 @@ const ConfidentialityAgreementForm = ({ open, onClose, listingTitle }) => {
                   }}
                 />
               </Grid>
+              {error && (
+                <Grid item xs={12}>
+                  <Alert severity="error" sx={{ mt: 2 }}>{error}</Alert>
+                </Grid>
+              )}
               <Grid item xs={12}>
-                <Button type="submit" variant="contained" fullWidth sx={{ bgcolor: BRAND.blue, color: 'white', fontWeight: 600, borderRadius: 2, fontFamily: 'Fahkwang, Gilroy, sans-serif', '&:hover': { bgcolor: BRAND.darkBlue } }}>
-                  Submit
+                <Button type="submit" variant="contained" fullWidth sx={{ bgcolor: BRAND.blue, color: 'white', fontWeight: 600, borderRadius: 2, fontFamily: 'Fahkwang, Gilroy, sans-serif', '&:hover': { bgcolor: BRAND.darkBlue } }} disabled={loading}>
+                  {loading ? 'Submitting...' : 'Submit'}
                 </Button>
               </Grid>
             </Grid>

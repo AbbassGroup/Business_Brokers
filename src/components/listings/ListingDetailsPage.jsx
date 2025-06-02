@@ -83,18 +83,6 @@ const ListingDetailsPage = () => {
 
   return (
     <Box sx={{ bgcolor: BRAND.background, minHeight: '100vh' }}>
-      {/* Breadcrumbs */}
-      <Container maxWidth="md" sx={{ pt: 2 }}>
-        <Breadcrumbs aria-label="breadcrumb" sx={{ mb: 2 }}>
-          <Link component={RouterLink} underline="hover" color="inherit" to="/">
-            Home
-          </Link>
-          <Link component={RouterLink} underline="hover" color="inherit" to="/listings">
-            Listings
-          </Link>
-          <Typography color="text.primary">{listing.title}</Typography>
-        </Breadcrumbs>
-      </Container>
       {/* Hero Section with gradient overlay and animation */}
       <Box sx={{
         position: 'relative',
@@ -161,41 +149,30 @@ const ListingDetailsPage = () => {
           <Typography variant="h5" sx={{ color: BRAND.blue, fontWeight: 600, mb: 2 }}>
             {listing.price}
           </Typography>
-          <Typography variant="body2" sx={{ color: BRAND.textGray, mb: 2 }}>
-            <b>Location:</b> {listing.location}
-          </Typography>
-          {/* Summary */}
-          <Typography variant="h6" sx={{ fontWeight: 600, mt: 3, mb: 1 }}>
-            Summary
-          </Typography>
-          <Typography variant="body1" sx={{ color: BRAND.textGray, mb: 2 }}>
-            {listing.summary}
-          </Typography>
+          {/* Suburb/Town and Location */}
+          <Box sx={{ display: 'flex', gap: 3, mb: 2, flexWrap: 'wrap' }}>
+            {listing.suburb && (
+              <Paper sx={{ px: 2, py: 1, background: '#e0f7fa', color: BRAND.blue, borderRadius: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
+                <RoomIcon sx={{ fontSize: 18, mr: 0.5 }} />
+                <Typography variant="body2" sx={{ fontWeight: 600 }}>Suburb/Town:</Typography>
+                <Typography variant="body2" sx={{ ml: 1 }}>{listing.suburb}</Typography>
+              </Paper>
+            )}
+            {listing.location && (
+              <Paper sx={{ px: 2, py: 1, background: '#f3e5f5', color: '#7b1fa2', borderRadius: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
+                <RoomIcon sx={{ fontSize: 18, mr: 0.5 }} />
+                <Typography variant="body2" sx={{ fontWeight: 600 }}>Location:</Typography>
+                <Typography variant="body2" sx={{ ml: 1 }}>{listing.location}</Typography>
+              </Paper>
+            )}
+          </Box>
           {/* About the Business */}
           <Typography variant="h6" sx={{ fontWeight: 600, mt: 3, mb: 1 }}>
             About the Business
           </Typography>
-          <Typography variant="body1" sx={{ color: BRAND.textGray, mb: 2 }}>
-            {listing.about}
-          </Typography>
-          {/* Key Features with icons */}
-          <Typography variant="h6" sx={{ fontWeight: 600, mt: 3, mb: 1 }}>
-            Key Features
-          </Typography>
-          <Box component="ul" sx={{ pl: 0, mb: 2, listStyle: 'none' }}>
-            {listing.keyFeatures && listing.keyFeatures.map((feature, idx) => (
-              <li key={idx} style={{ display: 'flex', alignItems: 'center', marginBottom: 8, color: BRAND.textGray, fontSize: '1rem' }}>
-                {getFeatureIcon(feature)} {feature}
-              </li>
-            ))}
+          <Box sx={{ color: BRAND.textGray, mb: 2 }}>
+            <div dangerouslySetInnerHTML={{ __html: listing.about }} />
           </Box>
-          {/* Why This Opportunity? */}
-          <Typography variant="h6" sx={{ fontWeight: 600, mt: 3, mb: 1 }}>
-            Why This Opportunity?
-          </Typography>
-          <Typography variant="body1" sx={{ color: BRAND.textGray, mb: 2 }}>
-            {listing.whyOpportunity}
-          </Typography>
           {/* Map placeholder */}
           <Box sx={{ mt: 4, mb: 2 }}>
             <Typography variant="h6" sx={{ fontWeight: 600, mb: 1 }}>

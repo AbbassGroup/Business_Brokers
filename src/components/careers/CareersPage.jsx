@@ -70,6 +70,7 @@ const CareersPage = () => {
   });
 
   const [fileName, setFileName] = useState('');
+  const [submitStatus, setSubmitStatus] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -90,10 +91,32 @@ const CareersPage = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log(formData);
+    setSubmitStatus('');
+    const data = new FormData();
+    data.append('name', formData.name);
+    data.append('email', formData.email);
+    data.append('phone', formData.phone);
+    data.append('coverLetter', formData.coverLetter);
+    if (formData.resume) {
+      data.append('resume', formData.resume);
+    }
+    try {
+      const res = await fetch('http://localhost:5005/api/careers/apply', {
+        method: 'POST',
+        body: data
+      });
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || 'Submission failed');
+      }
+      setSubmitStatus('success');
+      setFormData({ name: '', email: '', phone: '', resume: null, coverLetter: '' });
+      setFileName('');
+    } catch (err) {
+      setSubmitStatus(err.message || 'Submission failed');
+    }
   };
 
   const benefits = [
@@ -292,6 +315,16 @@ const CareersPage = () => {
                   >
                     Submit Application
                   </Button>
+                  {submitStatus === 'success' && (
+                    <Typography color="success.main" sx={{ mt: 2 }}>
+                      Thank you! Your application has been submitted.
+                    </Typography>
+                  )}
+                  {submitStatus && submitStatus !== 'success' && (
+                    <Typography color="error.main" sx={{ mt: 2 }}>
+                      {submitStatus}
+                    </Typography>
+                  )}
                 </Grid>
               </Grid>
             </form>

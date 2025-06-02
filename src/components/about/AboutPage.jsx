@@ -312,22 +312,16 @@ const AboutPage = () => {
 
   const testimonials = [
     {
-      quote: "Working with Abbass Business Brokers was a game-changer for our business sale. Their professionalism and expertise made the entire process smooth and successful.",
-      author: "David Williams",
-      position: "Former Business Owner",
-      company: "Melbourne Cafe Group"
+      quote: "Abbass and his team are highly professional and knowledgeable. He genuinely care about his clients. He provides clear, honest advice and goes the extra mile to help people achieve their property and business goals. His expertise, integrity and dedication make him a trusted advisor in the industry. Highly recommended!",
+      author: "~Huss Khorsravi"
     },
     {
-      quote: "The team's attention to detail and market knowledge helped us secure the perfect buyer for our manufacturing business. Highly recommended!",
-      author: "Sarah Chen",
-      position: "CEO",
-      company: "Industrial Solutions Ltd"
+      quote: "My experience with Abbass Group was exceptional. As someone new to the process of purchasing a business, Sadeq made everything smooth and seamless. He was informative, responsive, and took the time to answer all of my questions in detail. I would definitely work with them again.",
+      author: "~Dan Laki"
     },
     {
-      quote: "Their valuation expertise and negotiation skills were instrumental in achieving our desired outcome. A truly professional team.",
-      author: "Michael Thompson",
-      position: "Managing Director",
-      company: "Retail Solutions Australia"
+      quote: "Sadeq and his team are incredible. They are quite knowledgeable and diligent. Their service is incredible. All my communication were promptly responded to. All my questions and queries were satisfactorily addressed. Made the entire process smooth and assuring. Great team to have by your corner regardless what your needs are. Highly recommend Sadeq and his team.",
+      author: "~Nik Tribhuvan"
     }
   ];
 
@@ -878,12 +872,6 @@ const AboutPage = () => {
                       </Typography>
                       <Typography variant="h6" sx={{ color: BRAND.textDark }}>
                         {testimonial.author}
-                      </Typography>
-                      <Typography variant="subtitle2" sx={{ color: BRAND.blue }}>
-                        {testimonial.position}
-                      </Typography>
-                      <Typography variant="body2" sx={{ color: BRAND.textGray }}>
-                        {testimonial.company}
                       </Typography>
                     </CardContent>
                   </TestimonialCard>

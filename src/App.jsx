@@ -12,6 +12,8 @@ import ContactPage from './components/contact/ContactPage';
 import CareersPage from './components/careers/CareersPage';
 import ListingDetailsPage from './components/listings/ListingDetailsPage';
 import AdminDashboard from './components/admin/AdminDashboard';
+import Resources from './components/resources/Resources';
+import FranchisePage from './components/franchise/FranchisePage';
 import './App.css';
 
 const theme = createTheme({
@@ -106,8 +108,9 @@ function App() {
           <Route path="/agents" element={<AgentsPage />} />
           <Route path="/careers" element={<CareersPage />} />
           <Route path="/contact" element={<ContactPage />} />
-          <Route path="/blog" element={<div>Blog</div>} />
+          <Route path="/resources" element={<Resources />} />
           <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/franchise" element={<FranchisePage />} />
         </Routes>
       </Router>
     </ThemeProvider>
