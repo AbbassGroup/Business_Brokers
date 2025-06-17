@@ -45,6 +45,7 @@ const IMAGES = {
     client4: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=150&q=80"
   },
   companies: {
+<<<<<<< HEAD
     cheesecakeShop: "/car/Cheesecake Shop.png",
     gamiChicken: "/car/Gami Chicken.jpeg",
     ndis: "/car/NDIS.png",
@@ -54,11 +55,23 @@ const IMAGES = {
     rolld: "/car/Rolld.png",
     bigAls: "/car/Big Als.png",
     sumoSalad: "/car/Sumo Salad.png"
+=======
+    logo1: "/Cheesecake-shop-logo-2024.png", // Cheesecake Shop
+    logo2: "/WSQ-NewWeb-Gami-Logo1.jpg", // Gami Chicken
+    logo3: "/We-love-ndis-logo_1x.webp", // NDIS
+    logo4: "/Degani cafe.jpg", // Degani Cafe
+    burgertory: "/burgertory.png", // Burgertory PNG
+    jamaicaBlue: "/jamaocablue.png", // Jamaica Blue PNG
+    rolld: "/rolld.jpg", // Roll'd (JPG in public)
+    bigals: "/bigals.png", // Big Al's PNG
+    sumosalad: "/sumosalad.png" // Sumo Salad PNG
+>>>>>>> 1ea9416f620c0e44ed6360ef37f06664796df824
   }
 };
 
 // Add company URLs for linking
 const COMPANY_LINKS = [
+<<<<<<< HEAD
   { url: "https://www.cheesecake.com.au/", logo: IMAGES.companies.cheesecakeShop, alt: "Cheesecake Shop" },
   { url: "https://www.gamichicken.com.au/", logo: IMAGES.companies.gamiChicken, alt: "Gami Chicken" },
   { url: "https://www.ndis.gov.au/", logo: IMAGES.companies.ndis, alt: "NDIS" },
@@ -68,6 +81,17 @@ const COMPANY_LINKS = [
   { url: "https://rolld.com.au/", logo: IMAGES.companies.rolld, alt: "Roll'd Vietnamese" },
   { url: "https://www.bigalpizza.com.au/", logo: IMAGES.companies.bigAls, alt: "Big Al's Pizza" },
   { url: "https://sumosalad.com/", logo: IMAGES.companies.sumoSalad, alt: "Sumo Salad" }
+=======
+  "https://www.cheesecake.com.au/", // Cheesecake Shop
+  "https://www.gamichicken.com.au/", // Gami Chicken
+  "https://www.ndis.gov.au/", // NDIS
+  "https://degani.com.au/", // Degani Cafe
+  "https://www.burgertory.com.au/", // Burgertory
+  "https://jamaicablue.com.au/", // Jamaica Blue
+  "https://rolld.com.au/", // Roll'd Vietnamese
+  "https://www.bigalpizza.com.au/", // Big Al's Pizza
+  "https://sumosalad.com/" // Sumo Salad
+>>>>>>> 1ea9416f620c0e44ed6360ef37f06664796df824
 ];
 
 const SearchBar = styled(Box)(({ theme }) => ({
@@ -832,6 +856,7 @@ const HomePage = () => {
               { icon: <BuildIcon sx={{ fontSize: 60, color: BRAND.blue }} />, title: 'Services', listings: 'Available Listings' },
             ].map((category, index) => (
               <Grid item xs={12} sm={6} md={3} key={index}>
+<<<<<<< HEAD
                 <CategoryCard
                   component={Link}
                   to={`/listings?category=${category.title}`}
@@ -843,6 +868,9 @@ const HomePage = () => {
                     }
                   }}
                 >
+=======
+                <CategoryCard>
+>>>>>>> 1ea9416f620c0e44ed6360ef37f06664796df824
                   <Box sx={{ mb: 2 }}>
                     {category.icon}
                   </Box>
@@ -893,7 +921,11 @@ const HomePage = () => {
             {[
               { number: 40, suffix: '+', label: 'Years of combined industry experience' },
               { number: 1200, suffix: '+', label: 'Qualified buyers in our database' },
+<<<<<<< HEAD
               { number: 20000, suffix: '+', label: 'Monthly marketing reach'},
+=======
+              { number: 20000, suffix: '+', label: 'Monthly marketing reach', sublabel: 'Active buyers per month' },
+>>>>>>> 1ea9416f620c0e44ed6360ef37f06664796df824
               { number: 10, suffix: '+', label: 'Industry sectors served' },
             ].map((stat, index) => (
               <Grid item xs={12} sm={6} md={3} key={index}>
@@ -1021,6 +1053,7 @@ const HomePage = () => {
             ))}
           </Grid>
 
+<<<<<<< HEAD
           {/* Trusted By Leading Companies */}
           <Box sx={{ py: { xs: 6, md: 8 }, bgcolor: 'white' }}>
             <Container maxWidth="lg">
@@ -1032,10 +1065,27 @@ const HomePage = () => {
                   fontWeight: 600,
                   color: BRAND.textDark,
                   mb: 6
+=======
+          {/* Trusted By Companies Section */}
+          <Box sx={{ mt: 10, textAlign: 'center' }}>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            >
+              <Typography
+                variant="h5"
+                sx={{
+                  fontWeight: 600,
+                  color: BRAND.textGray,
+                  mb: 4
+>>>>>>> 1ea9416f620c0e44ed6360ef37f06664796df824
                 }}
               >
                 Trusted By Leading Companies
               </Typography>
+<<<<<<< HEAD
               <Marquee gradient={false} speed={40}>
                 {COMPANY_LINKS.map((company, index) => (
                   <Box
@@ -1065,6 +1115,26 @@ const HomePage = () => {
                 ))}
               </Marquee>
             </Container>
+=======
+            </motion.div>
+            <Box sx={{ maxWidth: 1200, mx: 'auto', position: 'relative' }}>
+              <Marquee gradient={false} speed={40} pauseOnHover={true} style={{ minHeight: 160 }}>
+                {COMPANY_LINKS.map((link, index) => (
+                  <Box key={index} sx={{ mx: 2, display: 'inline-block' }}>
+                    <a href={link} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
+                      <LogoCard>
+                        <CompanyLogo
+                          src={Object.values(IMAGES.companies)[index]}
+                          alt={`Company ${index + 1}`}
+                          style={{ maxHeight: '60px', maxWidth: '120px', width: 'auto', height: 'auto' }}
+                        />
+                      </LogoCard>
+                    </a>
+                  </Box>
+                ))}
+              </Marquee>
+            </Box>
+>>>>>>> 1ea9416f620c0e44ed6360ef37f06664796df824
           </Box>
 
           {/* Call to Action */}

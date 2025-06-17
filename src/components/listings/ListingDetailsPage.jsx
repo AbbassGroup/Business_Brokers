@@ -7,7 +7,10 @@ import StarIcon from '@mui/icons-material/Star';
 import PeopleIcon from '@mui/icons-material/People';
 import { motion } from 'framer-motion';
 import ConfidentialityAgreementForm from './ConfidentialityAgreementForm';
+<<<<<<< HEAD
 import EOIForm from './EOIForm';
+=======
+>>>>>>> 1ea9416f620c0e44ed6360ef37f06664796df824
 
 const BRAND = {
   blue: '#56C1BC',
@@ -53,7 +56,10 @@ const ListingDetailsPage = () => {
   const [listing, setListing] = React.useState(null);
   const [loading, setLoading] = React.useState(true);
   const [confidentialityOpen, setConfidentialityOpen] = React.useState(false);
+<<<<<<< HEAD
   const [eoiOpen, setEoiOpen] = React.useState(false);
+=======
+>>>>>>> 1ea9416f620c0e44ed6360ef37f06664796df824
 
   React.useEffect(() => {
     fetch(`http://localhost:5005/api/listings/${id}`)
@@ -120,6 +126,7 @@ const ListingDetailsPage = () => {
       </Box>
 
       <Container maxWidth="lg" sx={{ mt: 2, mb: 6 }}>
+<<<<<<< HEAD
         <Button 
           variant="outlined" 
           sx={{ 
@@ -134,13 +141,20 @@ const ListingDetailsPage = () => {
           }} 
           onClick={() => navigate('/listings')}
         >
+=======
+        <Button variant="outlined" sx={{ mb: 3 }} onClick={() => navigate('/listings')}>
+>>>>>>> 1ea9416f620c0e44ed6360ef37f06664796df824
           ← Back to Listings
         </Button>
         <Box sx={{ display: 'flex', gap: 2, mb: 3, flexWrap: 'wrap' }}>
           <Button variant="contained" color="primary" sx={{ bgcolor: BRAND.blue, '&:hover': { bgcolor: BRAND.darkBlue } }} onClick={() => setConfidentialityOpen(true)}>
             Submit Confidentiality Agreement →
           </Button>
+<<<<<<< HEAD
           <Button variant="contained" color="primary" sx={{ bgcolor: BRAND.blue, '&:hover': { bgcolor: BRAND.darkBlue } }} onClick={() => setEoiOpen(true)}>
+=======
+          <Button variant="contained" color="primary" sx={{ bgcolor: BRAND.blue, '&:hover': { bgcolor: BRAND.darkBlue } }}>
+>>>>>>> 1ea9416f620c0e44ed6360ef37f06664796df824
             EOI Form →
           </Button>
           <Button variant="outlined" color="primary" sx={{ borderColor: BRAND.blue, color: BRAND.blue }}>
@@ -226,6 +240,7 @@ const ListingDetailsPage = () => {
             </Paper>
           </Box>
         </Box>
+<<<<<<< HEAD
         <EOIForm
           open={eoiOpen}
           onClose={() => setEoiOpen(false)}
@@ -236,6 +251,9 @@ const ListingDetailsPage = () => {
           onClose={() => setConfidentialityOpen(false)}
           listingTitle={listing?.title}
         />
+=======
+        <ConfidentialityAgreementForm open={confidentialityOpen} onClose={() => setConfidentialityOpen(false)} listingTitle={listing.title} />
+>>>>>>> 1ea9416f620c0e44ed6360ef37f06664796df824
       </Container>
     </Box>
   );

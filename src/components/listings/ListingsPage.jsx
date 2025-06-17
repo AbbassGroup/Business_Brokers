@@ -3,7 +3,11 @@ import { Container, Box, Typography, Grid, Card, CardContent, CardMedia, Button,
 import { motion } from 'framer-motion';
 import Footer from '../common/Footer';
 import HeroSection from '../common/HeroSection';
+<<<<<<< HEAD
 import { Link, useSearchParams } from 'react-router-dom';
+=======
+import { Link } from 'react-router-dom';
+>>>>>>> 1ea9416f620c0e44ed6360ef37f06664796df824
 import RoomIcon from '@mui/icons-material/Room';
 import LabelIcon from '@mui/icons-material/Label';
 
@@ -20,6 +24,7 @@ const BRAND = {
   textGray: '#64748b'
 };
 
+<<<<<<< HEAD
 // Category mapping from main categories to detailed categories
 const CATEGORY_MAPPING = {
   'Retail': ['retail'],
@@ -28,6 +33,8 @@ const CATEGORY_MAPPING = {
   'Services': ['beauty', 'education', 'trade', 'healthcare']
 };
 
+=======
+>>>>>>> 1ea9416f620c0e44ed6360ef37f06664796df824
 const FilterSection = styled(Box)(({ theme }) => ({
   padding: theme.spacing(3),
   backgroundColor: BRAND.cardBg,
@@ -81,12 +88,17 @@ const FilterLabel = styled(FormControlLabel)(({ theme }) => ({
 }));
 
 const ListingsPage = () => {
+<<<<<<< HEAD
   const [searchParams, setSearchParams] = useSearchParams();
   const [selectedCategory, setSelectedCategory] = useState(searchParams.get('category') || 'all');
+=======
+  const [selectedCategory, setSelectedCategory] = useState('all');
+>>>>>>> 1ea9416f620c0e44ed6360ef37f06664796df824
   const [selectedLocation, setSelectedLocation] = useState('all');
   const [listings, setListings] = useState([]);
 
   useEffect(() => {
+<<<<<<< HEAD
     // Get category from URL parameters
     const categoryParam = searchParams.get('category');
     if (categoryParam) {
@@ -95,6 +107,8 @@ const ListingsPage = () => {
   }, [searchParams]);
 
   useEffect(() => {
+=======
+>>>>>>> 1ea9416f620c0e44ed6360ef37f06664796df824
     fetch('http://localhost:5005/api/listings')
       .then(res => res.json())
       .then(data => {
@@ -131,6 +145,7 @@ const ListingsPage = () => {
     { id: 'sydney', name: 'Sydney' }
   ];
 
+<<<<<<< HEAD
   // Handle category change
   const handleCategoryChange = (event) => {
     const category = event.target.value;
@@ -143,11 +158,14 @@ const ListingsPage = () => {
     setSearchParams(searchParams);
   };
 
+=======
+>>>>>>> 1ea9416f620c0e44ed6360ef37f06664796df824
   // Filter listings by selected category and location
   const filteredListings = listings.filter(listing => {
     // Category filter
     let categoryMatch = true;
     if (selectedCategory !== 'all') {
+<<<<<<< HEAD
       // Check if the selected category is one of the main categories
       if (CATEGORY_MAPPING[selectedCategory]) {
         // If it's a main category, check if the listing's category ID matches any in the mapping
@@ -160,6 +178,11 @@ const ListingsPage = () => {
       }
     }
     
+=======
+      const selectedCategoryObj = categories.find(cat => cat.id === selectedCategory);
+      categoryMatch = selectedCategoryObj ? listing.category === selectedCategoryObj.name : true;
+    }
+>>>>>>> 1ea9416f620c0e44ed6360ef37f06664796df824
     // Location filter
     let locationMatch = true;
     if (selectedLocation !== 'all') {
@@ -230,7 +253,11 @@ const ListingsPage = () => {
                 <FormControl component="fieldset" sx={{ width: '100%' }}>
                   <RadioGroup
                     value={selectedCategory}
+<<<<<<< HEAD
                     onChange={handleCategoryChange}
+=======
+                    onChange={(e) => setSelectedCategory(e.target.value)}
+>>>>>>> 1ea9416f620c0e44ed6360ef37f06664796df824
                   >
                     <FilterLabel
                       value="all"

@@ -84,7 +84,11 @@ const Footer = () => {
               </Typography>
               <Typography
                 variant="subtitle1"
+<<<<<<< HEAD
                   sx={{ 
+=======
+                sx={{
+>>>>>>> 1ea9416f620c0e44ed6360ef37f06664796df824
                   color: BRAND.blue,
                   fontWeight: 500,
                   fontSize: '1.1rem',
@@ -92,8 +96,13 @@ const Footer = () => {
                   textAlign: { xs: 'center', md: 'left' },
                   mb: 0.5,
                   fontFamily: 'Fahkwang, sans-serif',
+<<<<<<< HEAD
                   }}
                 >
+=======
+                }}
+              >
+>>>>>>> 1ea9416f620c0e44ed6360ef37f06664796df824
                 BUSINESS BROKERS
               </Typography>
             </Box>
@@ -119,7 +128,11 @@ const Footer = () => {
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.2 }}>
               <Typography variant="body1" sx={{ color: 'white', fontSize: '1.05rem' }}>
                 Unit 102/24 Albert Rd,<br />South Melbourne VIC 3205
+<<<<<<< HEAD
             </Typography>
+=======
+              </Typography>
+>>>>>>> 1ea9416f620c0e44ed6360ef37f06664796df824
               <FooterLink href="tel:(03)91031317">(03) 9103 1317</FooterLink>
               <FooterLink href="mailto:info@abbass.group">info@abbass.group</FooterLink>
             </Box>
@@ -129,7 +142,11 @@ const Footer = () => {
           <Grid item xs={12} md={2}>
             <Typography variant="h6" sx={{ fontWeight: 700, mb: 2 }}>Useful Links</Typography>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.2 }}>
+<<<<<<< HEAD
               <FooterLink component={RouterLink} to="/terms-and-conditions">Terms & Conditions</FooterLink>
+=======
+              <FooterLink component={RouterLink} to="/terms">Terms & Conditions</FooterLink>
+>>>>>>> 1ea9416f620c0e44ed6360ef37f06664796df824
               <FooterLink component={RouterLink} to="/privacy">Privacy Policy</FooterLink>
             </Box>
           </Grid>

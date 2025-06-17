@@ -14,8 +14,11 @@ import ListingDetailsPage from './components/listings/ListingDetailsPage';
 import AdminDashboard from './components/admin/AdminDashboard';
 import Resources from './components/resources/Resources';
 import FranchisePage from './components/franchise/FranchisePage';
+<<<<<<< HEAD
 import TermsAndConditions from './components/TermsAndConditions';
 import PrivacyPolicy from './components/PrivacyPolicy';
+=======
+>>>>>>> 1ea9416f620c0e44ed6360ef37f06664796df824
 import './App.css';
 
 const theme = createTheme({
@@ -113,8 +116,11 @@ function App() {
           <Route path="/resources" element={<Resources />} />
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/franchise" element={<FranchisePage />} />
+<<<<<<< HEAD
           <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
           <Route path="/privacy" element={<PrivacyPolicy />} />
+=======
+>>>>>>> 1ea9416f620c0e44ed6360ef37f06664796df824
         </Routes>
       </Router>
     </ThemeProvider>

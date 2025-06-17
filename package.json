@@ -6,14 +6,20 @@
     "@base-ui-components/react": "^1.0.0-alpha.8",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
+<<<<<<< HEAD
     "@heroicons/react": "^2.2.0",
+=======
+>>>>>>> 1ea9416f620c0e44ed6360ef37f06664796df824
     "@mui/base": "^5.0.0-beta.35",
     "@mui/icons-material": "^5.15.11",
     "@mui/material": "^5.17.1",
     "@mui/styled-engine": "^5.15.11",
     "@mui/system": "^5.15.11",
     "@mui/utils": "^5.15.11",
+<<<<<<< HEAD
     "@mui/x-date-pickers": "^8.5.2",
+=======
+>>>>>>> 1ea9416f620c0e44ed6360ef37f06664796df824
     "@sendgrid/mail": "^8.1.5",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -35,10 +41,16 @@
     "cors": "^2.8.5",
     "date-fns": "^4.1.0",
     "framer-motion": "^12.6.3",
+<<<<<<< HEAD
     "multer": "^2.0.1",
     "nodemailer": "^7.0.3",
     "nth-check": "^2.1.1",
     "pdf-lib": "^1.17.1",
+=======
+    "multer": "^2.0.0",
+    "nodemailer": "^7.0.3",
+    "nth-check": "^2.1.1",
+>>>>>>> 1ea9416f620c0e44ed6360ef37f06664796df824
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-fast-marquee": "^1.6.5",

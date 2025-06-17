@@ -113,7 +113,11 @@ const ServicesProcessPage = () => {
 
   const services = [
     {
+<<<<<<< HEAD
       title: 'Business Appraisals',
+=======
+      title: 'Business Valuation',
+>>>>>>> 1ea9416f620c0e44ed6360ef37f06664796df824
       description: 'Get an accurate assessment of your business worth with our comprehensive valuation services. We use industry-standard methods to determine the true market value.',
       icon: <AssessmentIcon />,
       image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80',
@@ -139,7 +143,11 @@ const ServicesProcessPage = () => {
       ]
     },
     {
+<<<<<<< HEAD
       title: 'Mergers & Acquisitions',
+=======
+      title: 'Business Acquisitions',
+>>>>>>> 1ea9416f620c0e44ed6360ef37f06664796df824
       description: 'Looking to buy a business? We help you find the perfect opportunity that matches your criteria and guide you through the acquisition process.',
       icon: <SearchIcon />,
       image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=800&q=80',
@@ -152,7 +160,11 @@ const ServicesProcessPage = () => {
       ]
     },
     {
+<<<<<<< HEAD
       title: 'Business Advisory',
+=======
+      title: 'Financial Advisory',
+>>>>>>> 1ea9416f620c0e44ed6360ef37f06664796df824
       description: 'Our financial experts provide guidance on business structure, tax planning, and financial strategies to maximize your business value.',
       icon: <MonetizationOnIcon />,
       image: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=800&q=80',
@@ -165,7 +177,11 @@ const ServicesProcessPage = () => {
       ]
     },
     {
+<<<<<<< HEAD
       title: 'Exit Strategy',
+=======
+      title: 'Business Brokerage',
+>>>>>>> 1ea9416f620c0e44ed6360ef37f06664796df824
       description: 'We act as intermediaries between buyers and sellers, ensuring a smooth transaction process with confidentiality and professionalism.',
       icon: <BusinessIcon />,
       image: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=800&q=80',
@@ -401,9 +417,30 @@ const ServicesProcessPage = () => {
                     <Typography variant="h5" gutterBottom sx={{ fontWeight: 600, textAlign: 'center' }}>
                       {service.title}
                     </Typography>
+<<<<<<< HEAD
                     <Typography variant="body1" color="text.secondary" sx={{ mb: 0, textAlign: 'center' }}>
                       {service.description}
                     </Typography>
+=======
+                    <Typography variant="body1" color="text.secondary" sx={{ mb: 3, textAlign: 'center' }}>
+                      {service.description}
+                    </Typography>
+                    <Box sx={{ textAlign: 'center' }}>
+                      <Button
+                        variant="outlined"
+                        sx={{
+                          borderColor: BRAND.blue,
+                          color: BRAND.blue,
+                          '&:hover': {
+                            borderColor: BRAND.blue,
+                            backgroundColor: 'rgba(86, 193, 188, 0.1)',
+                          },
+                        }}
+                      >
+                        Learn More
+                      </Button>
+                    </Box>
+>>>>>>> 1ea9416f620c0e44ed6360ef37f06664796df824
                   </CardContent>
                 </ServiceCard>
               </Grid>

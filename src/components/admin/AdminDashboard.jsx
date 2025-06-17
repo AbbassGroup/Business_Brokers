@@ -33,7 +33,10 @@ import BusinessIcon from '@mui/icons-material/Business';
 import StarIcon from '@mui/icons-material/Star';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
+<<<<<<< HEAD
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+=======
+>>>>>>> 1ea9416f620c0e44ed6360ef37f06664796df824
 import { format } from 'date-fns';
 import { styled } from '@mui/material/styles';
 
@@ -626,6 +629,7 @@ const AdminDashboard = () => {
                       />
                     </Grid>
             <Grid item xs={12} sm={6}><TextField label="Price" name="price" value={form.price} onChange={e => setForm({ ...form, price: e.target.value })} fullWidth /></Grid>
+<<<<<<< HEAD
             <Grid item xs={12}>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                 <TextField label="Image URL" name="image" value={form.image} onChange={e => setForm({ ...form, image: e.target.value })} fullWidth />
@@ -664,6 +668,9 @@ const AdminDashboard = () => {
                 </Box>
               )}
             </Grid>
+=======
+            <Grid item xs={12}><TextField label="Image URL" name="image" value={form.image} onChange={e => setForm({ ...form, image: e.target.value })} fullWidth /></Grid>
+>>>>>>> 1ea9416f620c0e44ed6360ef37f06664796df824
                     <Grid item xs={12}>
                       <Typography variant="subtitle1" sx={{ mb: 1, fontWeight: 500 }}>About</Typography>
                       <AboutEditor value={form.about} onChange={value => setForm({ ...form, about: value })} />
