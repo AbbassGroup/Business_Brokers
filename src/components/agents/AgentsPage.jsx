@@ -26,7 +26,7 @@ const BRAND = {
 const AgentCard = styled(Card)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
-  height: '100%',
+  height: '700px',
   background: 'white',
   borderRadius: '16px',
   overflow: 'hidden',
@@ -40,7 +40,7 @@ const AgentCard = styled(Card)(({ theme }) => ({
 
 const AgentImage = styled('img')({
   width: '110%',
-  height: '550px',
+  height: '320px',
   objectFit: 'cover',
   borderBottom: `4px solid ${BRAND.blue}`
 });
@@ -141,10 +141,10 @@ const AgentsPage = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.2 }}
               >
-                <AgentCard>
+                <AgentCard style={{ height: '100%' }}>
                   <AgentImage src={agent.image} alt={agent.name} />
                   <CardContent sx={{ p: 4, display: 'flex', flexDirection: 'column', height: '100%' }}>
-                    <Box sx={{ flexGrow: 1 }}>
+                    <Box>
                       <Typography variant="h4" sx={{ fontWeight: 600, mb: 1, color: BRAND.textDark }}>
                         {agent.name}
                       </Typography>
@@ -163,9 +163,11 @@ const AgentsPage = () => {
                           {agent.specialization}
                         </Typography>
                       </Box>
-                      <Typography variant="body1" sx={{ color: BRAND.textGray, my: 2 }}>
+                      <Typography variant="body1" sx={{ color: BRAND.textGray, my: 2, display: '-webkit-box', WebkitLineClamp: 7, WebkitBoxOrient: 'vertical', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                         {agent.bio}
                       </Typography>
+                    </Box>
+                    <Box sx={{ mt: 'auto' }}>
                       <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 3 }}>
                         {agent.tags.map((tag, idx) => (
                           <Box
@@ -187,58 +189,58 @@ const AgentsPage = () => {
                           </Box>
                         ))}
                       </Box>
-                    </Box>
-                    <Box sx={{ display: 'flex', gap: 1, mt: 'auto' }}>
-                      <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
-                        <IconButton
-                          component="a"
-                          href={agent.linkedin}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          sx={{
-                            bgcolor: BRAND.lightBlue,
-                            color: BRAND.blue,
-                            '&:hover': {
-                              bgcolor: BRAND.blue,
-                              color: 'white'
-                            }
-                          }}
-                        >
-                          <LinkedInIcon />
-                        </IconButton>
-                      </motion.div>
-                      <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
-                        <IconButton
-                          component="a"
-                          href={`mailto:${agent.email}`}
-                          sx={{
-                            bgcolor: BRAND.lightBlue,
-                            color: BRAND.blue,
-                            '&:hover': {
-                              bgcolor: BRAND.blue,
-                              color: 'white'
-                            }
-                          }}
-                        >
-                          <EmailIcon />
-                        </IconButton>
-                      </motion.div>
-                      <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
-                        <IconButton
-                          component="a"
-                          href={`tel:${agent.phone.replace(/\s/g, '')}`}
-                          sx={{
-                            bgcolor: BRAND.lightBlue,
-                            color: BRAND.blue,
-                            '&:hover': {
-                              bgcolor: BRAND.blue,
-                              color: 'white'
-                            }
-                          }}
-                        >
-                          <PhoneIcon />
-                        </IconButton>
-                      </motion.div>
+                      <Box sx={{ display: 'flex', gap: 1 }}>
+                        <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
+                          <IconButton
+                            component="a"
+                            href={agent.linkedin}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            sx={{
+                              bgcolor: BRAND.lightBlue,
+                              color: BRAND.blue,
+                              '&:hover': {
+                                bgcolor: BRAND.blue,
+                                color: 'white'
+                              }
+                            }}
+                          >
+                            <LinkedInIcon />
+                          </IconButton>
+                        </motion.div>
+                        <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
+                          <IconButton
+                            component="a"
+                            href={`mailto:${agent.email}`}
+                            sx={{
+                              bgcolor: BRAND.lightBlue,
+                              color: BRAND.blue,
+                              '&:hover': {
+                                bgcolor: BRAND.blue,
+                                color: 'white'
+                              }
+                            }}
+                          >
+                            <EmailIcon />
+                          </IconButton>
+                        </motion.div>
+                        <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
+                          <IconButton
+                            component="a"
+                            href={`tel:${agent.phone.replace(/\s/g, '')}`}
+                            sx={{
+                              bgcolor: BRAND.lightBlue,
+                              color: BRAND.blue,
+                              '&:hover': {
+                                bgcolor: BRAND.blue,
+                                color: 'white'
+                              }
+                            }}
+                          >
+                            <PhoneIcon />
+                          </IconButton>
+                        </motion.div>
+                      </Box>
                     </Box>
                   </CardContent>
                 </AgentCard>

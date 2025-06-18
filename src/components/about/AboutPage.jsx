@@ -21,6 +21,9 @@ import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
 import DirectionsRunIcon from '@mui/icons-material/DirectionsRun';
 import SchoolIcon from '@mui/icons-material/School';
 import Footer from '../common/Footer';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay } from 'swiper/modules';
+import 'swiper/css';
 
 const BRAND = {
   blue: '#56C1BC',
@@ -312,17 +315,45 @@ const AboutPage = () => {
 
   const testimonials = [
     {
-      quote: "Abbass and his team are highly professional and knowledgeable. He genuinely care about his clients. He provides clear, honest advice and goes the extra mile to help people achieve their property and business goals. His expertise, integrity and dedication make him a trusted advisor in the industry. Highly recommended!",
-      author: "~Huss Khorsravi"
+      text: `I wanted to express my gratitude to Asif for his exceptional assistance. He worked diligently to provide me with all the necessary information, answering my questions thoroughly and professionally. His dedication and expertise were truly impressive. Thank you, Asif, for your outstanding support!`,
+      author: 'Kiran',
+      position: 'Business Buyer',
     },
     {
-      quote: "My experience with Abbass Group was exceptional. As someone new to the process of purchasing a business, Sadeq made everything smooth and seamless. He was informative, responsive, and took the time to answer all of my questions in detail. I would definitely work with them again.",
-      author: "~Dan Laki"
+      text: `My experience with Abbass Group was exceptional. As someone new to the process of purchasing a business, Sadeq made everything smooth and seamless. He was informative, responsive, and took the time to answer all of my questions in detail. I would definitely work with them again.`,
+      author: 'Dan',
+      position: 'Business Buyer',
     },
     {
-      quote: "Sadeq and his team are incredible. They are quite knowledgeable and diligent. Their service is incredible. All my communication were promptly responded to. All my questions and queries were satisfactorily addressed. Made the entire process smooth and assuring. Great team to have by your corner regardless what your needs are. Highly recommend Sadeq and his team.",
-      author: "~Nik Tribhuvan"
-    }
+      text: `Abbass and his team are highly professional and knowledgeable. He genuinely care about his clients. He provides clear, honest advice and goes the extra mile to help people achieve their property and business goals. His expertise, integrity and dedication make him a trusted advisor in the industry. Highly recommended!`,
+      author: 'Huss',
+      position: 'Business Owner',
+    },
+    {
+      text: `Sadeq and his team are incredible. They are quite knowledgeable and diligent. Their service is incredible. All my communication were promptly responded to. All my questions and queries were satisfactorily addressed. Made the entire process smooth and assuring. Great team to have by your corner regardless what your needs are. Highly recommend Sadeq and his team.`,
+      author: 'Nik',
+      position: 'Business Owner',
+    },
+    {
+      text: `I had a great experience with the Abbas Group. The team was outstanding! very professional, friendly, and welcoming from the start. They were always willing to help, offering clear advice and support whenever I needed it. I was impressed by how knowledgeable and approachable everyone was, making it easy to learn and feel comfortable. Abbas Group has a fantastic team that truly stands out for their dedication and teamwork. I highly recommend them!`,
+      author: 'Agust',
+      position: 'Business Owner',
+    },
+    {
+      text: `The team's negotiation skills and level of service and commitment was unparalleled. Highly recommended!`,
+      author: 'Jason',
+      position: 'Business Buyer',
+    },
+    {
+      text: `Definitely recommend Sadeq and the team at Abbass Group for brokerage services for your business. From the initial meeting, what was meant to be a very difficult and emotional process was met with the utmost professionalism and sincerity, unlike a lot of the others out there. Always clear in their communication with weekly updates, but also candid in the market feedback they observe. I was able to rest assured knowing these guys were working around the clock to fulfill a quick sale of my business which is what I had requested. Not to mention all for a very reasonable fee. Thank you team and all the best.`,
+      author: 'Jordan',
+      position: 'Business Owner',
+    },
+    {
+      text: `Abbass Brokers was instrumental in helping us find the perfect buyer. Their`,
+      author: 'Adisha',
+      position: 'Business Owner',
+    },
   ];
 
   const { scrollYProgress } = useScroll();
@@ -380,30 +411,6 @@ const AboutPage = () => {
             >
               A boutique firm delivering tailored, high-impact outcomes for business owners
             </Typography>
-            <Box sx={{ mt: 2 }}>
-              <Button
-                variant="contained"
-                size="large"
-                sx={{
-                  backgroundColor: BRAND.blue,
-                  color: 'white',
-                  px: 4,
-                  py: 2,
-                  fontSize: { xs: '1rem', md: '1.1rem' },
-                  fontWeight: 600,
-                  borderRadius: '30px',
-                  textTransform: 'none',
-                  boxShadow: '0 4px 14px rgba(86, 193, 188, 0.4)',
-                  '&:hover': {
-                    backgroundColor: BRAND.darkBlue,
-                    transform: 'translateY(-2px)',
-                    boxShadow: '0 6px 20px rgba(86, 193, 188, 0.6)'
-                  }
-                }}
-              >
-                Learn More About Us
-              </Button>
-            </Box>
           </motion.div>
         </Container>
       </HeroSection>
@@ -604,34 +611,65 @@ const AboutPage = () => {
 
                 <FadeInWhenVisible delay={0.5}>
                   <Box sx={{ mt: 4, display: 'flex', gap: 2 }}>
-                    {[
-                      { icon: <LinkedInIcon />, label: 'LinkedIn' },
-                      { icon: <EmailIcon />, label: 'Email' },
-                      { icon: <PhoneIcon />, label: 'Contact' }
-                    ].map((item, index) => (
-                      <motion.div
-                        key={index}
-                        whileHover={{ scale: 1.1, y: -5 }}
-                        whileTap={{ scale: 0.95 }}
+                    <motion.div whileHover={{ scale: 1.1, y: -5 }} whileTap={{ scale: 0.95 }}>
+                      <Button
+                        variant="contained"
+                        startIcon={<LinkedInIcon />}
+                        sx={{
+                          backgroundColor: BRAND.blue,
+                          color: 'white',
+                          px: 3,
+                          py: 1.5,
+                          borderRadius: '10px',
+                          '&:hover': { backgroundColor: BRAND.darkBlue }
+                        }}
+                        component="a"
+                        href="https://www.linkedin.com/in/sadeqabbass/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="LinkedIn Profile"
                       >
-                        <Button
-                          variant="contained"
-                          startIcon={item.icon}
-                          sx={{
-                            backgroundColor: BRAND.blue,
-                            color: 'white',
-                            px: 3,
-                            py: 1.5,
-                            borderRadius: '10px',
-                            '&:hover': {
-                              backgroundColor: BRAND.darkBlue
-                            }
-                          }}
-                        >
-                          {item.label}
-                        </Button>
-                      </motion.div>
-                    ))}
+                        LinkedIn
+                      </Button>
+                    </motion.div>
+                    <motion.div whileHover={{ scale: 1.1, y: -5 }} whileTap={{ scale: 0.95 }}>
+                      <Button
+                        variant="contained"
+                        startIcon={<EmailIcon />}
+                        sx={{
+                          backgroundColor: BRAND.blue,
+                          color: 'white',
+                          px: 3,
+                          py: 1.5,
+                          borderRadius: '10px',
+                          '&:hover': { backgroundColor: BRAND.darkBlue }
+                        }}
+                        component="a"
+                        href="mailto:sadeq@abbass.group"
+                        aria-label="Email Sadeq Abbass"
+                      >
+                        Email
+                      </Button>
+                    </motion.div>
+                    <motion.div whileHover={{ scale: 1.1, y: -5 }} whileTap={{ scale: 0.95 }}>
+                      <Button
+                        variant="contained"
+                        startIcon={<PhoneIcon />}
+                        sx={{
+                          backgroundColor: BRAND.blue,
+                          color: 'white',
+                          px: 3,
+                          py: 1.5,
+                          borderRadius: '10px',
+                          '&:hover': { backgroundColor: BRAND.darkBlue }
+                        }}
+                        component="a"
+                        href="tel:0391031317"
+                        aria-label="Call Sadeq Abbass"
+                      >
+                        Contact
+                      </Button>
+                    </motion.div>
                   </Box>
                 </FadeInWhenVisible>
               </Box>
@@ -845,41 +883,50 @@ const AboutPage = () => {
               }
             }}
           >
-            What Our Clients Say
+            Hear from our clients
           </Typography>
         </FadeInWhenVisible>
-        <StaggerChildren>
-          <Grid container spacing={4}>
-            {testimonials.map((testimonial, index) => (
-              <Grid item xs={12} md={4} key={index}>
-                <motion.div
-                  variants={{
-                    hidden: { opacity: 0, y: 20 },
-                    visible: { opacity: 1, y: 0 }
-                  }}
-                >
-                  <TestimonialCard>
-                    <CardContent sx={{ p: 4 }}>
-                      <motion.div
-                        initial={{ opacity: 0.3 }}
-                        whileHover={{ opacity: 1, scale: 1.1 }}
-                        transition={{ duration: 0.3 }}
-                      >
-                        <FormatQuoteIcon sx={{ fontSize: 40, color: BRAND.blue, mb: 2 }} />
-                      </motion.div>
-                      <Typography variant="body1" sx={{ color: BRAND.textGray, mb: 3, minHeight: '120px' }}>
-                        "{testimonial.quote}"
-                      </Typography>
-                      <Typography variant="h6" sx={{ color: BRAND.textDark }}>
-                        {testimonial.author}
-                      </Typography>
-                    </CardContent>
-                  </TestimonialCard>
-                </motion.div>
-              </Grid>
-            ))}
-          </Grid>
-        </StaggerChildren>
+        <Swiper
+          modules={[Autoplay]}
+          spaceBetween={30}
+          slidesPerView={1}
+          loop={true}
+          autoplay={{ delay: 4000, disableOnInteraction: false }}
+          style={{ paddingBottom: 40 }}
+          breakpoints={{
+            900: { slidesPerView: 2 },
+            1200: { slidesPerView: 3 },
+          }}
+        >
+          {testimonials.map((testimonial, index) => (
+            <SwiperSlide key={index}>
+              <Card sx={{
+                height: '100%',
+                minHeight: 340,
+                maxHeight: 340,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: 4,
+                borderRadius: '16px',
+                boxShadow: '0 8px 24px rgba(0,0,0,0.12)',
+                position: 'relative',
+              }}>
+                <FormatQuoteIcon sx={{ fontSize: 60, color: 'rgba(86, 193, 188, 0.2)', mb: 2 }} />
+                <Typography variant="body1" sx={{ mb: 3, fontStyle: 'italic', color: BRAND.textGray, minHeight: 120, maxHeight: 120, overflow: 'auto' }}>
+                  "{testimonial.text}"
+                </Typography>
+                <Typography variant="h6" sx={{ fontWeight: 600, color: BRAND.textDark }}>
+                  {testimonial.author}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  {testimonial.position}
+                </Typography>
+              </Card>
+            </SwiperSlide>
+          ))}
+        </Swiper>
       </Container>
 
       {/* Contact CTA Section */}

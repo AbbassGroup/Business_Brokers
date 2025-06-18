@@ -113,7 +113,7 @@ const ServicesProcessPage = () => {
 
   const services = [
     {
-      title: 'Business Valuation',
+      title: 'Business Appraisals',
       description: 'Get an accurate assessment of your business worth with our comprehensive valuation services. We use industry-standard methods to determine the true market value.',
       icon: <AssessmentIcon />,
       image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80',
@@ -139,7 +139,7 @@ const ServicesProcessPage = () => {
       ]
     },
     {
-      title: 'Business Acquisitions',
+      title: 'Mergers & Acquisitions',
       description: 'Looking to buy a business? We help you find the perfect opportunity that matches your criteria and guide you through the acquisition process.',
       icon: <SearchIcon />,
       image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=800&q=80',
@@ -152,7 +152,7 @@ const ServicesProcessPage = () => {
       ]
     },
     {
-      title: 'Financial Advisory',
+      title: 'Business Advisory',
       description: 'Our financial experts provide guidance on business structure, tax planning, and financial strategies to maximize your business value.',
       icon: <MonetizationOnIcon />,
       image: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=800&q=80',
@@ -165,7 +165,7 @@ const ServicesProcessPage = () => {
       ]
     },
     {
-      title: 'Business Brokerage',
+      title: 'Exit Strategy',
       description: 'We act as intermediaries between buyers and sellers, ensuring a smooth transaction process with confidentiality and professionalism.',
       icon: <BusinessIcon />,
       image: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=800&q=80',
@@ -404,21 +404,6 @@ const ServicesProcessPage = () => {
                     <Typography variant="body1" color="text.secondary" sx={{ mb: 3, textAlign: 'center' }}>
                       {service.description}
                     </Typography>
-                    <Box sx={{ textAlign: 'center' }}>
-                      <Button
-                        variant="outlined"
-                        sx={{
-                          borderColor: BRAND.blue,
-                          color: BRAND.blue,
-                          '&:hover': {
-                            borderColor: BRAND.blue,
-                            backgroundColor: 'rgba(86, 193, 188, 0.1)',
-                          },
-                        }}
-                      >
-                        Learn More
-                      </Button>
-                    </Box>
                   </CardContent>
                 </ServiceCard>
               </Grid>
@@ -536,7 +521,7 @@ const ServicesProcessPage = () => {
               fontSize: { xs: '2rem', md: '2.5rem' },
             }}
           >
-            What Our Clients Say
+            Hear from our clients
           </Typography>
           <Grid container spacing={4}>
             {testimonials.map((testimonial, index) => (

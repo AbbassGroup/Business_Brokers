@@ -112,7 +112,7 @@ const ConfidentialityAgreementForm = ({ open, onClose, listingTitle }) => {
     <Modal open={open} onClose={onClose} aria-labelledby="confidentiality-agreement-modal">
       <Box sx={style}>
         <Box sx={{ textAlign: 'center', mb: 2 }}>
-          <img src="/logo192.png" alt="ABBASS Business Brokers" style={{ width: 80, marginBottom: 8 }} />
+          <img src="/mark.png" alt="ABBASS Mark" style={{ width: 80, marginBottom: 8 }} />
           <Typography variant="h5" fontWeight={700} mb={2} sx={{ color: BRAND.textDark, fontFamily: 'Fahkwang, Gilroy, sans-serif' }}>
             Confidentiality Agreement
           </Typography>

@@ -70,6 +70,9 @@ const ContactPage = () => {
     subject: '',
     message: ''
   });
+  const [submitting, setSubmitting] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(null);
+  const [submitError, setSubmitError] = useState(null);
 
   const handleChange = (e) => {
     setFormData({
@@ -78,10 +81,25 @@ const ContactPage = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log(formData);
+    setSubmitting(true);
+    setSubmitSuccess(null);
+    setSubmitError(null);
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+      if (!res.ok) throw new Error('Failed to send message');
+      setSubmitSuccess('Your message has been sent! We will get back to you soon.');
+      setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
+    } catch (err) {
+      setSubmitError('There was an error sending your message. Please try again later.');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const contactInfo = [
@@ -98,7 +116,7 @@ const ContactPage = () => {
     {
       icon: <EmailIcon sx={{ fontSize: 40, color: BRAND.blue }} />,
       title: 'Email Us',
-      details: ['info@abbassbrokers.com', 'support@abbassbrokers.com']
+      details: ['info@abbass.group']
     }
   ];
 
@@ -112,15 +130,15 @@ const ContactPage = () => {
 
       {/* Contact Information Section */}
       <Container maxWidth="lg" sx={{ py: { xs: 8, md: 12 }, mb: 6 }}>
-        <Grid container spacing={4} sx={{ mb: 8 }}>
+        <Grid container spacing={4} sx={{ mb: 8 }} alignItems="stretch">
           {contactInfo.map((info, index) => (
-            <Grid item xs={12} md={4} key={index}>
+            <Grid item xs={12} md={4} key={index} sx={{ height: '100%' }}>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.2 }}
               >
-                <ContactCard>
+                <ContactCard sx={{ height: '100%', minHeight: 240, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                   <CardContent sx={{ textAlign: 'center', p: 4 }}>
                     <Box sx={{ mb: 2 }}>
                       {info.icon}
@@ -174,6 +192,12 @@ const ContactPage = () => {
                 Send Us a Message
               </Typography>
               <form onSubmit={handleSubmit}>
+                {submitSuccess && (
+                  <Box sx={{ mb: 2, color: 'green', fontWeight: 600 }}>{submitSuccess}</Box>
+                )}
+                {submitError && (
+                  <Box sx={{ mb: 2, color: 'red', fontWeight: 600 }}>{submitError}</Box>
+                )}
                 <Grid container spacing={3}>
                   <Grid item xs={12} sm={6}>
                     <StyledTextField
@@ -251,8 +275,9 @@ const ContactPage = () => {
                           },
                           width: { xs: '100%', sm: 'auto' }
                         }}
+                        disabled={submitting}
                       >
-                        Send Message
+                        {submitting ? 'Sending...' : 'Send Message'}
                       </Button>
                     </Box>
                   </Grid>

@@ -129,7 +129,7 @@ const Footer = () => {
           <Grid item xs={12} md={2}>
             <Typography variant="h6" sx={{ fontWeight: 700, mb: 2 }}>Useful Links</Typography>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.2 }}>
-              <FooterLink component={RouterLink} to="/terms">Terms & Conditions</FooterLink>
+              <FooterLink component={RouterLink} to="/terms-and-conditions">Terms & Conditions</FooterLink>
               <FooterLink component={RouterLink} to="/privacy">Privacy Policy</FooterLink>
             </Box>
           </Grid>

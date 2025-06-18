@@ -3,6 +3,12 @@ import { Container, Grid, Card, CardMedia, CardContent, Typography, Button, Box 
 import { Link } from 'react-router-dom';
 import Footer from '../common/Footer';
 
+const BRAND = {
+  blue: '#56C1BC',
+  darkBlue: '#45a19d',
+  textDark: '#2c3e50',
+};
+
 const blogs = [
   {
     title: 'Your Guide to Selling a Business in Australia: How ABBASS Business Brokers Can Help',
@@ -603,12 +609,33 @@ const Resources = () => {
         </Typography>
       </Box>
       <Container maxWidth="lg" sx={{ pb: { xs: 6, md: 10 } }}>
-        <Typography variant="h3" sx={{ fontWeight: 700, mb: 6, textAlign: 'center', color: '#2c3e50' }}>
-          Resources & Blog
+        <Typography
+          variant="h2"
+          align="center"
+          sx={{
+            fontSize: { xs: '2rem', md: '2.5rem' },
+            fontWeight: 700,
+            mb: 6,
+            color: BRAND.textDark,
+            position: 'relative',
+            '&::after': {
+              content: '""',
+              position: 'absolute',
+              bottom: '-16px',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              width: '80px',
+              height: '4px',
+              background: BRAND.blue,
+              borderRadius: '2px'
+            }
+          }}
+        >
+          Blogs
         </Typography>
         <Grid container spacing={4}>
-          {blogs.map((blog, idx) => (
-            <Grid item xs={12} sm={6} md={4} key={idx}>
+          {blogs.map((blog, index) => (
+            <Grid item xs={12} md={6} key={index}>
               <Card sx={{ 
                 height: '100%', 
                 display: 'flex', 
@@ -633,28 +660,28 @@ const Resources = () => {
                   <Typography variant="body2" sx={{ color: '#64748b', mb: 2 }}>
                     {blog.summary}
                   </Typography>
-                  {idx === 0 ? (
+                  {index === 0 ? (
                     <Button
                       sx={{ color: '#56C1BC', fontWeight: 500, textTransform: 'none', pl: 0 }}
                       onClick={() => setShowFirstBlog(true)}
                     >
                       READ MORE &raquo;
                     </Button>
-                  ) : idx === 1 ? (
+                  ) : index === 1 ? (
                     <Button
                       sx={{ color: '#56C1BC', fontWeight: 500, textTransform: 'none', pl: 0 }}
                       onClick={() => setShowSecondBlog(true)}
                     >
                       READ MORE &raquo;
                     </Button>
-                  ) : idx === 2 ? (
+                  ) : index === 2 ? (
                     <Button
                       sx={{ color: '#56C1BC', fontWeight: 500, textTransform: 'none', pl: 0 }}
                       onClick={() => setShowThirdBlog(true)}
                     >
                       READ MORE &raquo;
                     </Button>
-                  ) : idx === 3 ? (
+                  ) : index === 3 ? (
                     <Button
                       sx={{ color: '#56C1BC', fontWeight: 500, textTransform: 'none', pl: 0 }}
                       onClick={() => setShowFourthBlog(true)}

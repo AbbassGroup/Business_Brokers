@@ -14,6 +14,8 @@ import ListingDetailsPage from './components/listings/ListingDetailsPage';
 import AdminDashboard from './components/admin/AdminDashboard';
 import Resources from './components/resources/Resources';
 import FranchisePage from './components/franchise/FranchisePage';
+import TermsAndConditions from './components/legal/TermsAndConditions';
+import PrivacyPolicy from './components/legal/PrivacyPolicy';
 import './App.css';
 
 const theme = createTheme({
@@ -111,6 +113,8 @@ function App() {
           <Route path="/resources" element={<Resources />} />
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/franchise" element={<FranchisePage />} />
+          <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+          <Route path="/privacy" element={<PrivacyPolicy />} />
         </Routes>
       </Router>
     </ThemeProvider>

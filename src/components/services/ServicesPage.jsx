@@ -226,21 +226,6 @@ const ServicesPage = () => {
                     <Typography variant="body1" color="text.secondary" sx={{ mb: 3, textAlign: 'center' }}>
                       {service.description}
                     </Typography>
-                    <Box sx={{ textAlign: 'center' }}>
-                      <Button
-                        variant="outlined"
-                        sx={{
-                          borderColor: BRAND.blue,
-                          color: BRAND.blue,
-                          '&:hover': {
-                            borderColor: BRAND.blue,
-                            backgroundColor: 'rgba(86, 193, 188, 0.1)',
-                          },
-                        }}
-                      >
-                        Learn More
-                      </Button>
-                    </Box>
                   </CardContent>
                 </ServiceCard>
               </Grid>
@@ -261,7 +246,7 @@ const ServicesPage = () => {
               fontSize: { xs: '2rem', md: '2.5rem' },
             }}
           >
-            What Our Clients Say
+            Hear from our clients
           </Typography>
           <Grid container spacing={4}>
             {testimonials.map((testimonial, index) => (

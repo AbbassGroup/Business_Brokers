@@ -3,7 +3,7 @@ import { Container, Box, Typography, Grid, Card, CardContent, CardMedia, Button,
 import { motion } from 'framer-motion';
 import Footer from '../common/Footer';
 import HeroSection from '../common/HeroSection';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import RoomIcon from '@mui/icons-material/Room';
 import LabelIcon from '@mui/icons-material/Label';
 
@@ -73,9 +73,27 @@ const FilterLabel = styled(FormControlLabel)(({ theme }) => ({
 }));
 
 const ListingsPage = () => {
-  const [selectedCategory, setSelectedCategory] = useState('all');
+  const location = useLocation();
+  // Map HomePage categories to internal category names/ids
+  const categoryMap = {
+    Retail: 'retail',
+    Restaurants: "cafes",
+    Commercial: 'commercial',
+    Services: 'trade',
+  };
+  // Get category from query param
+  const params = new URLSearchParams(location.search);
+  const urlCategory = params.get('category');
+  const initialCategory = urlCategory && categoryMap[urlCategory] ? categoryMap[urlCategory] : 'all';
+
+  const [selectedCategory, setSelectedCategory] = useState(initialCategory);
   const [selectedLocation, setSelectedLocation] = useState('all');
   const [listings, setListings] = useState([]);
+
+  useEffect(() => {
+    setSelectedCategory(initialCategory);
+    // eslint-disable-next-line
+  }, [location.search]);
 
   useEffect(() => {
     fetch('http://localhost:5005/api/listings')

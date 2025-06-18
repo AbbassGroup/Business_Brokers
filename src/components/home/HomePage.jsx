@@ -45,29 +45,29 @@ const IMAGES = {
     client4: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=150&q=80"
   },
   companies: {
-    logo1: "/Cheesecake-shop-logo-2024.png", // Cheesecake Shop
-    logo2: "/WSQ-NewWeb-Gami-Logo1.jpg", // Gami Chicken
-    logo3: "/We-love-ndis-logo_1x.webp", // NDIS
-    logo4: "/Degani cafe.jpg", // Degani Cafe
-    burgertory: "/burgertory.png", // Burgertory PNG
-    jamaicaBlue: "/jamaocablue.png", // Jamaica Blue PNG
-    rolld: "/rolld.jpg", // Roll'd (JPG in public)
-    bigals: "/bigals.png", // Big Al's PNG
-    sumosalad: "/sumosalad.png" // Sumo Salad PNG
+    logo1: "/car/Donut-King.png",
+    logo2: "/car/Degani-Logo.webp",
+    logo3: "/car/NDIS.png",
+    logo4: "/car/Sumo-Salad.png",
+    logo5: "/car/Rolld.png",
+    logo6: "/car/Big-Als.png",
+    logo7: "/car/Gami-Chicken.jpeg",
+    logo8: "/car/Cheesecake-Shop.png",
+    logo9: "/car/Burgertory.png"
   }
 };
 
 // Add company URLs for linking
 const COMPANY_LINKS = [
-  "https://www.cheesecake.com.au/", // Cheesecake Shop
-  "https://www.gamichicken.com.au/", // Gami Chicken
+  "https://www.donutking.com.au/", // Donut King
+  "https://degani.com.au/", // Degani
   "https://www.ndis.gov.au/", // NDIS
-  "https://degani.com.au/", // Degani Cafe
-  "https://www.burgertory.com.au/", // Burgertory
-  "https://jamaicablue.com.au/", // Jamaica Blue
-  "https://rolld.com.au/", // Roll'd Vietnamese
-  "https://www.bigalpizza.com.au/", // Big Al's Pizza
-  "https://sumosalad.com/" // Sumo Salad
+  "https://sumosalad.com/", // Sumo Salad
+  "https://rolld.com.au/", // Roll'd
+  "https://www.bigalpizza.com.au/", // Big Al's
+  "https://www.gamichicken.com.au/", // Gami Chicken
+  "https://www.cheesecake.com.au/", // Cheesecake Shop
+  "https://www.burgertory.com.au/" // Burgertory
 ];
 
 const SearchBar = styled(Box)(({ theme }) => ({
@@ -824,15 +824,19 @@ const HomePage = () => {
             </Typography>
           </Box>
 
-          <Grid container spacing={4}>
+          <Grid container spacing={4} justifyContent="center">
             {[
               { icon: <StorefrontIcon sx={{ fontSize: 60, color: BRAND.blue }} />, title: 'Retail', listings: 'Available Listings' },
               { icon: <RestaurantIcon sx={{ fontSize: 60, color: BRAND.blue }} />, title: 'Restaurants', listings: 'Available Listings' },
               { icon: <ApartmentIcon sx={{ fontSize: 60, color: BRAND.blue }} />, title: 'Commercial', listings: 'Available Listings' },
               { icon: <BuildIcon sx={{ fontSize: 60, color: BRAND.blue }} />, title: 'Services', listings: 'Available Listings' },
             ].map((category, index) => (
-              <Grid item xs={12} sm={6} md={3} key={index}>
-                <CategoryCard>
+              <Grid item xs={12} sm={6} md={3} key={index} sx={{ display: 'flex', justifyContent: 'center' }}>
+                <CategoryCard
+                  component={Link}
+                  to={`/listings?category=${encodeURIComponent(category.title)}`}
+                  sx={{ textDecoration: 'none', maxWidth: 260, width: '100%' }}
+                >
                   <Box sx={{ mb: 2 }}>
                     {category.icon}
                   </Box>
@@ -883,7 +887,7 @@ const HomePage = () => {
             {[
               { number: 40, suffix: '+', label: 'Years of combined industry experience' },
               { number: 1200, suffix: '+', label: 'Qualified buyers in our database' },
-              { number: 20000, suffix: '+', label: 'Monthly marketing reach', sublabel: 'Active buyers per month' },
+              { number: 20000, suffix: '+', label: 'Monthly marketing reach'},
               { number: 10, suffix: '+', label: 'Industry sectors served' },
             ].map((stat, index) => (
               <Grid item xs={12} sm={6} md={3} key={index}>
@@ -966,13 +970,13 @@ const HomePage = () => {
           <Grid container spacing={4} justifyContent="center">
             {[
               {
-                video: "/Testimonial - Adisha .MP4",
+                video: "/Testimonial-Adisha.MP4",
                 author: "Adisha",
                 position: "Business Owner",
                 company: "Successful Business Sale"
               },
               {
-                video: "/Jordan - Testimonial copy.MP4",
+                video: "/Jordan-Testimonial-copy.MP4",
                 author: "Jordan",
                 position: "Business Owner",
                 company: "Successful Business Sale"
