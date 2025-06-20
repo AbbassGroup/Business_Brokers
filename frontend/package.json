@@ -1,0 +1,81 @@
+{
+  "name": "business-brokers",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@base-ui-components/react": "^1.0.0-alpha.8",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/base": "^5.0.0-beta.35",
+    "@mui/icons-material": "^5.15.11",
+    "@mui/material": "^5.17.1",
+    "@mui/styled-engine": "^5.15.11",
+    "@mui/system": "^5.15.11",
+    "@mui/utils": "^5.15.11",
+    "@sendgrid/mail": "^8.1.5",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "@tiptap/extension-color": "^2.12.0",
+    "@tiptap/extension-font-family": "^2.12.0",
+    "@tiptap/extension-strike": "^2.12.0",
+    "@tiptap/extension-text-style": "^2.12.0",
+    "@tiptap/extension-underline": "^2.12.0",
+    "@tiptap/react": "^2.12.0",
+    "@tiptap/starter-kit": "^2.12.0",
+    "@types/jest": "^27.5.2",
+    "@types/node": "^16.18.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "ajv": "^8.17.1",
+    "ajv-keywords": "^5.1.0",
+    "axios": "^1.4.0",
+    "cors": "^2.8.5",
+    "date-fns": "^4.1.0",
+    "framer-motion": "^12.6.3",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^3.0.1",
+    "multer": "^2.0.0",
+    "nodemailer": "^7.0.3",
+    "nth-check": "^2.1.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-fast-marquee": "^1.6.5",
+    "react-quill": "^2.0.0",
+    "react-router-dom": "^6.11.0",
+    "react-scripts": "^5.0.1",
+    "swiper": "^11.2.8",
+    "typescript": "^4.9.5",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "overrides": {
+    "nth-check": "^2.1.1",
+    "postcss": "^8.4.31",
+    "css-select": "^4.0.0",
+    "svgo": "^2.0.0"
+  }
+}
